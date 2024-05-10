@@ -1,3 +1,11 @@
-.homeMain{
-    margin: 10vb ;
-}
+.homeMain {
+    display: flex;
+    justify-content: center; /* Aligns content horizontally in the center */
+    padding: 0 30px; /* 30px padding on both sides */
+  }
+  
+  .contentWrapper {
+    max-width: 1000px; /* Optional: Set a maximum width for the content */
+    width: 100%; /* Optional: Ensures the content fills the available space */
+  }
+  

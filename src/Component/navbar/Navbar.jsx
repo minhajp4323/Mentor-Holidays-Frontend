@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import MentorMain from "./../../assets/Menort Main Logo.png"
+import MentorMain from "./../../assets/Menort Main Logo.png";
 import "./navbar.css";
 
 function Header() {
@@ -33,11 +33,11 @@ function Header() {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link href="#features">Features</Nav.Link>
+            <Nav.Link href="#features">List your property</Nav.Link>
             <Nav.Link href="#pricing">Pricing</Nav.Link>
-            <Nav.Link href="#deets">More deets</Nav.Link>
+            <Nav.Link href="#deets">Trips</Nav.Link>
             <Nav.Link eventKey={2} href="#memes">
-              Dank memes
+              SignIn
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

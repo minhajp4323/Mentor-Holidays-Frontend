@@ -17,10 +17,7 @@ export const Covers = [
     category: "Houseboat",
     image:Houseboat,
   },
-  {
-    category: "Cottage",
-    image: Cottage,
-  },
+
   {
     category: "Resort",
     image: Resort,

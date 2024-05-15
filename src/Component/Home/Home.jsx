@@ -3,9 +3,8 @@ import "./../Home/Home.css";
 import { FaTags } from "react-icons/fa";
 import { MdOutlineChangeCircle } from "react-icons/md";
 import { Covers } from "./stay/stayDetails.js";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Col } from "react-bootstrap";
 
 function Home() {
   return (
@@ -59,19 +58,28 @@ function Home() {
           </div>
         </section> */}
         <section className="section_item">
-          <div  className="Card_items">
-            <Card className="Cards" style={{ width: "18rem" }}>
-              {Covers.map((item) => (
-                <div  key={item.category}>
-                  <Card.Img variant="top" src={item.image} />
-                  <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text>Somsfs</Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
-                  </Card.Body>
+          <div className="Card_items">
+            {Covers.map((item) => (
+              <Card key={item.category} className="Cards">
+                <div className="imageContainer">
+                  <Card.Img
+                    variant="top"
+                    src={item.image}
+                    style={{
+                      height: "auto",
+                      width: "100%",
+                      maxWidth: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <div className="overlay">
+                    <Card.Body>
+                      <Card.Title>{item.category}</Card.Title>
+                    </Card.Body>
+                  </div>
                 </div>
-              ))}
-            </Card>
+              </Card>
+            ))}
           </div>
         </section>
       </div>

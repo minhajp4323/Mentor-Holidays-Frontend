@@ -1,11 +1,13 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+// import NavDropdown from "react-bootstrap/NavDropdown";
 import MentorMain from "./../../assets/Menort Main Logo.png";
 import "./navbar.css";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate()
   return (
     <Navbar collapseOnSelect expand="lg" className="navbarMain">
       <Container>
@@ -16,7 +18,7 @@ function Header() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto   ">
-            <NavDropdown
+            {/* <NavDropdown
               title="Book Now"
               id="collapsible-nav-dropdown"
               className=""
@@ -30,7 +32,9 @@ function Header() {
               <NavDropdown.Item href="#action/3.4">
                 Separated link
               </NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
+            <Nav.Link onClick={()=>navigate("/properties")} >Book Now</Nav.Link>
+
           </Nav>
           <Nav>
             <Nav.Link href="#features">List your property</Nav.Link>

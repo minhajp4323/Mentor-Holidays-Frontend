@@ -1,6 +1,5 @@
 import img1 from "../../assets/homeCatergoryDtl/Apartment cover.jpg";
 
-
 export const fullProperties = [
   {
     title: "Flower Valley Plantation",

@@ -11,7 +11,7 @@ function Header() {
   return (
     <Navbar collapseOnSelect expand="lg" className="navbarMain">
       <Container>
-        <Navbar.Brand href="#home" className="">
+        <Navbar.Brand onClick={()=>navigate("/")} href="#home" className="">
           {" "}
           <img src={MentorMain} style={{ width: "90px" }} alt="" />
         </Navbar.Brand>
@@ -40,7 +40,7 @@ function Header() {
             <Nav.Link href="#features">List your property</Nav.Link>
             <Nav.Link href="#pricing">Pricing</Nav.Link>
             <Nav.Link href="#deets">Trips</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
+            <Nav.Link onClick={()=>navigate("/Admin/Login")} eventKey={2} >
               SignIn
             </Nav.Link>
           </Nav>

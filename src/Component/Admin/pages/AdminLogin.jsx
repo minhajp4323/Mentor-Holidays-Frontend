@@ -2,7 +2,7 @@ import { Button } from "react-bootstrap";
 import "./AdminLogin.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Header from "../navbar/Navbar";
+import Header from "../../navbar/Navbar";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -29,6 +29,7 @@ function AdminLogin() {
         autoClose: 3000,
       });
     } catch (error) {
+      toast.error(error.response.data.message)
       console.log("Login failed", error.response.data);
     }
   };

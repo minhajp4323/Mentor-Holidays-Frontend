@@ -40,7 +40,7 @@ function Header() {
             <Nav.Link href="#features">List your property</Nav.Link>
             <Nav.Link href="#pricing">Pricing</Nav.Link>
             <Nav.Link href="#deets">Trips</Nav.Link>
-            <Nav.Link onClick={()=>navigate("/Admin/Login")} eventKey={2} >
+            <Nav.Link onDoubleClick={()=>navigate("/Admin/Login")} onClick={()=>navigate("/signin")} eventKey={2} >
               SignIn
             </Nav.Link>
           </Nav>

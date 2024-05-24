@@ -5,6 +5,8 @@ import Properties from "./Component/properties/Properties.jsx";
 import AdminLogin from "./Component/Admin/pages/AdminLogin.jsx";
 import AdminHome from "./Component/Admin/pages/AdminHome.jsx";
 import AddProduct from "./Component/Admin/pages/AddProduct.jsx";
+import Registration from "./Component/registration/Signin.jsx";
+import Login from "./Component/registration/Login.jsx";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/properties" element={<Properties />} />
+          <Route path="/signin" element={<Registration />} />
+          <Route path="/login" element ={<Login />} />
           <Route path="/Admin/Login" element={<AdminLogin />} />
           <Route path="/Admin/Home" element={<AdminHome />} />
           <Route path="/Admin/AddProduct" element={<AddProduct />} />

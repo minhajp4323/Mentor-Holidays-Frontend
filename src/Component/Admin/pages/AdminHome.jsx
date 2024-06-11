@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import Footer from "../../../shared/footer/Footer.jsx";
 import Sidebar from "../components/Sidebar.jsx";
 import Card from "react-bootstrap/Card";
 
 function AdminHome() {
+  const navigate= useNavigate()
   return (
     <>
       <div className="d-flex">
@@ -11,7 +13,7 @@ function AdminHome() {
           <div>
             <Card style={{ width: "18rem" }} className="mb-2 m-2 bg-secondary">
               <Card.Header>USERS</Card.Header>
-              <Card.Body>
+              <Card.Body onClick={()=>navigate("/Admin/AllUser")} >
                 <Card.Title> USERS </Card.Title>
                 <Card.Text>{/* <h1>  {userData.length} </h1> */}</Card.Text>
               </Card.Body>

@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import SideBar from "../components/Sidebar";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-function AddProduct() {
+function EditProperty() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [propertyData, setPropertyData] = useState({
     title: "",
     location: "",
@@ -14,6 +17,39 @@ function AddProduct() {
     description: "",
     category: "",
   });
+
+  useEffect(() => {
+    const fetchProperty = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3333/api/user/properties/${id}`
+        );
+        const {
+          title,
+          location,
+          price,
+          bedroom,
+          bathroom,
+          images,
+          description,
+          category,
+        } = response.data.data;
+        setPropertyData({
+          title,
+          location,
+          price,
+          bedroom,
+          bathroom,
+          images,
+          description,
+          category,
+        });
+      } catch (error) {
+        toast.error("Error fetching property details");
+      }
+    };
+    fetchProperty();
+  }, [id]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -52,22 +88,17 @@ function AddProduct() {
     }
 
     try {
-      await axios.post("http://localhost:3333/api/admin/properties", formData);
-      toast.success("Property added successfully");
-
-      // Reset form inputs
-      setPropertyData({
-        title: "",
-        location: "",
-        price: "",
-        bedroom: "",
-        bathroom: "",
-        images: [],
-        description: "",
-        category: "",
-      });
+      const response = await axios.put(
+        `http://localhost:3333/api/admin/properties/${id}`,
+        formData
+      );
+      //   toast.success("property editted");
+      console.log(response);
+      toast.success(response.data.message);
+        setTimeout(() => navigate('/Admin/AdminProperties'), 2000);
     } catch (error) {
-      toast.error("Error adding property");
+      toast.error("Error updating property");
+      console.log(error);
     }
   };
 
@@ -96,7 +127,7 @@ function AddProduct() {
               borderRadius: 5,
             }}
           >
-            <h2 className="mb-0">Add a Property</h2>
+            <h2 className="mb-0">Edit Property</h2>
           </div>
           <div className="card-body" style={{ color: "yellow" }}>
             <form onSubmit={handleSubmit}>
@@ -215,7 +246,7 @@ function AddProduct() {
               </div>
 
               <button type="submit" className="btn btn-primary">
-                Add Property
+                Update Property
               </button>
             </form>
           </div>
@@ -225,4 +256,4 @@ function AddProduct() {
   );
 }
 
-export default AddProduct;
+export default EditProperty;

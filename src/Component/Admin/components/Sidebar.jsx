@@ -28,12 +28,17 @@ const SideBar = () => {
                 Booking Details
               </CDBSidebarMenuItem>
             </NavLink>
-            <NavLink>
+            <NavLink to="/Admin/AllUser">
               <CDBSidebarMenuItem icon="user">Users</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink>
+            {/* <NavLink to="/Admin/EditProperty">
               <CDBSidebarMenuItem icon="edit">
                 Edit Properties
+              </CDBSidebarMenuItem>
+            </NavLink> */}
+            <NavLink to="/Admin/AdminProperties">
+              <CDBSidebarMenuItem icon="building">
+                Properties
               </CDBSidebarMenuItem>
             </NavLink>
             <NavLink to="/Admin/AddProduct">

@@ -27,12 +27,11 @@ function ViewProduct() {
 
   return (
     <>
-    <Header />
-      <h1>All Properties</h1>
+      <Header />
       <div className="homeMain">
         {porperty && (
-          <Card key={porperty._id} style={{ width: "100vh" }}>
-            <Card.Img variant="top" src={porperty.images?.[0]} alt=""  />
+          <Card key={porperty._id} style={{ margin: 50, width: "100vh" }}>
+            <Card.Img variant="top" src={porperty.images?.[0]} alt="" />
             <Card.Body>
               <Card.Title>{porperty.title}</Card.Title>
               <Card.Text>₹{porperty.price}/-</Card.Text>

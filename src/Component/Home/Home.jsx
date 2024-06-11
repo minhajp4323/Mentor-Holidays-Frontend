@@ -2,15 +2,15 @@ import Searchbar from "./../../shared/searchbar/Searchbar.jsx";
 import "./../Home/Home.css";
 import { FaTags } from "react-icons/fa";
 import { MdOutlineChangeCircle } from "react-icons/md";
-import { Covers } from "./stay/stayDetails.js";
+// import { Covers } from "./stay/stayDetails.js";
 // import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
+// import Card from "react-bootstrap/Card";
 import Header from "../navbar/Navbar.jsx";
 
 function Home() {
   return (
     <>
-    <Header/>
+      <Header />
       <div className="homeMain lg">
         <div className="contentWrapper">
           <Searchbar />
@@ -62,7 +62,7 @@ function Home() {
         </section> */}
           <section className="section_item">
             <div className="Card_items">
-              {Covers.map((item) => (
+              {/* {Covers.map((item) => (
                 <Card key={item.category} className="Cards">
                   <div className="imageContainer">
                     <Card.Img
@@ -82,7 +82,7 @@ function Home() {
                     </div>
                   </div>
                 </Card>
-              ))}
+              ))} */}
             </div>
           </section>
         </div>

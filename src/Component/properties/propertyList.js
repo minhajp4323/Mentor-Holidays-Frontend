@@ -1,6 +1,5 @@
 import img1 from "../../assets/homeCatergoryDtl/Apartment cover.jpg";
-
-export const fullProperties = [
+const fullProperties = [
   {
     title: "Flower Valley Plantation",
     category: "farm",
@@ -136,3 +135,6 @@ export const fullProperties = [
     price: 5980,
   },
 ];
+
+
+export default fullProperties

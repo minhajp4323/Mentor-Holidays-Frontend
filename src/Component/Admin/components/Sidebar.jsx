@@ -13,9 +13,11 @@ const SideBar = () => {
   return (
     <div className="sidebar_main" style={{ height: "100vh" }}>
       <CDBSidebar className="sidebar">
-        <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>
-          Contrast
-        </CDBSidebarHeader>
+        <NavLink to="/Admin/Home">
+          <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>
+            Admin Dashboard
+          </CDBSidebarHeader>
+        </NavLink>
         <CDBSidebarContent>
           <CDBSidebarMenu>
             <NavLink>
@@ -39,9 +41,14 @@ const SideBar = () => {
                 Add Properties
               </CDBSidebarMenuItem>
             </NavLink>
-            <NavLink to="/">
+            <NavLink to="">
               <CDBSidebarMenuItem icon="credit-card" iconType="solid">
                 Payment
+              </CDBSidebarMenuItem>
+            </NavLink>
+            <NavLink to="/">
+              <CDBSidebarMenuItem icon="home" iconType="solid">
+                Home
               </CDBSidebarMenuItem>
             </NavLink>
           </CDBSidebarMenu>

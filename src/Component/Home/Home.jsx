@@ -4,7 +4,7 @@ import { FaTags } from "react-icons/fa";
 import { MdOutlineChangeCircle } from "react-icons/md";
 // import { Covers } from "./stay/stayDetails.js";
 // import Button from "react-bootstrap/Button";
-// import Card from "react-bootstrap/Card";
+import Card from "react-bootstrap/Card";
 import Header from "../navbar/Navbar.jsx";
 
 function Home() {
@@ -62,12 +62,12 @@ function Home() {
         </section> */}
           <section className="section_item">
             <div className="Card_items">
-              {/* {Covers.map((item) => (
-                <Card key={item.category} className="Cards">
+              
+                <Card  className="Cards">
                   <div className="imageContainer">
                     <Card.Img
                       variant="top"
-                      src={item.image}
+                      src="https://media-cdn.tripadvisor.com/media/photo-s/16/01/46/28/niraamaya-retreats-backwaters.jpg"
                       style={{
                         height: "auto",
                         width: "100%",
@@ -77,12 +77,12 @@ function Home() {
                     />
                     <div className="overlay">
                       <Card.Body>
-                        <Card.Title>{item.category}</Card.Title>
+                        <Card.Title></Card.Title>
                       </Card.Body>
                     </div>
                   </div>
                 </Card>
-              ))} */}
+              
             </div>
           </section>
         </div>

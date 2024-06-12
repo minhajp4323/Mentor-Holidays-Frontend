@@ -11,7 +11,8 @@ import ViewProduct from "./Component/properties/ViewProduct.jsx";
 import EditProperty from "./Component/Admin/pages/EditProperty.jsx";
 import AdminProperties from "./Component/Admin/pages/AdminProperties.jsx";
 import AllUser from "./Component/Admin/pages/AllUsers.jsx";
-// import OrderProps from "./Component/OrderProps.jsx";
+import OrderProps from "./Component/OrderProps.jsx";
+import ConfirmBooking from "./Component/ConfirmBooking.jsx";
 
 function App() {
   return (
@@ -23,7 +24,8 @@ function App() {
           <Route path="/signin" element={<Registration />} />
           <Route path="/login" element={<Login />} />
           <Route path="/viewproperty/:_id" element={<ViewProduct />} />
-          {/* <Route path="/orderproperty/:id" element={<OrderProps />} /> */}
+          <Route path="/orderproperty/:id" element={<OrderProps />} />
+          <Route path="/confirmbooking/:id" element={<ConfirmBooking/>} />
 
           <Route path="/Admin/Login" element={<AdminLogin />} />
           <Route path="/Admin/Home" element={<AdminHome />} />

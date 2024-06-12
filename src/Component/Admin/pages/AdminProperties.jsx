@@ -29,7 +29,7 @@ function AdminProperties() {
       try {
         await axios.delete(`http://localhost:3333/api/admin/properties/${id}`);
         setProperties(properties.filter((property) => property._id !== id));
-        
+        //render error        
       } catch (error) {
         console.error("Error deleting property", error);
       }

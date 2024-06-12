@@ -4,13 +4,25 @@ import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import Header from "./navbar/Navbar";
 
+
 function ConfirmBooking() {
   const navigate = useNavigate();
   const location = useLocation();
   const { property, guestNumber, checkInDate, checkOutDate } = location.state;
 
+  // Calculate the number of nights
+  const getNumberOfNights = (checkIn, checkOut) => {
+    const checkInDate = new Date(checkIn);
+    const checkOutDate = new Date(checkOut);
+    const timeDifference = checkOutDate - checkInDate;
+    const daysDifference = timeDifference / (1000 * 3600 * 24);
+    return daysDifference;
+  };
+
+  const totalNights = getNumberOfNights(checkInDate, checkOutDate);
+  const totalPrice = totalNights * property.price;
+
   const handleConfirm = () => {
-    // Handle confirmation logic here
     navigate(`/booking-success`);
   };
 
@@ -27,12 +39,20 @@ function ConfirmBooking() {
           minHeight: "100vh",
           display: "flex",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         {property && (
           <Card style={{ width: "70%", borderRadius: 10 }}>
-            <Card.Header as="h5" style={{ backgroundColor: "#007bff", color: "#fff", borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
+            <Card.Header
+              as="h5"
+              style={{
+                backgroundColor: "#007bff",
+                color: "#fff",
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+              }}
+            >
               Booking Confirmation
             </Card.Header>
             <Card.Body style={{ padding: 20 }}>
@@ -46,16 +66,64 @@ function ConfirmBooking() {
                     <i className="fas fa-map-marker-alt" /> {property.location}
                   </Card.Text>
                 </div>
-                <div style={{ width: "40%", padding: "0 20px", borderLeft: "1px solid #ddd" }}>
+                <div
+                  style={{
+                    width: "40%",
+                    padding: "0 20px",
+                    borderLeft: "1px solid #ddd",
+                  }}
+                >
                   <ListGroup variant="flush">
-                    <ListGroup.Item style={{ border: "none", padding: "10px 0" }}>
+                    <ListGroup.Item
+                      style={{ border: "none", padding: "10px 0" }}
+                    >
                       <strong>Guests:</strong> {guestNumber}
                     </ListGroup.Item>
-                    <ListGroup.Item style={{ border: "none", padding: "10px 0" }}>
+                    <ListGroup.Item
+                      style={{ border: "none", padding: "10px 0" }}
+                    >
                       <strong>Check-in Date:</strong> {checkInDate}
                     </ListGroup.Item>
-                    <ListGroup.Item style={{ border: "none", padding: "10px 0" }}>
+                    <ListGroup.Item
+                      style={{ border: "none", padding: "10px 0" }}
+                    >
                       <strong>Check-out Date:</strong> {checkOutDate}
+                    </ListGroup.Item>
+                    <ListGroup.Item
+                      style={{ border: "none", padding: "10px 0" }}
+                    >
+                      <strong>Total Nights: </strong> {totalNights}
+                    </ListGroup.Item>
+                    <ListGroup.Item
+                      style={{ border: "none", padding: "10px 0" }}
+                    >
+                      <strong>Total Price: </strong> ₹{totalPrice}
+                    </ListGroup.Item>
+                  </ListGroup>
+                </div>
+                <div
+                  style={{
+                    width: "40%",
+                    padding: "0 20px",
+                    borderLeft: "1px solid #ddd",
+                  }}
+                >
+                  <ListGroup variant="flush">
+                    <ListGroup.Item
+                      style={{ border: "none", padding: "10px 0" }}
+                    >
+                      <p>
+                        <strong>Guest Name:</strong>{" "}
+                        {localStorage.getItem("username")}
+                      </p>
+                      <p>
+                        <strong>Email: </strong>
+                        {localStorage.getItem("email")}
+                      </p>
+                      <p>
+                        <strong>Phone: </strong>
+                        {localStorage.getItem("phonenumber")}
+                      </p>
                     </ListGroup.Item>
                   </ListGroup>
                 </div>
@@ -64,7 +132,11 @@ function ConfirmBooking() {
                 <Button
                   variant="primary"
                   onClick={handleConfirm}
-                  style={{ width: "100%", backgroundColor: "#007bff", borderColor: "#007bff" }}
+                  style={{
+                    width: "100%",
+                    backgroundColor: "#007bff",
+                    borderColor: "#007bff",
+                  }}
                 >
                   Confirm Booking
                 </Button>

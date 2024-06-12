@@ -17,6 +17,14 @@ function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleLoginSucces = (token, userDetails) => {
+    const { _id, username, email, phonenumber } = userDetails;
+    localStorage.setItem("token", token);
+    localStorage.setItem("userid", _id);
+    localStorage.setItem("username", username);
+    localStorage.setItem("email", email);
+    localStorage.setItem("phonenumber", phonenumber);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -29,8 +37,11 @@ function Login() {
       console.log(response.data);
       navigate("/");
       toast.success("Successfully logged in");
-      localStorage.setItem()
 
+      const { token, data } = response.data;
+
+
+      handleLoginSucces(token, data);
     } catch (error) {
       console.log("Error while logging in", error);
 

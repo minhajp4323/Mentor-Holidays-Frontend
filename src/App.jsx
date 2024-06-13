@@ -1,6 +1,6 @@
 import Home from "./Component/Home/Home.jsx";
 import "../src/App.css";
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import { Route, Routes } from "react-router-dom";
 import Properties from "./Component/properties/Properties.jsx";
@@ -13,22 +13,24 @@ import ViewProduct from "./Component/properties/ViewProduct.jsx";
 import EditProperty from "./Component/Admin/pages/EditProperty.jsx";
 import AdminProperties from "./Component/Admin/pages/AdminProperties.jsx";
 import AllUser from "./Component/Admin/pages/AllUsers.jsx";
-import OrderProps from "./Component/OrderProps.jsx";
 import ConfirmBooking from "./Component/ConfirmBooking.jsx";
+import Wishlist from "./Component/wishlist/Wishlist.jsx";
 
 function App() {
   return (
     <>
       <div className="App">
         <Routes>
+          {/* user */}
           <Route path="/" element={<Home />} />
           <Route path="/properties" element={<Properties />} />
           <Route path="/signin" element={<Registration />} />
           <Route path="/login" element={<Login />} />
           <Route path="/viewproperty/:_id" element={<ViewProduct />} />
-          <Route path="/orderproperty/:id" element={<OrderProps />} />
-          <Route path="/confirmbooking/:id" element={<ConfirmBooking/>} />
+          <Route path="/confirmbooking/:id" element={<ConfirmBooking />} />
+          <Route path="/wishlist" element={<Wishlist />} />
 
+          {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />
           <Route path="/Admin/Home" element={<AdminHome />} />
           <Route path="/Admin/AddProduct" element={<AddProduct />} />

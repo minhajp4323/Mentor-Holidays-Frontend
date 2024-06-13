@@ -4,22 +4,56 @@ import Header from "../navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { toast } from "react-toastify";
 
 function Properties() {
   const navigate = useNavigate();
   const [properties, setProperties] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
+  const userId = localStorage.getItem("userid");
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        "http://localhost:3333/api/user/properties"
-      );
+      const response = await axios.get("http://localhost:3333/api/user/properties");
       setProperties(response.data.data);
-      console.log(response.data.data);
+
+      if (userId) {
+        const wishlistResponse = await axios.get(`http://localhost:3333/api/user/${userId}/wishlist`);
+        setWishlist(wishlistResponse.data.data.map(property => property._id));
+      }
     };
     fetchData();
-  }, []);
+  }, [userId]);
+
+  const handleWishlistClick = async (propertyId) => {
+    if (!userId) {
+      toast.error("Please log in to add to the wishlist");
+      setTimeout(() => {
+        
+        navigate('/login')
+      }, 1000);
+      return;
+    }
+
+    try {
+      if (wishlist.includes(propertyId)) {
+        // Remove from wishlist
+        await axios.delete(`http://localhost:3333/api/user/${userId}/wishlist/${propertyId}`);
+        setWishlist(wishlist.filter(id => id !== propertyId));
+        console.log("Wishlist Deleted for", propertyId, "for userId", userId);
+        toast.error("Removed from Wishlist");
+      } else {
+        // Add to wishlist
+        await axios.post(`http://localhost:3333/api/user/${userId}/wishlist`, { propertyId });
+        setWishlist([...wishlist, propertyId]);
+        console.log("Wishlist Added for", propertyId, "for userId", userId);
+        toast.success("Property added to wishlist");
+      }
+    } catch (error) {
+      console.error("Error updating wishlist:", error);
+    }
+  };
 
   return (
     <>
@@ -27,18 +61,21 @@ function Properties() {
       <h1>All Properties</h1>
       <div className="homeMain">
         {properties.map((items) => (
-          <Card key={items._id} style={{ margin: 20, width: "18rem", position: "relative" }}>
+          <Card
+            key={items._id}
+            style={{ margin: 20, width: "18rem", position: "relative" }}
+          >
             <i
-              className="fas fa-heart"
+              className={`fas fa-heart ${wishlist.includes(items._id) ? "wishlist-active" : ""}`}
               style={{
                 position: "absolute",
                 top: "10px",
                 right: "10px",
-                color: "red",
+                color: wishlist.includes(items._id) ? "red" : "black",
                 cursor: "pointer",
-                fontSize: "1.5rem"
+                fontSize: "1.5rem",
               }}
-              onClick={() => console.log("Favorite clicked for", items._id)}
+              onClick={() => handleWishlistClick(items._id)}
             />
             <Card.Img
               variant="top"

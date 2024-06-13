@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../navbar/Navbar";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function ViewProduct() {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function ViewProduct() {
   const [totalDays, setTotalDays] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,12 +34,10 @@ function ViewProduct() {
   }, [_id]);
 
   useEffect(() => {
-    // Calculate the total number of days between check-in and check-out
     const diffTime = Math.abs(checkOutDate - checkInDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     setTotalDays(diffDays);
 
-    // Calculate the total price with a 5% discount if the total days are more than 3
     if (property) {
       const basePrice = diffDays * property.price;
       const discount = diffDays > 3 ? 0.05 * basePrice : 0;
@@ -57,6 +57,10 @@ function ViewProduct() {
     });
   };
 
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <>
       <Header />
@@ -69,7 +73,20 @@ function ViewProduct() {
         }}
       >
         {property && (
-          <Card style={{ margin: 10, width: "70%" }}>
+          <Card style={{ margin: 10, width: "70%", position: "relative" }}>
+            <i
+              className={isFavorite ? "fas fa-heart" : "far fa-heart"}
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                color: isFavorite ? "red" : "black",
+                cursor: "pointer",
+                fontSize: "1.5rem",
+                zIndex: 1
+              }}
+              onClick={toggleFavorite}
+            />
             <Carousel style={{ height: "400px" }}>
               {property.images.slice(0, 5).map((image, index) => (
                 <Carousel.Item key={index} style={{ height: "400px" }}>
@@ -136,10 +153,9 @@ function ViewProduct() {
                     onChange={(e) => {
                       const newCheckInDate = new Date(e.target.value);
                       setCheckInDate(newCheckInDate);
-                      // Ensure check-out date is not before check-in date
                       if (newCheckInDate >= checkOutDate) {
                         const newCheckOutDate = new Date(newCheckInDate);
-                        newCheckOutDate.setDate(newCheckOutDate.getDate() + 1); // set check-out date to be at least one day after check-in date
+                        newCheckOutDate.setDate(newCheckOutDate.getDate() + 1);
                         setCheckOutDate(newCheckOutDate);
                       }
                     }}

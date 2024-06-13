@@ -28,8 +28,8 @@ function Header() {
           {" "}
           <img src={MentorMain} style={{ width: "90px" }} alt="" />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
+        <Navbar.Toggle style={{backgroundColor:"grey"}} aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse  id="responsive-navbar-nav">
           <Nav className="me-auto   ">
             {/* <NavDropdown
               title="Book Now"

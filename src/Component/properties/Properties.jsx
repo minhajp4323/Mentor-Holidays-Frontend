@@ -4,6 +4,7 @@ import Header from "../navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function Properties() {
   const navigate = useNavigate();
@@ -26,7 +27,19 @@ function Properties() {
       <h1>All Properties</h1>
       <div className="homeMain">
         {properties.map((items) => (
-          <Card key={items._id} style={{ margin: 20, width: "18rem" }}>
+          <Card key={items._id} style={{ margin: 20, width: "18rem", position: "relative" }}>
+            <i
+              className="fas fa-heart"
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                color: "red",
+                cursor: "pointer",
+                fontSize: "1.5rem"
+              }}
+              onClick={() => console.log("Favorite clicked for", items._id)}
+            />
             <Card.Img
               variant="top"
               src={items.images[0]}

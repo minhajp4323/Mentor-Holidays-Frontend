@@ -1,5 +1,7 @@
 import Home from "./Component/Home/Home.jsx";
 import "../src/App.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 import { Route, Routes } from "react-router-dom";
 import Properties from "./Component/properties/Properties.jsx";
 import AdminLogin from "./Component/Admin/pages/AdminLogin.jsx";

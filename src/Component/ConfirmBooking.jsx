@@ -61,7 +61,6 @@ function ConfirmBooking() {
                   <Card.Title>{property.title}</Card.Title>
                   <Card.Text>₹{property.price}/- per night</Card.Text>
                   <Card.Text>{property.category}</Card.Text>
-                  {/* <Card.Text>{property.description}</Card.Text> */}
                   <Card.Text>
                     <i className="fas fa-map-marker-alt" /> {property.location}
                   </Card.Text>

@@ -15,12 +15,16 @@ function Properties() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("http://localhost:3333/api/user/properties");
+      const response = await axios.get(
+        "http://localhost:3333/api/user/properties"
+      );
       setProperties(response.data.data);
 
       if (userId) {
-        const wishlistResponse = await axios.get(`http://localhost:3333/api/user/${userId}/wishlist`);
-        setWishlist(wishlistResponse.data.data.map(property => property._id));
+        const wishlistResponse = await axios.get(
+          `http://localhost:3333/api/user/${userId}/wishlist`
+        );
+        setWishlist(wishlistResponse.data.data.map((property) => property._id));
       }
     };
     fetchData();
@@ -30,8 +34,7 @@ function Properties() {
     if (!userId) {
       toast.error("Please log in to add to the wishlist");
       setTimeout(() => {
-        
-        navigate('/login')
+        navigate("/login");
       }, 1000);
       return;
     }
@@ -39,13 +42,13 @@ function Properties() {
     try {
       if (wishlist.includes(propertyId)) {
         // Remove from wishlist
-        await axios.delete(`http://localhost:3333/api/user/${userId}/wishlist/${propertyId}`);
-        setWishlist(wishlist.filter(id => id !== propertyId));
+        // await axios.delete(`http://localhost:3333/api/user/${userId}/wishlist/${propertyId}`);
+        setWishlist(wishlist.filter((id) => id !== propertyId));
         console.log("Wishlist Deleted for", propertyId, "for userId", userId);
         toast.error("Removed from Wishlist");
       } else {
         // Add to wishlist
-        await axios.post(`http://localhost:3333/api/user/${userId}/wishlist`, { propertyId });
+        // await axios.post(`http://localhost:3333/api/user/${userId}/wishlist`, { propertyId });
         setWishlist([...wishlist, propertyId]);
         console.log("Wishlist Added for", propertyId, "for userId", userId);
         toast.success("Property added to wishlist");
@@ -66,7 +69,9 @@ function Properties() {
             style={{ margin: 20, width: "18rem", position: "relative" }}
           >
             <i
-              className={`fas fa-heart ${wishlist.includes(items._id) ? "wishlist-active" : ""}`}
+              className={`fas fa-heart ${
+                wishlist.includes(items._id) ? "wishlist-active" : ""
+              }`}
               style={{
                 position: "absolute",
                 top: "10px",

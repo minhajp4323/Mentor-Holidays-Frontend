@@ -2,10 +2,11 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Carousel from "react-bootstrap/Carousel";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../navbar/Navbar";
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import { toast } from "react-toastify";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { useEffect, useState } from "react";
 
 function ViewProduct() {
   const navigate = useNavigate();
@@ -17,7 +18,6 @@ function ViewProduct() {
   const [totalDays, setTotalDays] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,18 +47,29 @@ function ViewProduct() {
   }, [checkInDate, checkOutDate, property]);
 
   const handleBookNow = () => {
+    if (totalDays <= 0) {
+      toast.info("Please choose valid dates.");
+      return;
+    }
+
     navigate(`/confirmbooking/${_id}`, {
       state: {
         property,
         guestNumber,
         checkInDate: checkInDate.toISOString().split("T")[0],
-        checkOutDate: checkOutDate.toISOString().split("T")[0]
-      }
+        checkOutDate: checkOutDate.toISOString().split("T")[0],
+      },
     });
   };
 
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+  const increaseGuest = () => {
+    setGuestNumber((prevGuests) => prevGuests + 1);
+  };
+
+  const decreaseGuest = () => {
+    if (guestNumber > 1) {
+      setGuestNumber((prevGuests) => prevGuests - 1);
+    }
   };
 
   return (
@@ -73,20 +84,7 @@ function ViewProduct() {
         }}
       >
         {property && (
-          <Card style={{ margin: 10, width: "70%", position: "relative" }}>
-            <i
-              className={isFavorite ? "fas fa-heart" : "far fa-heart"}
-              style={{
-                position: "absolute",
-                top: "10px",
-                right: "10px",
-                color: isFavorite ? "red" : "black",
-                cursor: "pointer",
-                fontSize: "1.5rem",
-                zIndex: 1
-              }}
-              onClick={toggleFavorite}
-            />
+          <Card style={{ margin: 10, width: "70%" }}>
             <Carousel style={{ height: "400px" }}>
               {property.images.slice(0, 5).map((image, index) => (
                 <Carousel.Item key={index} style={{ height: "400px" }}>
@@ -113,7 +111,7 @@ function ViewProduct() {
               <div
                 className="guest"
                 style={{
-                  width: "42%",
+                  width: "40%",
                   padding: "0 20px",
                   borderLeft: "1px solid #ddd",
                 }}
@@ -127,14 +125,36 @@ function ViewProduct() {
                   }}
                 >
                   <label htmlFor="guestNumber">Guests:</label>
-                  <input
-                    type="number"
-                    id="guestNumber"
-                    value={guestNumber}
-                    onChange={(e) => setGuestNumber(parseInt(e.target.value))}
-                    min="1"
-                    style={{ width: "100%" }}
-                  />
+                  <div className="d-flex">
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={decreaseGuest}
+                      style={{ marginRight: "10px" }}
+                    >
+                      -
+                    </button>
+                    <input
+                      type="number"
+                      id="guestNumber"
+                      value={guestNumber}
+                      onChange={(e) =>
+                        setGuestNumber(parseInt(e.target.value, 10))
+                      }
+                      min="1"
+                      style={{
+                        width: "50px",
+                        textAlign: "center",
+                      }}
+                    />
+
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={increaseGuest}
+                      style={{ marginLeft: "10px" }}
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
                 <div
                   style={{

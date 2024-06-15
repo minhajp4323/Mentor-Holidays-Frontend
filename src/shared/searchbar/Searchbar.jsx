@@ -23,7 +23,7 @@ function Searchbar() {
           </Col>
           <Col sm={3} style={{ paddingRight: 0 }}>
             {" "}
-            {/* Remove right padding for the last column */}
+            
             <Button>Search..</Button>
           </Col>
         </Row>

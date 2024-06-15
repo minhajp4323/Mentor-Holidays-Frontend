@@ -79,7 +79,7 @@ function ViewProduct() {
         className="homeMain d-flex justify-content-space-between"
         style={{
           width: "100%",
-          padding: "50px 100px 50px 100px",
+          padding: "50px 1% 50px 1%",
           borderRadius: 50,
         }}
       >
@@ -159,7 +159,7 @@ function ViewProduct() {
                 <div
                   style={{
                     marginBottom: "10px",
-                    padding: "10px",
+                    padding: "1%",
                     border: "solid black 1px",
                     borderRadius: 5,
                   }}

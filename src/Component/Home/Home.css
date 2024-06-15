@@ -1,7 +1,7 @@
 .homeMain {
   display: flex;
   justify-content: center; /* Aligns content horizontally in the center */
-  padding: 0 30px; /* 30px padding on both sides */
+  padding: 0 10%; /* 30px padding on both sides */
   flex-wrap: wrap;
 }
 

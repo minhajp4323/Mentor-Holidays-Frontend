@@ -15,15 +15,21 @@ function Properties() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("http://localhost:3333/api/user/properties");
+      const response = await axios.get(
+        "http://localhost:3333/api/user/properties"
+      );
       setProperties(response.data.data);
 
       const storedWishlist = localStorage.getItem("wishlist");
       if (storedWishlist) {
         setWishlist(JSON.parse(storedWishlist));
       } else if (userId) {
-        const wishlistResponse = await axios.get(`http://localhost:3333/api/user/${userId}/wishlist`);
-        const wishlistIds = wishlistResponse.data.data.map((property) => property._id);
+        const wishlistResponse = await axios.get(
+          `http://localhost:3333/api/user/${userId}/wishlist`
+        );
+        const wishlistIds = wishlistResponse.data.data.map(
+          (property) => property._id
+        );
         setWishlist(wishlistIds);
         localStorage.setItem("wishlist", JSON.stringify(wishlistIds));
       }
@@ -43,11 +49,16 @@ function Properties() {
     try {
       let updateWishlist = [...wishlist];
       if (updateWishlist.includes(propertyId)) {
-        updateWishlist = updateWishlist.filter((wishId) => wishId !== propertyId);
-        await axios.delete(`http://localhost:3333/api/user/wishlist/${userId}`, {
-          data: { propertyId },
-        });
-        // localStorage.setItem("wishlist", JSON.stringify(updateWishlist))
+        updateWishlist = updateWishlist.filter(
+          (wishId) => wishId !== propertyId
+        );
+        await axios.delete(
+          `http://localhost:3333/api/user/wishlist/${userId}`,
+          {
+            data: { propertyId },
+          }
+        );
+        localStorage.setItem("wishlist", JSON.stringify(updateWishlist));
         toast.error("Removed from Wishlist");
       } else {
         updateWishlist.push(propertyId);
@@ -59,7 +70,6 @@ function Properties() {
 
       setWishlist(updateWishlist);
       localStorage.setItem("wishlist", JSON.stringify(updateWishlist));
-      
     } catch (error) {
       console.error("Error updating wishlist:", error);
       toast.error("Error updating wishlist");

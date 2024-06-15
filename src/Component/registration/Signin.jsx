@@ -3,6 +3,7 @@ import Header from "../navbar/Navbar";
 import "./Signin.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -13,42 +14,87 @@ function SignIn() {
     password: "",
     confirmPassword: "",
   });
-
+  const [otp, setOtp] = useState(""); 
   const [errorMessage, setErrorMessage] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [email, setEmail] = useState(""); 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleOtpChange = (e) => {
+    setOtp(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    if (formData.password !== formData.confirmPassword) {
-      setErrorMessage("Passwords do not match");
+
+    if (!otpSent && formData.password !== formData.confirmPassword) {
+      setErrorMessage("Passwords do not match")
+      toast.error("Passwords do not match")
       return;
     }
-  
+
+    if (!otpSent) {
+      try {
+        const response = await axios.post(
+          "http://localhost:3333/api/user/register",
+          formData,
+          { headers: { "Content-Type": "application/json" } }
+        );
+        console.log(response.data);
+        setEmail(formData.email);
+        setOtpSent(true);
+        setErrorMessage("");
+        toast.success("otp send successfully")
+      } catch (error) {
+        console.error("Error during registration", error);
+
+        if (error.response) {
+          setErrorMessage(
+            error.response.data?.error ||
+              "An error occurred during registration"
+          );
+        } else if (error.request) {
+          setErrorMessage("No response from server. Please try again later.");
+        } else {
+          setErrorMessage("Error during registration. Please try again.");
+        }
+      }
+    } else {
+      handleOtpSubmit();
+    }
+  };
+
+  const handleOtpSubmit = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3333/api/user/register",
-        formData,
+        "http://localhost:3333/api/user/verifyotp",
+        { email, otp },
         { headers: { "Content-Type": "application/json" } }
       );
       console.log(response.data);
-      navigate('/login')
+      navigate("/login");
+      toast.success("User successfully registered")
     } catch (error) {
-      console.error("Error during registration", error);
-  
+      console.error("Error during OTP verification", error);
+      toast.success("Error during OTP verification")
+
       if (error.response) {
-        setErrorMessage(error.response.data?.error || "An error occurred during registration");
+        console.log(error.response.data.error);
+        setErrorMessage(
+          error.response.data?.error ||
+            "An error occurred during OTP verification"
+        );
       } else if (error.request) {
-        setErrorMessage("No response from server. Please try again later.");
+        setErrorMessage("No response from server. Please try again later.")
+        
       } else {
-        setErrorMessage("Error during registration. Please try again.");
+        setErrorMessage("Error during OTP verification. Please try again.");
       }
     }
   };
-  
 
   return (
     <>
@@ -68,6 +114,7 @@ function SignIn() {
                 placeholder="Enter Username.."
                 required
                 onChange={handleChange}
+                value={formData.username}
               />
             </div>
             <div className="form-group mt-3">
@@ -79,6 +126,7 @@ function SignIn() {
                 placeholder="Enter Email.. "
                 required
                 onChange={handleChange}
+                value={formData.email}
               />
             </div>
             <div className="form-group mt-3">
@@ -90,34 +138,54 @@ function SignIn() {
                 placeholder="Enter Phone number"
                 required
                 onChange={handleChange}
+                value={formData.phonenumber}
               />
             </div>
-            <div className="form-group mt-3">
-              <label>Password</label>
-              <input
-                name="password"
-                type="password"
-                className="form-control mt-1"
-                placeholder="Enter password"
-                required
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group mt-3">
-              <label>Re-enter Password</label>
-              <input
-                name="confirmPassword"
-                type="password"
-                className="form-control mt-1"
-                placeholder="Confirm Password"
-                required
-                onChange={handleChange}
-              />
-            </div>
+            {!otpSent && (
+              <>
+                <div className="form-group mt-3">
+                  <label>Password</label>
+                  <input
+                    name="password"
+                    type="password"
+                    className="form-control mt-1"
+                    placeholder="Enter password"
+                    required
+                    onChange={handleChange}
+                    value={formData.password}
+                  />
+                </div>
+                <div className="form-group mt-3">
+                  <label>Re-enter Password</label>
+                  <input
+                    name="confirmPassword"
+                    type="password"
+                    className="form-control mt-1"
+                    placeholder="Confirm Password"
+                    required
+                    onChange={handleChange}
+                    value={formData.confirmPassword}
+                  />
+                </div>
+              </>
+            )}
+            {otpSent && (
+              <div className="form-group mt-3">
+                <label>OTP</label>
+                <input
+                  name="otp"
+                  type="text"
+                  className="form-control mt-1"
+                  placeholder="Enter OTP"
+                  required
+                  onChange={handleOtpChange}
+                />
+              </div>
+            )}
             <div className="d-grid gap-2 mt-3">
               {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
               <button type="submit" className="btn btn-primary">
-                Submit
+                {otpSent ? "Verify OTP" : "Submit"}
               </button>
               <p className="forgot text-right mt-2">
                 Already have an account?{" "}

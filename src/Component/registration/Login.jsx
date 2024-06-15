@@ -11,12 +11,11 @@ function Login() {
     password: "",
   });
 
-  
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+  };
 
   const handleLoginSucces = (token, userDetails) => {
     const { _id, username, email, phonenumber } = userDetails;
@@ -28,15 +27,15 @@ function Login() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      console.log(formData)
+      console.log(formData);
       const response = await axios.post(
         "http://localhost:3333/api/user/login",
         formData,
         { headers: { "Content-Type": "application/json" } }
-        );
-      console.log('helloo',response.data);
+      );
+      console.log("helloo", response.data);
 
       navigate("/");
       toast.success("Successfully logged in");

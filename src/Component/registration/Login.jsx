@@ -3,6 +3,7 @@ import Header from "../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function Login() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ function Login() {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
@@ -25,9 +27,10 @@ function Login() {
     localStorage.setItem("email", email);
     localStorage.setItem("phonenumber", phonenumber);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       console.log(formData);
       const response = await axios.post(
@@ -51,6 +54,8 @@ function Login() {
       } else {
         setErrorMessage("Error during login, please try again");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -87,8 +92,8 @@ function Login() {
             </div>
             <div className="d-grid gap-2 mt-3">
               {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-              <button type="submit" className="btn btn-primary">
-                Login
+              <button type="submit" className="btn btn-primary" disabled={loading}>
+                {loading ? <ClipLoader size={20} color={"#fff"} /> : "Login"}
               </button>
             </div>
             <p className="forgot text-right mt-2">

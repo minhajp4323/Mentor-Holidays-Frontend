@@ -15,6 +15,7 @@ import AdminProperties from "./Component/Admin/pages/AdminProperties.jsx";
 import AllUser from "./Component/Admin/pages/AllUsers.jsx";
 import ConfirmBooking from "./Component/ConfirmBooking.jsx";
 import Wishlist from "./Component/wishlist/Wishlist.jsx";
+import UserPropfile from "./Component/profile/UserPropfile.jsx";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/viewproperty/:_id" element={<ViewProduct />} />
           <Route path="/confirmbooking/:id" element={<ConfirmBooking />} />
           <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/profile" element={<UserPropfile />} />
 
           {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />

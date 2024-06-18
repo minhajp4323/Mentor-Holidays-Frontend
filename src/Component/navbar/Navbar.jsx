@@ -17,6 +17,8 @@ function Header() {
     localStorage.removeItem("username");
     localStorage.removeItem("email");
     localStorage.removeItem("phonenumber");
+    localStorage.removeItem("token");
+    localStorage.removeItem("wishlist")
 
     navigate("/");
   };
@@ -28,8 +30,11 @@ function Header() {
           {" "}
           <img src={MentorMain} style={{ width: "90px" }} alt="" />
         </Navbar.Brand>
-        <Navbar.Toggle style={{backgroundColor:"grey"}} aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse  id="responsive-navbar-nav">
+        <Navbar.Toggle
+          style={{ backgroundColor: "grey" }}
+          aria-controls="responsive-navbar-nav"
+        />
+        <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto   ">
             {/* <NavDropdown
               title="Book Now"
@@ -50,7 +55,7 @@ function Header() {
               Book Now
             </Nav.Link>
           </Nav>
-          
+
           {/* <Nav>
             <Nav.Link href="#pricing">My Bookings</Nav.Link>
             <Nav.Link href="#deets">Favorites</Nav.Link>
@@ -73,16 +78,13 @@ function Header() {
               onDoubleClick={() => navigate("/Admin/Login")}
               title={
                 username ? (
-                  <b>
-                    {username} 
-                  </b>
+                  <b>{username}</b>
                 ) : (
-                  <b onClick={()=>navigate("/login")}>Login</b>
+                  <b onClick={() => navigate("/login")}>Login</b>
                 )
               }
               id="NavbarScrollingDropdown"
             >
-              
               {username && (
                 <>
                   <NavDropdown.Item onClick={() => navigate("/profile")}>

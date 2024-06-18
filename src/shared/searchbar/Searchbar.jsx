@@ -23,12 +23,10 @@ function Searchbar() {
           </Col>
           <Col sm={3} style={{ paddingRight: 0 }}>
             {" "}
-            
             <Button>Search..</Button>
           </Col>
         </Row>
       </Form>
-      
     </>
   );
 }

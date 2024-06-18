@@ -4,6 +4,7 @@ import "./Signin.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ function SignIn() {
   const [errorMessage, setErrorMessage] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [email, setEmail] = useState(""); 
+  const [loading, setLoading] = useState(false); // Loading state
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,11 +33,12 @@ function SignIn() {
     e.preventDefault();
 
     if (!otpSent && formData.password !== formData.confirmPassword) {
-      setErrorMessage("Passwords do not match")
-      toast.error("Passwords do not match")
+      setErrorMessage("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
 
+    setLoading(true); // Start loading
     if (!otpSent) {
       try {
         const response = await axios.post(
@@ -47,7 +50,7 @@ function SignIn() {
         setEmail(formData.email);
         setOtpSent(true);
         setErrorMessage("");
-        toast.success("otp send successfully")
+        toast.success("OTP sent successfully");
       } catch (error) {
         console.error("Error during registration", error);
 
@@ -61,6 +64,8 @@ function SignIn() {
         } else {
           setErrorMessage("Error during registration. Please try again.");
         }
+      } finally {
+        setLoading(false); // Stop loading
       }
     } else {
       handleOtpSubmit();
@@ -68,6 +73,7 @@ function SignIn() {
   };
 
   const handleOtpSubmit = async () => {
+    setLoading(true); // Start loading
     try {
       const response = await axios.post(
         "http://localhost:3333/api/user/verifyotp",
@@ -76,10 +82,10 @@ function SignIn() {
       );
       console.log(response.data);
       navigate("/login");
-      toast.success("User successfully registered")
+      toast.success("User successfully registered");
     } catch (error) {
       console.error("Error during OTP verification", error);
-      toast.success("Error during OTP verification")
+      toast.error("Error during OTP verification");
 
       if (error.response) {
         console.log(error.response.data.error);
@@ -88,11 +94,12 @@ function SignIn() {
             "An error occurred during OTP verification"
         );
       } else if (error.request) {
-        setErrorMessage("No response from server. Please try again later.")
-        
+        setErrorMessage("No response from server. Please try again later.");
       } else {
         setErrorMessage("Error during OTP verification. Please try again.");
       }
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -184,8 +191,8 @@ function SignIn() {
             )}
             <div className="d-grid gap-2 mt-3">
               {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-              <button type="submit" className="btn btn-primary">
-                {otpSent ? "Verify OTP" : "Submit"}
+              <button type="submit" className="btn btn-primary" disabled={loading}>
+                {loading ? <ClipLoader size={20} color={"#fff"} /> : otpSent ? "Verify OTP" : "Submit"}
               </button>
               <p className="forgot text-right mt-2">
                 Already have an account?{" "}

@@ -10,6 +10,9 @@ import "./sidebar.css";
 import { NavLink } from "react-router-dom";
 
 const SideBar = () => {
+  const handleLogout = ()=>{
+    localStorage.removeItem("admintoken")
+  }
   return (
     <div className="sidebar_main" style={{ height: "100vh" }}>
       <CDBSidebar className="sidebar">
@@ -51,9 +54,9 @@ const SideBar = () => {
                 Payment
               </CDBSidebarMenuItem>
             </NavLink>
-            <NavLink to="/">
-              <CDBSidebarMenuItem icon="home" iconType="solid">
-                Home
+            <NavLink onClick={handleLogout} to="/">
+              <CDBSidebarMenuItem  icon="sign-out" iconType="solid" >
+                Logout
               </CDBSidebarMenuItem>
             </NavLink>
           </CDBSidebarMenu>

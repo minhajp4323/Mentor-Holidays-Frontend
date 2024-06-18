@@ -58,7 +58,7 @@ function Properties() {
             data: { propertyId },
           }
         );
-        localStorage.setItem("wishlist", JSON.stringify(updateWishlist));
+        localStorage.removeItem("wishlist", JSON.stringify(updateWishlist));
         toast.error("Removed from Wishlist");
       } else {
         updateWishlist.push(propertyId);

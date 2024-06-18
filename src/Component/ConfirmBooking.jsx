@@ -1,14 +1,16 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import Header from "./navbar/Navbar";
-
+import axios from "axios";
 
 function ConfirmBooking() {
-  const navigate = useNavigate();
   const location = useLocation();
   const { property, guestNumber, checkInDate, checkOutDate } = location.state;
+  // const razorPayKey = "rzp_test_QocKIFE4RKcglb"
+  const razorPayKey = import.meta.env.VITE_RAZOR_PAY_KEY_ID
+  console.log(razorPayKey);
 
   // Calculate the number of nights
   const getNumberOfNights = (checkIn, checkOut) => {
@@ -22,8 +24,47 @@ function ConfirmBooking() {
   const totalNights = getNumberOfNights(checkInDate, checkOutDate);
   const totalPrice = totalNights * property.price;
 
-  const handleConfirm = () => {
-    navigate(`/booking-success`);
+  const handlePayment = async () => {
+    // const userId = localStorage.getItem("userid");
+    const username = localStorage.getItem("username");
+    const email = localStorage.getItem("email");
+    const phonenumber = localStorage.getItem("phonenumber");
+    const receipt = `${Date.now}`;
+
+    const response = await axios.post(
+      "http://localhost:3333/api/user/payment",
+      {
+        amount: totalPrice * 100,
+        currency: "INR",
+        receipt,
+      }
+    );
+    const { data } = response.data;
+    const options = {
+      key: razorPayKey,
+      amount: data.amount,
+      currency: data.currency,
+      name: "Mentor Holidays",
+      description: "Test Transaction",
+      image: property.images[0],
+      booking_id: data.id,
+      handler: () => {
+        alert("payment successfull");
+      },
+      prefill: {
+        name: username,
+        email: email,
+        contact: phonenumber,
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#007bff",
+      },
+    };
+    const RzPay = new window.Razorpay(options);
+    RzPay.open();
   };
 
   return (
@@ -130,14 +171,14 @@ function ConfirmBooking() {
               <div className="d-flex justify-content-end mt-3">
                 <Button
                   variant="primary"
-                  onClick={handleConfirm}
+                  onClick={handlePayment}
                   style={{
                     width: "100%",
                     backgroundColor: "#007bff",
                     borderColor: "#007bff",
                   }}
                 >
-                  Confirm Booking
+                  Proceed to pay
                 </Button>
               </div>
             </Card.Body>

@@ -1,4 +1,3 @@
-// import React from "react";
 import TextField from "@mui/material/TextField";
 import Header from "../navbar/Navbar";
 
@@ -20,21 +19,21 @@ function UserPropfile() {
         <TextField
           style={textFieldStyle}
           id="outlined-basic"
-          label="Outlined"
+          label="Username"
           variant="outlined"
           defaultValue={username}
         />
         <TextField
           style={textFieldStyle}
           id="outlined-basic"
-          label="Outlined"
+          label="Email"
           defaultValue={email}
           variant="outlined"
         />
         <TextField
           style={textFieldStyle}
           id="outlined-basic"
-          label="Outlined"
+          label="Phone Number"
           defaultValue={phonenumber}
           variant="outlined"
         />

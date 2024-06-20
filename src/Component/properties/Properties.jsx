@@ -16,6 +16,7 @@ function Properties() {
   const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("userid");
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {

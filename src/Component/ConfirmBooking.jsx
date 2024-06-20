@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -8,9 +8,8 @@ import axios from "axios";
 function ConfirmBooking() {
   const location = useLocation();
   const { property, guestNumber, checkInDate, checkOutDate } = location.state;
-  // const razorPayKey = "rzp_test_QocKIFE4RKcglb"
-  const razorPayKey = import.meta.env.VITE_RAZOR_PAY_KEY_ID
-  console.log(razorPayKey);
+  const navigate = useNavigate();
+  const razorPayKey = import.meta.env.VITE_RAZOR_PAY_KEY_ID;
 
   // Calculate the number of nights
   const getNumberOfNights = (checkIn, checkOut) => {
@@ -25,11 +24,11 @@ function ConfirmBooking() {
   const totalPrice = totalNights * property.price;
 
   const handlePayment = async () => {
-    // const userId = localStorage.getItem("userid");
+    const userId = localStorage.getItem("userid");
     const username = localStorage.getItem("username");
     const email = localStorage.getItem("email");
     const phonenumber = localStorage.getItem("phonenumber");
-    const receipt = `${Date.now}`;
+    const receipt = `${Date.now()}`;
 
     const response = await axios.post(
       "http://localhost:3333/api/user/payment",
@@ -37,8 +36,14 @@ function ConfirmBooking() {
         amount: totalPrice * 100,
         currency: "INR",
         receipt,
+        propertyId: property._id,
+        checkInDate,
+        checkOutDate,
+        guestNumber,
+        userId
       }
     );
+
     const { data } = response.data;
     const options = {
       key: razorPayKey,
@@ -47,9 +52,10 @@ function ConfirmBooking() {
       name: "Mentor Holidays",
       description: "Test Transaction",
       image: property.images[0],
-      booking_id: data.id,
+      order_id: data.id,
       handler: () => {
-        alert("payment successfull");
+        alert("Payment successful");
+        navigate("/");
       },
       prefill: {
         name: username,
@@ -63,6 +69,7 @@ function ConfirmBooking() {
         color: "#007bff",
       },
     };
+
     const RzPay = new window.Razorpay(options);
     RzPay.open();
   };

@@ -13,9 +13,10 @@ import ViewProduct from "./Component/properties/ViewProduct.jsx";
 import EditProperty from "./Component/Admin/pages/EditProperty.jsx";
 import AdminProperties from "./Component/Admin/pages/AdminProperties.jsx";
 import AllUser from "./Component/Admin/pages/AllUsers.jsx";
-import ConfirmBooking from "./Component/ConfirmBooking.jsx";
 import Wishlist from "./Component/wishlist/Wishlist.jsx";
 import UserPropfile from "./Component/profile/UserPropfile.jsx";
+import ConfirmBooking from "./Component/booking/ConfirmBooking.jsx";
+import Bookings from "./Component/booking/Bookings.jsx";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/confirmbooking/:id" element={<ConfirmBooking />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/profile" element={<UserPropfile />} />
+          <Route path="/booking" element={<Bookings/>} />
 
           {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />

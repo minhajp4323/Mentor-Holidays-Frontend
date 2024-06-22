@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
-import Header from "./navbar/Navbar";
+import Header from "../navbar/Navbar";
 import axios from "axios";
 
 function ConfirmBooking() {

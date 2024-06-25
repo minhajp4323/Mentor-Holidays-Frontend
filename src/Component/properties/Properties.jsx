@@ -1,6 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Header from "../navbar/Navbar";
+import Footer from "../Admin/components/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -14,8 +15,8 @@ function Properties() {
   const [properties, setProperties] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
   const userId = localStorage.getItem("userid");
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,7 +69,7 @@ function Properties() {
             data: { propertyId },
           }
         );
-        localStorage.removeItem("wishlist", JSON.stringify(updateWishlist));
+        localStorage.setItem("wishlist", JSON.stringify(updateWishlist));
         toast.error("Removed from Wishlist");
       } else {
         updateWishlist.push(propertyId);
@@ -86,10 +87,44 @@ function Properties() {
     }
   };
 
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredProperties = properties.filter((property) => {
+    const titleCheck = property.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+      const propertyCheck = property.category
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+      const categoryCheck = property.category
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+      return propertyCheck || titleCheck ||categoryCheck
+  });
+
   return (
     <>
       <Header />
-      <h1>All Properties</h1>
+      <h1 style={{ textAlign: "center", paddingTop: "20px" }}>
+        All Properties
+      </h1>
+      <div style={{ textAlign: "center", marginBottom: "20px" }}>
+        <input
+          type="text"
+          placeholder="Search properties..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          style={{
+            width: "62%",
+            padding: "10px",
+            fontSize: "1rem",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+          }}
+        />
+      </div>
       <div className="homeMain">
         {loading
           ? Array(5)
@@ -103,7 +138,7 @@ function Properties() {
                   </Card.Body>
                 </Card>
               ))
-          : properties.map((items) => (
+          : filteredProperties.map((items) => (
               <Card
                 key={items._id}
                 style={{ margin: 20, width: "18rem", position: "relative" }}
@@ -144,6 +179,7 @@ function Properties() {
               </Card>
             ))}
       </div>
+      <Footer />
     </>
   );
 }

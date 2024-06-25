@@ -6,27 +6,28 @@ import {
   CDBSidebarMenuItem,
   CDBSidebarFooter,
 } from "cdbreact";
-import "./sidebar.css";
+// import "./sidebar.css";
 import { NavLink } from "react-router-dom";
 
 const SideBar = () => {
-  const handleLogout = ()=>{
-    localStorage.removeItem("admintoken")
-  }
+  const handleLogout = () => {
+    localStorage.removeItem("admintoken");
+  };
   return (
     <div className="sidebar_main" style={{ height: "100vh" }}>
       <CDBSidebar className="sidebar">
-        <NavLink to="/Admin/Home">
-          <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>
-            Admin Dashboard
-          </CDBSidebarHeader>
-        </NavLink>
+        <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>
+          Admin Dashboard
+        </CDBSidebarHeader>
         <CDBSidebarContent>
           <CDBSidebarMenu>
-            <NavLink>
-              <CDBSidebarMenuItem icon="th">Orders</CDBSidebarMenuItem>
+            <NavLink to="/Admin/Home">
+              <CDBSidebarMenuItem icon="home">Home</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink>
+            {/* <NavLink>
+              <CDBSidebarMenuItem icon="th">Orders</CDBSidebarMenuItem>
+            </NavLink> */}
+            <NavLink to="/Admin/AllBookings">
               <CDBSidebarMenuItem icon="list">
                 Booking Details
               </CDBSidebarMenuItem>
@@ -34,11 +35,7 @@ const SideBar = () => {
             <NavLink to="/Admin/AllUser">
               <CDBSidebarMenuItem icon="user">Users</CDBSidebarMenuItem>
             </NavLink>
-            {/* <NavLink to="/Admin/EditProperty">
-              <CDBSidebarMenuItem icon="edit">
-                Edit Properties
-              </CDBSidebarMenuItem>
-            </NavLink> */}
+
             <NavLink to="/Admin/AdminProperties">
               <CDBSidebarMenuItem icon="building">
                 Properties
@@ -49,13 +46,13 @@ const SideBar = () => {
                 Add Properties
               </CDBSidebarMenuItem>
             </NavLink>
-            <NavLink to="">
+            {/* <NavLink to="">
               <CDBSidebarMenuItem icon="credit-card" iconType="solid">
                 Payment
               </CDBSidebarMenuItem>
-            </NavLink>
+            </NavLink> */}
             <NavLink onClick={handleLogout} to="/">
-              <CDBSidebarMenuItem  icon="sign-out" iconType="solid" >
+              <CDBSidebarMenuItem icon="sign-out" iconType="solid">
                 Logout
               </CDBSidebarMenuItem>
             </NavLink>

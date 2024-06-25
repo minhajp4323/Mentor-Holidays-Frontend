@@ -4,6 +4,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Link,
+} from "@mui/material";
 
 function Login() {
   const navigate = useNavigate();
@@ -19,7 +26,7 @@ function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleLoginSucces = (token, userDetails) => {
+  const handleLoginSuccess = (token, userDetails) => {
     const { _id, username, email, phonenumber } = userDetails;
     localStorage.setItem("token", token);
     localStorage.setItem("userid", _id);
@@ -45,7 +52,7 @@ function Login() {
 
       const { token, data } = response.data;
 
-      handleLoginSucces(token, data);
+      handleLoginSuccess(token, data);
     } catch (error) {
       console.log("Error while logging in", error);
 
@@ -61,47 +68,77 @@ function Login() {
 
   return (
     <>
-      <div>
-        <Header />
-      </div>
-      <div className="login-container">
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="login-content">
-            <h3 className="login-title">Login</h3>
-            <div className="form-group mt-3">
-              <label>Username</label>
-              <input
-                name="username"
-                type="text"
-                className="form-control mt-1"
-                placeholder="Enter Username"
-                required
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group mt-3">
-              <label>Password</label>
-              <input
-                name="password"
-                type="password"
-                className="inputs form-control mt-1"
-                placeholder="Enter Password"
-                required
-                onChange={handleChange}
-              />
-            </div>
-            <div className="d-grid gap-2 mt-3">
-              {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-              <button type="submit" className="btn btn-primary" disabled={loading}>
-                {loading ? <ClipLoader size={20} color={"#fff"} /> : "Login"}
-              </button>
-            </div>
-            <p className="forgot text-right mt-2">
-              Not a member? <a onClick={() => navigate("/signin")}>Register</a>
-            </p>
-          </div>
+      <Header />
+      <Box
+        className="login-container"
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      >
+        <form
+          onSubmit={handleSubmit}
+          className="login-form"
+          style={{ width: "100%", maxWidth: "600px" }}
+        >
+          <Box className="login-content" sx={{ p: 3 }}>
+            <Typography
+              variant="h5"
+              component="h3"
+              className="login-title"
+              sx={{ mb: 3 }}
+            >
+              Login
+            </Typography>
+            <TextField
+              label="Username"
+              name="username"
+              variant="outlined"
+              fullWidth
+              required
+              onChange={handleChange}
+              value={formData.username}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              label="Password"
+              name="password"
+              type="password"
+              variant="outlined"
+              fullWidth
+              required
+              onChange={handleChange}
+              value={formData.password}
+              sx={{ mb: 2 }}
+            />
+            {errorMessage && (
+              <Typography color="error" sx={{ mb: 2 }}>
+                {errorMessage}
+              </Typography>
+            )}
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              disabled={loading}
+              sx={{ mb: 2 }}
+            >
+              {loading ? <ClipLoader size={20} color={"#fff"} /> : "Login"}
+            </Button>
+            <Typography
+              className="forgot text-right mt-2"
+              sx={{ textAlign: "right" }}
+            >
+              Not a member?{" "}
+              <Link
+                component="button"
+                variant="body2"
+                onClick={() => navigate("/signin")}
+              >
+                Register
+              </Link>
+            </Typography>
+          </Box>
         </form>
-      </div>
+      </Box>
     </>
   );
 }

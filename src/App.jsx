@@ -17,6 +17,7 @@ import Wishlist from "./Component/wishlist/Wishlist.jsx";
 import UserPropfile from "./Component/profile/UserPropfile.jsx";
 import ConfirmBooking from "./Component/booking/ConfirmBooking.jsx";
 import Bookings from "./Component/booking/Bookings.jsx";
+import BookingList from "./Component/Admin/pages/BookingList.jsx";
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
           <Route path="/confirmbooking/:id" element={<ConfirmBooking />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/profile" element={<UserPropfile />} />
-          <Route path="/booking" element={<Bookings/>} />
+          <Route path="/booking" element={<Bookings />} />
 
           {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />
@@ -42,6 +43,7 @@ function App() {
           <Route path="/Admin/AdminProperties" element={<AdminProperties />} />
           <Route path="/Admin/EditProperty/:id" element={<EditProperty />} />
           <Route path="/Admin/AllUser" element={<AllUser />} />
+          <Route path="/Admin/AllBookings" element={<BookingList />} />
         </Routes>
       </div>
     </>

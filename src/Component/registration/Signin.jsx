@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
+import { Box, TextField, Button, Typography, Link, Grid } from "@mui/material";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -15,10 +16,10 @@ function SignIn() {
     password: "",
     confirmPassword: "",
   });
-  const [otp, setOtp] = useState(""); 
+  const [otp, setOtp] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [otpSent, setOtpSent] = useState(false);
-  const [email, setEmail] = useState(""); 
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
 
   const handleChange = (e) => {
@@ -105,103 +106,105 @@ function SignIn() {
 
   return (
     <>
-      <div>
-        <Header />
-      </div>
-      <div className="signin-container">
-        <form onSubmit={handleSubmit} className="signin-form">
-          <div className="signin-content">
-            <h3 className="signin-title">Sign In</h3>
-            <div className="form-group mt-3">
-              <label>Username</label>
-              <input
-                name="username"
-                type="text"
-                className="form-control mt-1"
-                placeholder="Enter Username.."
-                required
-                onChange={handleChange}
-                value={formData.username}
-              />
-            </div>
-            <div className="form-group mt-3">
-              <label>Email</label>
-              <input
-                name="email"
-                type="email"
-                className="form-control mt-1"
-                placeholder="Enter Email.. "
-                required
-                onChange={handleChange}
-                value={formData.email}
-              />
-            </div>
-            <div className="form-group mt-3">
-              <label>Phone Number</label>
-              <input
-                name="phonenumber"
-                type="tel"
-                className="form-control mt-1"
-                placeholder="Enter Phone number"
-                required
-                onChange={handleChange}
-                value={formData.phonenumber}
-              />
-            </div>
+      <Header />
+      <Box className="signin-container" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <form onSubmit={handleSubmit} className="signin-form" style={{ width: '100%', maxWidth: '600px' }}>
+          <Box className="signin-content" sx={{ p: 3 }}>
+            <Typography variant="h5" component="h3" className="signin-title" sx={{ mb: 3 }}>
+              Sign In
+            </Typography>
+            <TextField
+              label="Username"
+              name="username"
+              variant="outlined"
+              fullWidth
+              required
+              onChange={handleChange}
+              value={formData.username}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              label="Email"
+              name="email"
+              type="email"
+              variant="outlined"
+              fullWidth
+              required
+              onChange={handleChange}
+              value={formData.email}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              label="Phone Number"
+              name="phonenumber"
+              type="tel"
+              variant="outlined"
+              fullWidth
+              required
+              onChange={handleChange}
+              value={formData.phonenumber}
+              sx={{ mb: 2 }}
+            />
             {!otpSent && (
-              <>
-                <div className="form-group mt-3">
-                  <label>Password</label>
-                  <input
+              <Grid container spacing={2} sx={{ mb: 2 }}>
+                <Grid item xs={6}>
+                  <TextField
+                    label="Password"
                     name="password"
                     type="password"
-                    className="form-control mt-1"
-                    placeholder="Enter password"
+                    variant="outlined"
+                    fullWidth
                     required
                     onChange={handleChange}
                     value={formData.password}
                   />
-                </div>
-                <div className="form-group mt-3">
-                  <label>Re-enter Password</label>
-                  <input
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    label="Re-enter Password"
                     name="confirmPassword"
                     type="password"
-                    className="form-control mt-1"
-                    placeholder="Confirm Password"
+                    variant="outlined"
+                    fullWidth
                     required
                     onChange={handleChange}
                     value={formData.confirmPassword}
                   />
-                </div>
-              </>
+                </Grid>
+              </Grid>
             )}
             {otpSent && (
-              <div className="form-group mt-3">
-                <label>OTP</label>
-                <input
-                  name="otp"
-                  type="text"
-                  className="form-control mt-1"
-                  placeholder="Enter OTP"
-                  required
-                  onChange={handleOtpChange}
-                />
-              </div>
+              <TextField
+                label="OTP"
+                name="otp"
+                type="text"
+                variant="outlined"
+                fullWidth
+                required
+                onChange={handleOtpChange}
+                sx={{ mb: 2 }}
+              />
             )}
-            <div className="d-grid gap-2 mt-3">
-              {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-              <button type="submit" className="btn btn-primary" disabled={loading}>
-                {loading ? <ClipLoader size={20} color={"#fff"} /> : otpSent ? "Verify OTP" : "Submit"}
-              </button>
-              <p className="forgot text-right mt-2">
-                Already have an account?{" "}
-                <a onClick={() => navigate("/login")}>Login here</a>
-              </p>
-            </div>
-          </div>
+            {errorMessage && <Typography color="error" sx={{ mb: 2 }}>{errorMessage}</Typography>}
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              disabled={loading}
+              sx={{ mb: 2 }}
+            >
+              {loading ? <ClipLoader size={20} color={"#fff"} /> : otpSent ? "Verify OTP" : "Submit"}
+            </Button>
+            <Typography className="forgot text-right mt-2" sx={{ textAlign: 'right' }}>
+              Already have an account?{" "}
+              <Link component="button" variant="body2" onClick={() => navigate("/login")}>
+                Login here
+              </Link>
+            </Typography>
+          </Box>
         </form>
-      </div>
+      </Box>
     </>
   );
 }

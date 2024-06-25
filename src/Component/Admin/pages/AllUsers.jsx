@@ -5,6 +5,7 @@ import axios from "axios";
 
 function AllUser() {
   const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -18,11 +19,34 @@ function AllUser() {
     fetchUsers();
   }, []);
 
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredUsers = users.filter((user) =>
+    user.username.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="d-flex w-full">
       <SideBar />
       <div className="container mt-5" style={{ padding: "50px" }}>
         <h1>All Users</h1>
+        <div style={{ marginBottom: "20px" }}>
+          <input
+            type="text"
+            placeholder="Search by username..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+            style={{
+              width: "100%",
+              padding: "10px",
+              fontSize: "1rem",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+            }}
+          />
+        </div>
         <table className="table">
           <thead>
             <tr>
@@ -32,7 +56,7 @@ function AllUser() {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {filteredUsers.map((user) => (
               <tr key={user._id}>
                 <td>{user.username}</td>
                 <td>{user.email}</td>

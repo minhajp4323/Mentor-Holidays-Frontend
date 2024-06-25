@@ -22,6 +22,7 @@ function ConfirmBooking() {
 
   const totalNights = getNumberOfNights(checkInDate, checkOutDate);
   const totalPrice = totalNights * property.price;
+  const title = property.title
 
   const handlePayment = async () => {
     const userId = localStorage.getItem("userid");
@@ -33,6 +34,7 @@ function ConfirmBooking() {
     const response = await axios.post(
       "http://localhost:3333/api/user/payment",
       {
+        title,
         amount: totalPrice * 100,
         currency: "INR",
         receipt,

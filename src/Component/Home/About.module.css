@@ -1,0 +1,15 @@
+.Main{
+    
+}
+.aboutMain {
+  background-size: cover;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 7rem;
+  background-image: url("https://wallup.net/wp-content/uploads/2017/11/23/522567-men-nature-landscape-mountains-clouds-Iceland-river-sun_rays-hills-rock.jpg");
+  height: 90vh;
+}

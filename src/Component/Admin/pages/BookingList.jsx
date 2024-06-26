@@ -53,7 +53,7 @@ function BookingList() {
         </div>
         <table className="table booking-table " >
           <thead>
-            <tr style={{fontSize:"1rem"}}>
+            <tr >
               <th scope="col">
                 <h3>Username</h3>
               </th>

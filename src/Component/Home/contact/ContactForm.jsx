@@ -7,9 +7,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebookF,
-  faTwitter,
   faInstagram,
   faLinkedinIn,
+  faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/system";
@@ -41,7 +41,7 @@ const CssTextField = styled(TextField)({
 
 const ContactForm = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id="contact">
       <span className={styles.bigCircle}></span>
       <div className={styles.form}>
         <div className={styles.contactInfo}>
@@ -73,13 +73,13 @@ const ContactForm = () => {
           <div className={styles.socialMedia}>
             <p>Connect with us :</p>
             <div className={styles.socialIcons}>
-              <a href="#">
+              <a href="https://www.facebook.com/profile.php?id=100063877939367">
                 <FontAwesomeIcon icon={faFacebookF} />
               </a>
               <a href="#">
-                <FontAwesomeIcon icon={faTwitter} />
+                <FontAwesomeIcon icon={faWhatsapp} />
               </a>
-              <a href="#">
+              <a href="https://www.instagram.com/mentorholidays/">
                 <FontAwesomeIcon icon={faInstagram} />
               </a>
               <a href="#">
@@ -102,6 +102,7 @@ const ContactForm = () => {
                 fullWidth
                 InputLabelProps={{ style: { color: "white" } }}
                 InputProps={{ style: { color: "white" } }}
+                required
               />
             </div>
             <div className={styles.inputContainer}>
@@ -112,6 +113,8 @@ const ContactForm = () => {
                 fullWidth
                 InputLabelProps={{ style: { color: "white" } }}
                 InputProps={{ style: { color: "white" } }}
+                required
+
               />
             </div>
             <div className={styles.inputContainer}>
@@ -122,6 +125,8 @@ const ContactForm = () => {
                 fullWidth
                 InputLabelProps={{ style: { color: "white" } }}
                 InputProps={{ style: { color: "white" } }}
+                required
+
               />
             </div>
             <div className={`${styles.inputContainer} ${styles.textarea}`}>
@@ -133,10 +138,13 @@ const ContactForm = () => {
                 fullWidth
                 InputLabelProps={{ style: { color: "white" } }}
                 InputProps={{ style: { color: "white" } }}
+                required
+
               />
             </div>
             <Button
               variant="contained"
+              
               style={{
                 backgroundColor: "#fff",
                 color: "#3f7acf",

@@ -18,7 +18,7 @@ function Header() {
     localStorage.removeItem("email");
     localStorage.removeItem("phonenumber");
     localStorage.removeItem("token");
-    localStorage.removeItem("wishlist")
+    localStorage.removeItem("wishlist");
 
     navigate("/");
   };
@@ -51,24 +51,19 @@ function Header() {
                 Separated link
               </NavDropdown.Item>
             </NavDropdown> */}
+            <Nav.Link onClick={() => navigate("/")}>Home</Nav.Link>
+
             <Nav.Link onClick={() => navigate("/properties")}>
               Book Now
             </Nav.Link>
           </Nav>
 
-          {/* <Nav>
-            <Nav.Link href="#pricing">My Bookings</Nav.Link>
-            <Nav.Link href="#deets">Favorites</Nav.Link>
-            <Nav.Link
-              onDoubleClick={() => navigate("/Admin/Login")}
-              onClick={() => navigate("/signin")}
-              eventKey={2}
-            >
-              {username ? username : <>Signin</>}
-            </Nav.Link>
-            <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+          <Nav>
+            <Nav.Link onClick={() => navigate("/about")}>About</Nav.Link>
+            <Nav.Link href="#deets">Services</Nav.Link>
+            <Nav.Link href="#contact">Contact</Nav.Link>
           </Nav>
-           */}
+
           <Nav
             className="my-2 my-lg-0"
             style={{ maxHeight: "100px" }}

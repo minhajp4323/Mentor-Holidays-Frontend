@@ -9,7 +9,7 @@ import ContactForm from "./contact/ContactForm.jsx";
 
 function Home() {
   return (
-    <>
+    <div id="Home">
       <Header />
 
       <div className="homeMain">
@@ -42,7 +42,7 @@ function Home() {
         <ContactForm />
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

@@ -18,6 +18,7 @@ import UserPropfile from "./Component/profile/UserPropfile.jsx";
 import ConfirmBooking from "./Component/booking/ConfirmBooking.jsx";
 import Bookings from "./Component/booking/Bookings.jsx";
 import BookingList from "./Component/Admin/pages/BookingList.jsx";
+import About from "./Component/Home/About.jsx";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/profile" element={<UserPropfile />} />
           <Route path="/booking" element={<Bookings />} />
+          <Route path="/about" element={<About />} />
 
           {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />

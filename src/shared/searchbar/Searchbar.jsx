@@ -1,4 +1,4 @@
-import { Button, Form, Col, Row } from "react-bootstrap";
+import { Button, Grid, TextField, Box } from "@mui/material";
 import "./Searchbar.css";
 
 function Searchbar() {
@@ -7,26 +7,28 @@ function Searchbar() {
       <div style={{ padding: "30px 0px 0 0" }}>
         <h1>Where to?</h1>
       </div>
-      <Form className="mainSearch contentWrapper">
-        <Row>
-          <Col sm={3}>
-            <Form.Control
-              type="text"
-              placeholder="Search places, hotel, and more"
+      <Box className="mainSearch contentWrapper">
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={3}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              label="Search places, hotel, and more"
             />
-          </Col>
-          <Col sm={3}>
-            <Form.Control type="date" placeholder="Search here" />
-          </Col>
-          <Col sm={3}>
-            <Form.Control type="text" placeholder="Search here" />
-          </Col>
-          <Col sm={3} style={{ paddingRight: 0 }}>
-            {" "}
-            <Button>Search..</Button>
-          </Col>
-        </Row>
-      </Form>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <TextField fullWidth variant="outlined" type="date" label="Check-in" />
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <TextField fullWidth  variant="outlined" type="number" label="No. of guest" />
+          </Grid>
+          <Grid item xs={12} sm={3} sx={{ display: 'flex' }}>
+            <Button variant="contained" color="primary" fullWidth sx={{ width: '100%' }}>
+              Search
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
     </>
   );
 }

@@ -1,3 +1,4 @@
+import  { useState, useEffect } from "react";
 import Searchbar from "./../../shared/searchbar/Searchbar.jsx";
 import "./../Home/Home.css";
 import { FaTags } from "react-icons/fa";
@@ -8,6 +9,15 @@ import CardComponent from "./cardComponent.jsx";
 import ContactForm from "./contact/ContactForm.jsx";
 
 function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading or any async operations
+    setTimeout(() => {
+      setIsLoading(false); // Set loading state to false after loading
+    }, 2000); // Adjust timeout as needed
+  }, []);
+
   return (
     <div id="Home">
       <Header />
@@ -38,8 +48,18 @@ function Home() {
             </section>
           </div>
         </div>
-        <CardComponent />
-        <ContactForm />
+        {isLoading ? (
+          <div className="loadingAnimation">
+            {/* Loading animation or spinner */}
+            <div className="spinner"></div>
+            <p>Loading...</p>
+          </div>
+        ) : (
+          <>
+            <CardComponent />
+            <ContactForm />
+          </>
+        )}
       </div>
       <Footer />
     </div>

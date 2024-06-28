@@ -1,14 +1,22 @@
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Carousel from "react-bootstrap/Carousel";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import Header from "../navbar/Navbar";
 import { toast } from "react-toastify";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Button,
+  Grid,
+  TextField,
+  Container,
+  Box,
+} from "@mui/material";
+import Carousel from "react-material-ui-carousel";
+import Header from "../navbar/Navbar";
 
 function ViewProduct() {
   const navigate = useNavigate();
@@ -80,215 +88,198 @@ function ViewProduct() {
   return (
     <>
       <Header />
-      <div
-        className="homeMain d-flex justify-content-space-between"
-        style={{
-          width: "100%",
-          padding: "50px 100px 50px 100px",
-          borderRadius: 50,
-        }}
-      >
+      <Container maxWidth="lg" style={{ marginTop: "50px" }}>
         {loading ? (
-          <Card style={{ margin: 10, width: "70%" }}>
+          <Card style={{ margin: "10px", width: "100%" }}>
             <Skeleton height={400} />
-            <Card.Body className="d-flex" >
-              <div style={{ width: "60%" , paddingRight:"10px"}}>
-                <Skeleton height={30} width="80%" />
-                <Skeleton height={20} width="50%" />
-                <Skeleton height={20} width="50%" />
-                <Skeleton height={100} />
-                <Skeleton height={20} width="60%" />
-              </div>
-              <div
-                className="guest"
-                style={{
-                  width: "40%",
-                  padding: "0 20px ",
-                  borderLeft: "1px solid #ddd",
-                }}
-              >
-                <Skeleton height={60} />
-                <Skeleton height={60} />
-                <Skeleton height={80} />
-                <Skeleton height={30} />
-                <Skeleton height={40} />
-                <Skeleton height={40} />
-              </div>
-            </Card.Body>
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={8}>
+                  <Skeleton height={30} width="80%" />
+                  <Skeleton height={20} width="50%" />
+                  <Skeleton height={20} width="50%" />
+                  <Skeleton height={100} />
+                  <Skeleton height={20} width="60%" />
+                </Grid>
+                <Grid item xs={4}>
+                  <Skeleton height={60} />
+                  <Skeleton height={60} />
+                  <Skeleton height={80} />
+                  <Skeleton height={30} />
+                  <Skeleton height={40} />
+                  <Skeleton height={40} />
+                </Grid>
+              </Grid>
+            </CardContent>
           </Card>
         ) : (
           property && (
-            <Card style={{ margin: 10, width: "70%" }}>
-              <Carousel style={{ height: "400px" }}>
+            <Card style={{ margin: "10px", width: "100%" }}>
+              <Carousel>
                 {property.images.slice(0, 5).map((image, index) => (
-                  <Carousel.Item key={index} style={{ height: "400px" }}>
-                    <img
-                      className="d-block w-100"
-                      src={image}
-                      alt={`Slide ${index}`}
-                      style={{ height: "100%", objectFit: "cover" }}
-                    />
-                  </Carousel.Item>
+                  <CardMedia
+                    key={index}
+                    component="img"
+                    height="400"
+                    image={image}
+                    alt={`Slide ${index}`}
+                  />
                 ))}
               </Carousel>
-
-              <Card.Body className="d-flex">
-                <div style={{ width: "60%",  paddingRight:10}}>
-                  <Card.Title>{property.title}</Card.Title>
-                  <Card.Text>₹{property.price}/- per night</Card.Text>
-                  <Card.Text>{property.category}</Card.Text>
-                  <Card.Text>{property.description}</Card.Text>
-                  <Card.Text>
-                    <i className="fas fa-map-marker-alt" /> {property.location}
-                  </Card.Text>
-                </div>
-                <div
-                  className="guest"
-                  style={{
-                    width: "40%",
-                    padding: "0 20px",
-                    borderLeft: "1px solid #ddd",
-                  }}
-                >
-                  <div
-                    style={{
-                      marginBottom: "10px",
-                      padding: "10px",
-                      border: "solid black 1px",
-                      borderRadius: 5,
-                    }}
-                  >
-                    <label htmlFor="guestNumber">Guests:</label>
-                    <div className="d-flex">
-                      <button
-                        className="btn btn-outline-primary"
-                        onClick={decreaseGuest}
-                        style={{ marginRight: "10px" }}
-                      >
-                        -
-                      </button>
-                      <input
-                        type="number"
-                        id="guestNumber"
-                        value={guestNumber}
-                        onChange={(e) =>
-                          setGuestNumber(parseInt(e.target.value, 10))
-                        }
-                        min="1"
-                        style={{
-                          width: "50px",
-                          textAlign: "center",
-                        }}
-                      />
-
-                      <button
-                        className="btn btn-outline-primary"
-                        onClick={increaseGuest}
-                        style={{ marginLeft: "10px" }}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      marginBottom: "10px",
-                      padding: "10px",
-                      border: "solid black 1px",
-                      borderRadius: 5,
-                    }}
-                  >
-                    <label htmlFor="checkInDate">Check-in Date:</label>
-                    <input
-                      type="date"
-                      id="checkInDate"
-                      value={checkInDate.toISOString().split("T")[0]}
-                      min={new Date().toISOString().split("T")[0]}
-                      onChange={(e) => {
-                        const newCheckInDate = new Date(e.target.value);
-                        setCheckInDate(newCheckInDate);
-                        if (newCheckInDate >= checkOutDate) {
-                          const newCheckOutDate = new Date(newCheckInDate);
-                          newCheckOutDate.setDate(
-                            newCheckOutDate.getDate() + 1
-                          );
-                          setCheckOutDate(newCheckOutDate);
-                        }
+              <CardContent>
+                <Grid container spacing={2}>
+                  <Grid item xs={8}>
+                    <Typography variant="h5">{property.title}</Typography>
+                    <Typography variant="subtitle1">
+                      ₹{property.price}/- per night
+                    </Typography>
+                    <Typography variant="body2">{property.category}</Typography>
+                    <Typography variant="body1">
+                      {property.description}
+                    </Typography>
+                    <Typography variant="body2">
+                      <i className="fas fa-map-marker-alt" /> {property.location}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Box
+                      sx={{
+                        border: 1,
+                        borderRadius: 1,
+                        padding: 2,
+                        marginBottom: 2,
                       }}
-                      style={{ width: "100%" }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      marginBottom: "10px",
-                      padding: "10px",
-                      border: "solid black 1px",
-                      borderRadius: 5,
-                    }}
-                  >
-                    <label htmlFor="checkOutDate">Check-out Date:</label>
-                    <input
-                      type="date"
-                      id="checkOutDate"
-                      value={checkOutDate.toISOString().split("T")[0]}
-                      min={checkInDate.toISOString().split("T")[0]}
-                      onChange={(e) =>
-                        setCheckOutDate(new Date(e.target.value))
-                      }
-                      style={{ width: "100%" }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      marginBottom: "10px",
-                      padding: "10px",
-                      border: "solid black 1px",
-                      borderRadius: 5,
-                    }}
-                  >
-                    <label>Total Days:</label>
-                    <input
-                      type="text"
-                      value={totalDays}
-                      readOnly
-                      style={{ width: "100%" }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      marginBottom: "10px",
-                      padding: "10px",
-                      border: "solid black 1px",
-                      borderRadius: 5,
-                    }}
-                  >
-                    <label>Total Price:</label>
-                    <input
-                      type="text"
-                      value={`₹${totalPrice.toFixed(2)}`}
-                      readOnly
-                      style={{ width: "100%" }}
-                    />
-                  </div>
-                  {discountAmount > 0 && (
-                    <div style={{ color: "red", marginBottom: "10px" }}>
-                      You saved ₹{discountAmount.toFixed(2)} with the 5%
-                      discount!
-                    </div>
-                  )}
-                  <Button
-                    variant="primary"
-                    onClick={handleBookNow}
-                    style={{ width: "100%" }}
-                  >
-                    Book Now
-                  </Button>
-                </div>
-              </Card.Body>
+                    >
+                      <Typography variant="subtitle1">Guests:</Typography>
+                      <Box display="flex" alignItems="center">
+                        <Button
+                          variant="outlined"
+                          onClick={decreaseGuest}
+                          style={{ marginRight: "10px" }}
+                        >
+                          -
+                        </Button>
+                        <TextField
+                          type="number"
+                          value={guestNumber}
+                          onChange={(e) =>
+                            setGuestNumber(parseInt(e.target.value, 10))
+                          }
+                          inputProps={{ min: 1 }}
+                          style={{ width: "50px", textAlign: "center" }}
+                        />
+                        <Button
+                          variant="outlined"
+                          onClick={increaseGuest}
+                          style={{ marginLeft: "10px" }}
+                        >
+                          +
+                        </Button>
+                      </Box>
+                    </Box>
+                    <Box
+                      sx={{
+                        border: 1,
+                        borderRadius: 1,
+                        padding: 2,
+                        marginBottom: 2,
+                      }}
+                    >
+                      <TextField
+                        label="Check-in Date"
+                        type="date"
+                        value={checkInDate.toISOString().split("T")[0]}
+                        onChange={(e) => {
+                          const newCheckInDate = new Date(e.target.value);
+                          setCheckInDate(newCheckInDate);
+                          if (newCheckInDate >= checkOutDate) {
+                            const newCheckOutDate = new Date(newCheckInDate);
+                            newCheckOutDate.setDate(
+                              newCheckOutDate.getDate() + 1
+                            );
+                            setCheckOutDate(newCheckOutDate);
+                          }
+                        }}
+                        fullWidth
+                      />
+                    </Box>
+                    <Box
+                      sx={{
+                        border: 1,
+                        borderRadius: 1,
+                        padding: 2,
+                        marginBottom: 2,
+                      }}
+                    >
+                      <TextField
+                        label="Check-out Date"
+                        type="date"
+                        value={checkOutDate.toISOString().split("T")[0]}
+                        onChange={(e) =>
+                          setCheckOutDate(new Date(e.target.value))
+                        }
+                        fullWidth
+                      />
+                    </Box>
+                    <Box
+                      sx={{
+                        border: 1,
+                        borderRadius: 1,
+                        padding: 2,
+                        marginBottom: 2,
+                      }}
+                    >
+                      <TextField
+                        label="Total Days"
+                        value={totalDays}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                        fullWidth
+                      />
+                    </Box>
+                    <Box
+                      sx={{
+                        border: 1,
+                        borderRadius: 1,
+                        padding: 2,
+                        marginBottom: 2,
+                      }}
+                    >
+                      <TextField
+                        label="Total Price"
+                        value={`₹${totalPrice.toFixed(2)}`}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                        fullWidth
+                      />
+                    </Box>
+                    {discountAmount > 0 && (
+                      <Typography
+                        variant="body2"
+                        color="error"
+                        style={{ marginBottom: "10px" }}
+                      >
+                        You saved ₹{discountAmount.toFixed(2)} with the 5%
+                        discount!
+                      </Typography>
+                    )}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleBookNow}
+                      fullWidth
+                    >
+                      Book Now
+                    </Button>
+                  </Grid>
+                </Grid>
+              </CardContent>
             </Card>
           )
         )}
-      </div>
+      </Container>
     </>
   );
 }

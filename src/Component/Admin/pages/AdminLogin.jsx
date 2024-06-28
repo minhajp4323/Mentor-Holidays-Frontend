@@ -65,21 +65,6 @@ function AdminLogin() {
     }
   };
 
-  const handleForgotPassword = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3333/api/admin/forgot-password",
-        { email: resetPasswordEmail },
-        { headers: { "Content-Type": "application/json" } }
-      );
-      setResetPasswordDialogOpen(false);
-      toast.success("Password reset email sent successfully");
-    } catch (error) {
-      console.error("Error sending password reset email", error);
-      toast.error("Failed to send password reset email");
-    }
-  };
-
   return (
     <>
       <Header />
@@ -192,7 +177,10 @@ function AdminLogin() {
           >
             Cancel
           </Button>
-          <Button onClick={handleForgotPassword} color="primary">
+          <Button
+            //  onClick={handleForgotPassword}
+            color="primary"
+          >
             Send Reset Email
           </Button>
         </DialogActions>

@@ -46,9 +46,11 @@ function Bookings() {
   return (
     <>
       <Header />
-      <MDBContainer fluid >
-        <h1>Booking</h1>
-        <MDBRow className="justify-content-center mb-3" >
+      <MDBContainer fluid>
+        <h1 style={{ textAlign: "center", paddingTop: "20px" }}>
+          My Bookings
+        </h1>
+        <MDBRow className="justify-content-center mb-3">
           {bookings.map((booking) => (
             <MDBCol md="12" xl="10" key={booking._id}>
               <MDBCard className="shadow-0 border rounded-3 mb-3">

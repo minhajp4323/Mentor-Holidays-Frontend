@@ -19,6 +19,7 @@ import ConfirmBooking from "./Component/booking/ConfirmBooking.jsx";
 import Bookings from "./Component/booking/Bookings.jsx";
 import BookingList from "./Component/Admin/pages/BookingList.jsx";
 import About from "./Component/Home/About.jsx";
+import Category from "./Component/properties/Category.jsx";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/profile" element={<UserPropfile />} />
           <Route path="/booking" element={<Bookings />} />
           <Route path="/about" element={<About />} />
+          <Route path="/category" element={<Category />} />
 
           {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />

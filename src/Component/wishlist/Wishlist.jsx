@@ -53,7 +53,9 @@ function Wishlist() {
   return (
     <>
       <Header />
-      <h1>Wishlist</h1>
+      <h1 style={{ textAlign: "center", paddingTop: "20px" }}>
+        Wishlist
+      </h1>
       <hr />
       <div className="homeMain">
         {properties.length === 0 ? (

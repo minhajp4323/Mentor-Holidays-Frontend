@@ -13,6 +13,7 @@ function AdminHome() {
   const [booking, setBooking] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [totalRevenue, setTotalRevenue] = useState(0);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -41,8 +42,22 @@ function AdminHome() {
       }
     };
 
+    const fetchTotalRevenue = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3333/api/admin/total-revenue"
+        );
+        setTotalRevenue(response.data.data[0].total); 
+        console.log(response.data.data[0].total)
+      } catch (error) {
+        console.error("Error fetching total revenue", error);
+        setError(error);
+      }
+    };
+
     fetchUsers();
     fetchBookings();
+    fetchTotalRevenue();
   }, []);
 
   if (loading) {
@@ -124,7 +139,6 @@ function AdminHome() {
             <Card style={{ width: "18rem" }} className="mb-2 m-2 bg-secondary">
               <Card.Header>USERS</Card.Header>
               <Card.Body onClick={() => navigate("/Admin/AllUser")}>
-                {/* <Card.Title> No. of Users </Card.Title> */}
                 <Card.Text>
                   <h1>{users.length}</h1>
                 </Card.Text>
@@ -136,7 +150,6 @@ function AdminHome() {
             <Card style={{ width: "18rem" }} className="mb-2 m-2 bg-secondary">
               <Card.Header>ORDERS</Card.Header>
               <Card.Body onClick={() => navigate("/Admin/AllBookings")}>
-                {/* <Card.Title> ORDERS </Card.Title> */}
                 <Card.Text>
                   <h1>{booking.length}</h1>
                 </Card.Text>
@@ -146,10 +159,10 @@ function AdminHome() {
 
           <div>
             <Card style={{ width: "18rem" }} className="mb-2 m-2 bg-secondary">
-              <Card.Header>Delivered</Card.Header>
+              <Card.Header>Total Revenue</Card.Header>
               <Card.Body>
                 <Card.Text>
-                  <h1>3</h1>
+                  <h1>₹{totalRevenue.toLocaleString()}</h1>
                 </Card.Text>
               </Card.Body>
             </Card>

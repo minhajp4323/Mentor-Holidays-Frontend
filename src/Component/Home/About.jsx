@@ -7,7 +7,7 @@ function About() {
       <Header />
       <div className={styles.Main}>
         <div className={styles.aboutMain}>
-          <h1 style={{ fontSize: "70%" }}>Who We Are</h1>
+          <h1 style={{ fontSize: "70%" }}>Who We Are..??</h1>
         </div>
       </div>
       <div className={styles.second}>

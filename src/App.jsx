@@ -20,6 +20,7 @@ import Bookings from "./Component/booking/Bookings.jsx";
 import BookingList from "./Component/Admin/pages/BookingList.jsx";
 import About from "./Component/Home/About.jsx";
 import Category from "./Component/properties/Category.jsx";
+import ContactForm from "./Component/Home/contact/ContactForm.jsx";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/properties" element={<Properties />} />
           <Route path="/signin" element={<Registration />} />
+          <Route path="/contact" element={<ContactForm />} />
           <Route path="/login" element={<Login />} />
           <Route path="/viewproperty/:_id" element={<ViewProduct />} />
           <Route path="/confirmbooking/:id" element={<ConfirmBooking />} />

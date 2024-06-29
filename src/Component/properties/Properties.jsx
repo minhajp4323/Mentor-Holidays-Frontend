@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Header from "../navbar/Navbar";
 import Footer from "../Admin/components/Footer";
@@ -15,8 +14,9 @@ import {
   Checkbox,
   ListItemText,
   OutlinedInput,
-  TextField, // Import TextField from Material-UI
+  TextField,
 } from "@mui/material";
+import Carousel from "react-material-ui-carousel"; // Import Carousel
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const ITEM_HEIGHT = 48;
@@ -38,6 +38,7 @@ function Properties() {
   const [searchTerm, setSearchTerm] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState(["All"]);
+  const [hoveredProperty, setHoveredProperty] = useState(null); // State to track hovered property
   const userId = localStorage.getItem("userid");
 
   useEffect(() => {
@@ -48,6 +49,7 @@ function Properties() {
         );
         setProperties(response.data.data);
 
+        console.log("Properties", response.data.data);
         const uniqueCategories = [
           "All",
           ...new Set(response.data.data.map((property) => property.category)),
@@ -122,6 +124,14 @@ function Properties() {
   const handleCategoryChange = (event) => {
     const { value } = event.target;
     setSelectedCategories(typeof value === "string" ? value.split(",") : value);
+  };
+
+  const handleMouseEnter = (propertyId) => {
+    setHoveredProperty(propertyId);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredProperty(null);
   };
 
   const filteredProperties = properties
@@ -200,23 +210,42 @@ function Properties() {
                   </div>
                 ))
             : filteredProperties.map((item) => (
-                <div key={item._id} className="col-md-3 mb-3">
-                  <Card>
-                    <Card.Img
-                      variant="top"
-                      src={item.images[0]}
-                      style={{ height: "250px", objectFit: "cover" }}
-                    />
-                    <Card.Body>
-                      <Card.Title>{item.title}</Card.Title>
-                      <Card.Text>₹{item.price}/-</Card.Text>
-                      <Card.Text>{item.category}</Card.Text>
-                      <Button
-                        variant="primary"
-                        onClick={() => navigate(`/viewproperty/${item._id}`)}
-                      >
-                        View details
-                      </Button>
+                <div
+                  key={item._id}
+                  className="col-md-3 mb-3"
+                  style={{ padding: "5px" }}
+                >
+                  <Card
+                    style={{ margin: "0" }}
+                    onMouseEnter={() => handleMouseEnter(item._id)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <Carousel
+                      animation="slide"
+                      autoPlay={false}
+                      indicators={false}
+                      navButtonsAlwaysVisible={hoveredProperty === item._id}
+                    >
+                      {item.images.map((image, index) => (
+                        <Card.Img
+                          key={index}
+                          variant="top"
+                          src={image}
+                          style={{ height: "250px", objectFit: "cover" }}
+                          onClick={() => navigate(`/viewproperty/${item._id}`)}
+                        />
+                      ))}
+                    </Carousel>
+                    <Card.Body
+                      onClick={() => navigate(`/viewproperty/${item._id}`)}
+                    >
+                      <Card.Title style={{ fontSize: "1rem" }}>
+                        <strong>{item.title}</strong>
+                      </Card.Title>
+                      <Card.Text style={{ margin: "0px" }}>₹{item.price}/-</Card.Text>
+                      <Card.Text style={{ margin: "0px" }}>{item.category}</Card.Text>
+                      <Card.Text style={{ margin: "0px" }}>Maximu Guest: {item.maxGuest}</Card.Text>
+
                     </Card.Body>
                     <Card.Footer>
                       <small className="text-muted">
@@ -235,6 +264,7 @@ function Properties() {
               ))}
         </div>
       </div>
+
       <Footer />
     </>
   );

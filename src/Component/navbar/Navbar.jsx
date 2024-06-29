@@ -61,7 +61,7 @@ function Header() {
           <Nav>
             <Nav.Link onClick={() => navigate("/about")}>About</Nav.Link>
             <Nav.Link href="#deets">Services</Nav.Link>
-            <Nav.Link href="#contact">Contact</Nav.Link>
+            <Nav.Link href="#contact" onClick={()=>navigate('/contact')}>Contact</Nav.Link>
           </Nav>
 
           <Nav

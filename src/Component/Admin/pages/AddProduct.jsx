@@ -13,6 +13,7 @@ function AddProduct() {
     images: [],
     description: "",
     category: "",
+    maxGuest: "",
   });
 
   const handleChange = (e) => {
@@ -46,6 +47,7 @@ function AddProduct() {
     formData.append("bathroom", propertyData.bathroom);
     formData.append("category", propertyData.category);
     formData.append("description", propertyData.description);
+    formData.append("maxGuest", propertyData.maxGuest);
 
     for (let i = 0; i < propertyData.images.length; i++) {
       formData.append("images", propertyData.images[i]);
@@ -65,6 +67,7 @@ function AddProduct() {
         images: [],
         description: "",
         category: "",
+        maxGuest: "",
       });
     } catch (error) {
       toast.error("Error adding property");
@@ -210,6 +213,19 @@ function AddProduct() {
                   id="category"
                   className="form-control"
                   value={propertyData.category}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="maxGuest" className="form-label">
+                maxGuest:
+                </label>
+                <input
+                  onChange={handleChange}
+                  type="text"
+                  id="maxGuest"
+                  className="form-control"
+                  value={propertyData.maxGuest}
                   required
                 />
               </div>

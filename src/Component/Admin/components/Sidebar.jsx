@@ -46,11 +46,12 @@ const SideBar = () => {
                 Add Properties
               </CDBSidebarMenuItem>
             </NavLink>
-            {/* <NavLink to="">
-              <CDBSidebarMenuItem icon="credit-card" iconType="solid">
-                Payment
+            <NavLink to="">
+              <CDBSidebarMenuItem icon="dollar" iconType="solid">
+                Revenue
               </CDBSidebarMenuItem>
-            </NavLink> */}
+            </NavLink>
+          
             <NavLink onClick={handleLogout} to="/">
               <CDBSidebarMenuItem icon="sign-out" iconType="solid">
                 Logout

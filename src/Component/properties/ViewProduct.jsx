@@ -2,21 +2,121 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import Skeleton from "react-loading-skeleton";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 import {
   Card,
   CardContent,
   CardMedia,
   Typography,
-  Button,
   Grid,
   TextField,
   Container,
   Box,
+  Button,
 } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import Header from "../navbar/Navbar";
+import { styled } from "@mui/system";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+
+const blue = {
+  100: "#daecff",
+  200: "#b6daff",
+  300: "#66b2ff",
+  400: "#3399ff",
+  500: "#007fff",
+  600: "#0072e5",
+  700: "#0059B2",
+  800: "#004c99",
+};
+
+const grey = {
+  50: "#F3F6F9",
+  100: "#E5EAF2",
+  200: "#DAE2ED",
+  300: "#C7D0DD",
+  400: "#B0B8C4",
+  500: "#9DA8B7",
+  600: "#6B7A90",
+  700: "#434D5B",
+  800: "#303740",
+  900: "#1C2025",
+};
+
+const StyledInputRoot = styled("div")(
+  ({ theme }) => `
+  display: flex;
+  align-items: center;
+`
+);
+
+const StyledInput = styled("input")(
+  ({ theme }) => `
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
+  background: ${theme.palette.mode === "dark" ? grey[800] : grey[100]};
+  border: 1px solid ${theme.palette.mode === "dark" ? grey[700] : grey[300]};
+  border-radius: 4px;
+  padding: 8px;
+  width: 3rem;
+  text-align: center;
+  margin: 0 8px;
+  outline: 0;
+
+  &:hover {
+    border-color: ${blue[400]};
+  }
+
+  &:focus {
+    border-color: ${blue[400]};
+    box-shadow: 0 0 0 3px ${
+      theme.palette.mode === "dark" ? blue[700] : blue[200]
+    };
+  }
+
+  &:focus-visible {
+    outline: 0;
+  }
+`
+);
+
+const StyledButton = styled("button")(
+  ({ theme }) => `
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
+  background: ${theme.palette.mode === "dark" ? grey[800] : grey[100]};
+  border: 1px solid ${theme.palette.mode === "dark" ? grey[700] : grey[300]};
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: ${theme.palette.mode === "dark" ? blue[800] : blue[200]};
+    color: ${theme.palette.mode === "dark" ? grey[100] : grey[900]};
+  }
+
+  &:focus {
+    outline: 0;
+    border-color: ${blue[400]};
+    box-shadow: 0 0 0 3px ${
+      theme.palette.mode === "dark" ? blue[700] : blue[200]
+    };
+  }
+`
+);
 
 function ViewProduct() {
   const navigate = useNavigate();
@@ -29,6 +129,8 @@ function ViewProduct() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const userId = localStorage.getItem("userid");
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +139,7 @@ function ViewProduct() {
           `http://localhost:3333/api/user/properties/${_id}`
         );
         setProperty(response.data.data);
+        console.log(response.data.data);
       } catch (err) {
         console.log(err);
       } finally {
@@ -59,29 +162,38 @@ function ViewProduct() {
     }
   }, [checkInDate, checkOutDate, property]);
 
+ 
   const handleBookNow = () => {
     if (totalDays <= 0) {
       toast.info("Please choose valid dates.");
       return;
     }
+    if (userId) {
+      navigate(`/confirmbooking/${_id}`, {
+        state: {
+          property,
+          guestNumber,
+          checkInDate: checkInDate.toISOString().split("T")[0],
+          checkOutDate: checkOutDate.toISOString().split("T")[0],
+        },
+      });
+    }else{
+      toast.error("Login to book property")
+      navigate('/login')
+    }
 
-    navigate(`/confirmbooking/${_id}`, {
-      state: {
-        property,
-        guestNumber,
-        checkInDate: checkInDate.toISOString().split("T")[0],
-        checkOutDate: checkOutDate.toISOString().split("T")[0],
-      },
-    });
+    
   };
 
-  const increaseGuest = () => {
-    setGuestNumber((prevGuests) => prevGuests + 1);
+  const incrementGuestNumber = () => {
+    if (guestNumber < 99) {
+      setGuestNumber(guestNumber + 1);
+    }
   };
 
-  const decreaseGuest = () => {
+  const decrementGuestNumber = () => {
     if (guestNumber > 1) {
-      setGuestNumber((prevGuests) => prevGuests - 1);
+      setGuestNumber(guestNumber - 1);
     }
   };
 
@@ -123,156 +235,145 @@ function ViewProduct() {
                     height="400"
                     image={image}
                     alt={`Slide ${index}`}
+                    style={{
+                      height: "400px",
+                      objectFit: "cover",
+                      // backgroundColor: "wheat",
+                    }}
                   />
                 ))}
               </Carousel>
-              <CardContent>
-                <Grid container spacing={2}>
-                  <Grid item xs={8}>
-                    <Typography variant="h5">{property.title}</Typography>
-                    <Typography variant="subtitle1">
-                      ₹{property.price}/- per night
+              <hr />
+              <CardContent
+                style={{ backgroundColor: "white", textSizeAdjust: 100 }}
+              >
+                <Grid container spacing={2} style={{ padding: "2%" }}>
+                  <Grid item xs={12} sm={8}>
+                    <Typography variant="h5" fontSize="2rem">
+                      <strong>{property.title}</strong>
                     </Typography>
-                    <Typography variant="body2">{property.category}</Typography>
+                    <Typography variant="subtitle1" fontSize="1.2rem">
+                      ₹{property.price} /- per night
+                    </Typography>
+                    <Typography variant="body3" fontSize="1.2rem">
+                      {property.category}
+                    </Typography>
+                    <Typography variant="body3" fontSize="1.2rem">
+                      Bathrooms : {property.bathroom}
+                    </Typography>
+                    <br />
+                    <Typography variant="body3" fontSize="1.2rem">
+                      Bedrroms : {property.bedroom}
+                    </Typography>
+                    <Typography variant="body2" fontSize="1rem">
+                      <i className="fas fa-map-marker-alt"></i>{" "}
+                      {property.location}
+                    </Typography>
+
                     <Typography variant="body1">
                       {property.description}
                     </Typography>
-                    <Typography variant="body2">
-                      <i className="fas fa-map-marker-alt" /> {property.location}
-                    </Typography>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} sm={4}>
                     <Box
-                      sx={{
-                        border: 1,
-                        borderRadius: 1,
-                        padding: 2,
-                        marginBottom: 2,
+                      display="flex"
+                      flexDirection="column"
+                      alignItems="center"
+                      justifyContent="center"
+                      style={{
+                        height: "100%",
+                        boxShadow: "0 2px 20px 2px rgba(0, 0, 0, 0.2)",
+                        padding: "10px",
+                        borderRadius: "20px",
                       }}
                     >
-                      <Typography variant="subtitle1">Guests:</Typography>
-                      <Box display="flex" alignItems="center">
-                        <Button
-                          variant="outlined"
-                          onClick={decreaseGuest}
-                          style={{ marginRight: "10px" }}
-                        >
-                          -
-                        </Button>
-                        <TextField
-                          type="number"
-                          value={guestNumber}
-                          onChange={(e) =>
-                            setGuestNumber(parseInt(e.target.value, 10))
-                          }
-                          inputProps={{ min: 1 }}
-                          style={{ width: "50px", textAlign: "center" }}
-                        />
-                        <Button
-                          variant="outlined"
-                          onClick={increaseGuest}
-                          style={{ marginLeft: "10px" }}
-                        >
-                          +
-                        </Button>
-                      </Box>
-                    </Box>
-                    <Box
-                      sx={{
-                        border: 1,
-                        borderRadius: 1,
-                        padding: 2,
-                        marginBottom: 2,
-                      }}
-                    >
-                      <TextField
-                        label="Check-in Date"
-                        type="date"
-                        value={checkInDate.toISOString().split("T")[0]}
-                        onChange={(e) => {
-                          const newCheckInDate = new Date(e.target.value);
-                          setCheckInDate(newCheckInDate);
-                          if (newCheckInDate >= checkOutDate) {
-                            const newCheckOutDate = new Date(newCheckInDate);
-                            newCheckOutDate.setDate(
-                              newCheckOutDate.getDate() + 1
-                            );
-                            setCheckOutDate(newCheckOutDate);
-                          }
-                        }}
-                        fullWidth
-                      />
-                    </Box>
-                    <Box
-                      sx={{
-                        border: 1,
-                        borderRadius: 1,
-                        padding: 2,
-                        marginBottom: 2,
-                      }}
-                    >
-                      <TextField
-                        label="Check-out Date"
-                        type="date"
-                        value={checkOutDate.toISOString().split("T")[0]}
-                        onChange={(e) =>
-                          setCheckOutDate(new Date(e.target.value))
-                        }
-                        fullWidth
-                      />
-                    </Box>
-                    <Box
-                      sx={{
-                        border: 1,
-                        borderRadius: 1,
-                        padding: 2,
-                        marginBottom: 2,
-                      }}
-                    >
-                      <TextField
-                        label="Total Days"
-                        value={totalDays}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        fullWidth
-                      />
-                    </Box>
-                    <Box
-                      sx={{
-                        border: 1,
-                        borderRadius: 1,
-                        padding: 2,
-                        marginBottom: 2,
-                      }}
-                    >
-                      <TextField
-                        label="Total Price"
-                        value={`₹${totalPrice.toFixed(2)}`}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        fullWidth
-                      />
-                    </Box>
-                    {discountAmount > 0 && (
-                      <Typography
-                        variant="body2"
-                        color="error"
-                        style={{ marginBottom: "10px" }}
-                      >
-                        You saved ₹{discountAmount.toFixed(2)} with the 5%
-                        discount!
+                      <Typography variant="h6">
+                        <strong>Book Now</strong>
                       </Typography>
-                    )}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleBookNow}
-                      fullWidth
-                    >
-                      Book Now
-                    </Button>
+                      <div
+                        style={{
+                          width: "100%",
+                          border: "solid black 1px",
+                          padding: "0 10px 0 10px",
+                        }}
+                      >
+                        <TextField
+                          label="Check-in Date"
+                          type="date"
+                          value={checkInDate.toISOString().split("T")[0]}
+                          onChange={(e) =>
+                            setCheckInDate(new Date(e.target.value))
+                          }
+                          fullWidth
+                          margin="normal"
+                        />
+                      </div>
+                      <div
+                        style={{
+                          width: "100%",
+                          border: "solid black 1px",
+                          padding: "0 10px 0 10px",
+                        }}
+                      >
+                        <TextField
+                          label="Check-out Date"
+                          type="date"
+                          value={checkOutDate.toISOString().split("T")[0]}
+                          onChange={(e) =>
+                            setCheckOutDate(new Date(e.target.value))
+                          }
+                          fullWidth
+                          margin="normal"
+                        />
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          margin: "10px",
+                          border: "1px solid black",
+                          width: "100%",
+                          paddingBottom: "10px",
+                        }}
+                      >
+                        <p style={{ textAlign: "center" }}>No. of guest:</p>
+                        <StyledInputRoot>
+                          <StyledButton onClick={decrementGuestNumber}>
+                            <RemoveIcon fontSize="small" />
+                          </StyledButton>
+                          <StyledInput
+                            type="text"
+                            value={guestNumber}
+                            readOnly
+                          />
+                          <StyledButton
+                            onClick={incrementGuestNumber}
+                            className="increment"
+                          >
+                            <AddIcon fontSize="small" />
+                          </StyledButton>
+                        </StyledInputRoot>
+                      </div>
+                      <Typography variant="subtitle1">
+                        Total Days: {totalDays}
+                      </Typography>
+                      <Typography variant="subtitle1">
+                        Discount: ₹{discountAmount.toFixed(2)}
+                      </Typography>
+                      <Typography variant="subtitle1">
+                        <strong>Total Price: ₹{totalPrice.toFixed(2)}</strong>
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleBookNow}
+                        fullWidth
+                        style={{ borderRadius: "0px 0px 15px 15px " }}
+                      >
+                        Book Now
+                      </Button>
+                    </Box>
                   </Grid>
                 </Grid>
               </CardContent>

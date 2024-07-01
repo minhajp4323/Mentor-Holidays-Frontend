@@ -5,6 +5,7 @@ import axios from "axios";
 import Skeleton from "@mui/material/Skeleton";
 import styles from "./CardComponent.module.css";
 
+
 const CardComponent = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [properties, setProperties] = useState([]);
@@ -34,9 +35,9 @@ const CardComponent = () => {
   };
 
   const handleCardClick = (category) => {
-    navigate(`/category/${category}`);
+    navigate("/properties", { state: { selectedCategory: category } });
   };
-
+  
   // Extract unique categories and limit to 4
   const uniqueCategories = [...new Set(properties.map((property) => property.category))].slice(0, 4);
 

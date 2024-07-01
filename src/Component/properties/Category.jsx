@@ -4,19 +4,21 @@ import Header from "../navbar/Navbar";
 import Footer from "../Admin/components/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import CardComponent from "../Home/cardComponent";
 
 function Category() {
   const navigate = useNavigate();
+  const { category } = useParams();
   const [properties, setProperties] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState(category || "All");
   const userId = localStorage.getItem("userid");
 
   useEffect(() => {
@@ -150,6 +152,7 @@ function Category() {
             ))}
       </div>
       <Footer />
+      <CardComponent onSelectCategory={setSelectedCategory} />
     </>
   );
 }

@@ -10,6 +10,12 @@ import {
   Button,
   Typography,
   Link,
+  Container,
+  Card,
+  CardContent,
+  Grid,
+  useMediaQuery,
+  useTheme
 } from "@mui/material";
 
 function Login() {
@@ -39,13 +45,11 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      console.log(formData);
       const response = await axios.post(
         "http://localhost:3333/api/user/login",
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
-      console.log("helloo", response.data);
 
       navigate("/");
       toast.success("Successfully logged in");
@@ -54,8 +58,6 @@ function Login() {
 
       handleLoginSuccess(token, data);
     } catch (error) {
-      console.log("Error while logging in", error);
-
       if (error.response) {
         setErrorMessage(error.response.data.message);
       } else {
@@ -66,79 +68,120 @@ function Login() {
     }
   };
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <>
       <Header />
-      <Box
-        className="login-container"
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      <Container
+        sx={{
+          height: isSmallScreen ? '100vh' : '70vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
       >
-        <form
-          onSubmit={handleSubmit}
-          className="login-form"
-          style={{ width: "100%", maxWidth: "600px" }}
+        <Card
+          sx={{
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            flexDirection: isSmallScreen ? 'column' : 'row',
+            backgroundImage: isSmallScreen ? 'url(https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?cs=srgb&dl=pexels-donaldtong94-189296.jpg&fm=jpg)' : 'none',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            position: 'relative',
+            '&::before': isSmallScreen ? {
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              backgroundColor: 'rgba(255, 300, 255, 0.4)',
+              backdropFilter: 'blur(5px)',
+              zIndex: 1,
+            } : {},
+          }}
         >
-          <Box className="login-content" sx={{ p: 3 }}>
-            <Typography
-              variant="h5"
-              component="h3"
-              className="login-title"
-              sx={{ mb: 3 }}
+          <Grid container sx={{ height: '100%' }}>
+            <Grid
+              item
+              xs={12}
+              md={8}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                order: isSmallScreen ? 1 : 1,
+                zIndex: 2,
+                padding: isSmallScreen ? '16px' : '0',
+              }}
             >
-              Login
-            </Typography>
-            <TextField
-              label="Username"
-              name="username"
-              variant="outlined"
-              fullWidth
-              required
-              onChange={handleChange}
-              value={formData.username}
-              sx={{ mb: 2 }}
-            />
-            <TextField
-              label="Password"
-              name="password"
-              type="password"
-              variant="outlined"
-              fullWidth
-              required
-              onChange={handleChange}
-              value={formData.password}
-              sx={{ mb: 2 }}
-            />
-            {errorMessage && (
-              <Typography color="error" sx={{ mb: 2 }}>
-                {errorMessage}
-              </Typography>
+              <CardContent>
+                <form onSubmit={handleSubmit}>
+                  <TextField
+                    label="Username"
+                    name="username"
+                    variant="outlined"
+                    fullWidth
+                    required
+                    onChange={handleChange}
+                    value={formData.username}
+                    sx={{ mb: 2 }}
+                  />
+                  <TextField
+                    label="Password"
+                    name="password"
+                    type="password"
+                    variant="outlined"
+                    fullWidth
+                    required
+                    onChange={handleChange}
+                    value={formData.password}
+                    sx={{ mb: 2 }}
+                  />
+                  {errorMessage && (
+                    <Typography color="error" sx={{ mb: 2 }}>
+                      {errorMessage}
+                    </Typography>
+                  )}
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                    <Button component="a" href="#" variant="text">Forgot password?</Button>
+                    <Box></Box>
+                  </Box>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    disabled={loading}
+                    sx={{ mb: 2 }}
+                  >
+                    {loading ? <ClipLoader size={20} color={"#fff"} /> : "Sign in"}
+                  </Button>
+                </form>
+                <Typography sx={{ textAlign: 'center' }}>
+                  Not a member?{" "}
+                  <Link
+                    component="button"
+                    variant="body2"
+                    onClick={() => navigate("/signin")}
+                  >
+                    Register
+                  </Link>
+                </Typography>
+              </CardContent>
+            </Grid>
+            {!isSmallScreen && (
+              <Grid item xs={12} md={4} sx={{ height: '100%' }}>
+                <img src="https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?cs=srgb&dl=pexels-donaldtong94-189296.jpg&fm=jpg" alt="login bg" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </Grid>
             )}
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              fullWidth
-              disabled={loading}
-              sx={{ mb: 2 }}
-            >
-              {loading ? <ClipLoader size={20} color={"#fff"} /> : "Login"}
-            </Button>
-            <Typography
-              className="forgot text-right mt-2"
-              sx={{ textAlign: "right" }}
-            >
-              Not a member?{" "}
-              <Link
-                component="button"
-                variant="body2"
-                onClick={() => navigate("/signin")}
-              >
-                Register
-              </Link>
-            </Typography>
-          </Box>
-        </form>
-      </Box>
+          </Grid>
+        </Card>
+      </Container>
     </>
   );
 }

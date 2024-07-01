@@ -1,0 +1,20 @@
+.navLink {
+  color: black;
+  font-size: 1rem;
+  transition: color 0.3s ease, font-size 0.3s ease;
+}
+
+.navLink:hover {
+  color: #164282;
+  font-size: 1.1rem;
+}
+
+.dropdownItem {
+  color: black;
+  transition: color 0.3s ease, font-size 0.3s ease;
+}
+
+.dropdownItem:hover {
+  color: #164282;
+  font-size: 1.1rem;
+}

@@ -1,15 +1,13 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-// import NavDropdown from "react-bootstrap/NavDropdown";
 import MentorMain from "./../../assets/Menort Main Logo.png";
-import "./navbar.css";
+import styles from "./navbar.module.css";
 import { useNavigate } from "react-router-dom";
 import { NavDropdown } from "react-bootstrap";
 
 function Header() {
   const username = localStorage.getItem("username");
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -19,15 +17,13 @@ function Header() {
     localStorage.removeItem("phonenumber");
     localStorage.removeItem("token");
     localStorage.removeItem("wishlist");
-
     navigate("/");
   };
 
   return (
-    <Navbar collapseOnSelect expand="lg" className="navbarMain">
+    <Navbar collapseOnSelect expand="lg" className={styles.navbarMain}>
       <Container>
-        <Navbar.Brand onClick={() => navigate("/")} href="#home" className="">
-          {" "}
+        <Navbar.Brand onClick={() => navigate("/")} href="#home">
           <img src={MentorMain} style={{ width: "90px" }} alt="" />
         </Navbar.Brand>
         <Navbar.Toggle
@@ -35,33 +31,35 @@ function Header() {
           aria-controls="responsive-navbar-nav"
         />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto   ">
-            {/* <NavDropdown
-              title="Book Now"
-              id="collapsible-nav-dropdown"
-              className=""
+          <Nav className="me-auto">
+            <Nav.Link onClick={() => navigate("/")} className={styles.navLink}>
+              Home
+            </Nav.Link>
+            <Nav.Link
+              onClick={() => navigate("/properties")}
+              className={styles.navLink}
             >
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
-            <Nav.Link onClick={() => navigate("/")}>Home</Nav.Link>
-
-            <Nav.Link onClick={() => navigate("/properties")}>
               Book Now
             </Nav.Link>
           </Nav>
 
           <Nav>
-            <Nav.Link onClick={() => navigate("/about")}>About</Nav.Link>
-            <Nav.Link href="#deets">Services</Nav.Link>
-            <Nav.Link href="#contact" onClick={()=>navigate('/contact')}>Contact</Nav.Link>
+            <Nav.Link
+              onClick={() => navigate("/about")}
+              className={styles.navLink}
+            >
+              About
+            </Nav.Link>
+            <Nav.Link href="#deets" className={styles.navLink}>
+              Services
+            </Nav.Link>
+            <Nav.Link
+              href="#contact"
+              onClick={() => navigate("/contact")}
+              className={styles.navLink}
+            >
+              Contact
+            </Nav.Link>
           </Nav>
 
           <Nav
@@ -82,20 +80,35 @@ function Header() {
             >
               {username && (
                 <>
-                  <NavDropdown.Item onClick={() => navigate("/profile")}>
+                  <NavDropdown.Item
+                    onClick={() => navigate("/profile")}
+                    className={styles.dropdownItem}
+                  >
                     My Profile
                   </NavDropdown.Item>
-                  <NavDropdown.Item onClick={() => navigate("/wishlist")}>
+                  <NavDropdown.Item
+                    onClick={() => navigate("/wishlist")}
+                    className={styles.dropdownItem}
+                  >
                     Wishlist
                   </NavDropdown.Item>
-                  <NavDropdown.Item onClick={() => navigate("/trip")}>
+                  <NavDropdown.Item
+                    onClick={() => navigate("/trip")}
+                    className={styles.dropdownItem}
+                  >
                     Trip
                   </NavDropdown.Item>
-                  <NavDropdown.Item onClick={() => navigate("/booking")}>
+                  <NavDropdown.Item
+                    onClick={() => navigate("/booking")}
+                    className={styles.dropdownItem}
+                  >
                     Booking
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={handleLogout}>
+                  <NavDropdown.Item
+                    onClick={handleLogout}
+                    className={styles.dropdownItem}
+                  >
                     <i className="fas fa-sign-out-alt" /> Logout
                   </NavDropdown.Item>
                 </>

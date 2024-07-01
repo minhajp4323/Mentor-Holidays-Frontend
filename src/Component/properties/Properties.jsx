@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom"; // Import useLocation
 import Card from "react-bootstrap/Card";
 import Header from "../navbar/Navbar";
 import Footer from "../Admin/components/Footer";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
 import {
@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import Carousel from "react-material-ui-carousel"; // Import Carousel
 import "bootstrap/dist/css/bootstrap.min.css";
+import styles from "./properties.module.css"; // Import the CSS Module
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -31,6 +32,7 @@ const MenuProps = {
 };
 
 function Properties() {
+  const location = useLocation(); // Get the location object
   const navigate = useNavigate();
   const [properties, setProperties] = useState([]);
   const [wishlist, setWishlist] = useState([]);
@@ -44,12 +46,9 @@ function Properties() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3333/api/user/properties"
-        );
+        const response = await axios.get("http://localhost:3333/api/user/properties");
         setProperties(response.data.data);
 
-        console.log("Properties", response.data.data);
         const uniqueCategories = [
           "All",
           ...new Set(response.data.data.map((property) => property.category)),
@@ -60,12 +59,8 @@ function Properties() {
         if (storedWishlist) {
           setWishlist(JSON.parse(storedWishlist));
         } else if (userId) {
-          const wishlistResponse = await axios.get(
-            `http://localhost:3333/api/user/${userId}/wishlist`
-          );
-          const wishlistIds = wishlistResponse.data.data.map(
-            (property) => property._id
-          );
+          const wishlistResponse = await axios.get(`http://localhost:3333/api/user/${userId}/wishlist`);
+          const wishlistIds = wishlistResponse.data.data.map((property) => property._id);
           setWishlist(wishlistIds);
           localStorage.setItem("wishlist", JSON.stringify(wishlistIds));
         }
@@ -77,6 +72,12 @@ function Properties() {
     };
     fetchData();
   }, [userId]);
+
+  useEffect(() => {
+    if (location.state && location.state.selectedCategory) {
+      setSelectedCategories([location.state.selectedCategory]);
+    }
+  }, [location.state]);
 
   const handleWishlistClick = async (propertyId) => {
     if (!userId) {
@@ -90,15 +91,10 @@ function Properties() {
     try {
       let updateWishlist = [...wishlist];
       if (updateWishlist.includes(propertyId)) {
-        updateWishlist = updateWishlist.filter(
-          (wishId) => wishId !== propertyId
-        );
-        await axios.delete(
-          `http://localhost:3333/api/user/wishlist/${userId}`,
-          {
-            data: { propertyId },
-          }
-        );
+        updateWishlist = updateWishlist.filter((wishId) => wishId !== propertyId);
+        await axios.delete(`http://localhost:3333/api/user/wishlist/${userId}`, {
+          data: { propertyId },
+        });
         localStorage.setItem("wishlist", JSON.stringify(updateWishlist));
         toast.error("Removed from Wishlist");
       } else {
@@ -136,22 +132,12 @@ function Properties() {
 
   const filteredProperties = properties
     .filter((property) => {
-      const titleCheck = property.title
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-      const propertyCheck = property.category
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-      const categoryCheck = property.category
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+      const titleCheck = property.title.toLowerCase().includes(searchTerm.toLowerCase());
+      const propertyCheck = property.category.toLowerCase().includes(searchTerm.toLowerCase());
+      const categoryCheck = property.category.toLowerCase().includes(searchTerm.toLowerCase());
       return propertyCheck || titleCheck || categoryCheck;
     })
-    .filter(
-      (property) =>
-        selectedCategories.includes("All") ||
-        selectedCategories.includes(property.category)
-    );
+    .filter((property) => selectedCategories.includes("All") || selectedCategories.includes(property.category));
 
   return (
     <>
@@ -183,9 +169,7 @@ function Properties() {
               >
                 {categories.map((category) => (
                   <MenuItem key={category} value={category}>
-                    <Checkbox
-                      checked={selectedCategories.indexOf(category) > -1}
-                    />
+                    <Checkbox checked={selectedCategories.indexOf(category) > -1} />
                     <ListItemText primary={category} />
                   </MenuItem>
                 ))}
@@ -194,13 +178,13 @@ function Properties() {
           </div>
         </div>
       </div>
-      <div className="container">
+      <div className="container ">
         <div className="row">
           {loading
             ? Array(5)
                 .fill()
                 .map((_, index) => (
-                  <div key={index} className="col-md-4 mb-4">
+                  <div key={index} className="col-md-3 mb-4">
                     <Card>
                       <Skeleton height={200} />
                       <Card.Body>
@@ -212,11 +196,11 @@ function Properties() {
             : filteredProperties.map((item) => (
                 <div
                   key={item._id}
-                  className="col-md-3 mb-3"
+                  className="col-md-3 mb-3 "
                   style={{ padding: "5px" }}
                 >
                   <Card
-                    style={{ margin: "0" }}
+                    className={styles.card} // Apply the CSS Module class
                     onMouseEnter={() => handleMouseEnter(item._id)}
                     onMouseLeave={handleMouseLeave}
                   >
@@ -236,25 +220,26 @@ function Properties() {
                         />
                       ))}
                     </Carousel>
-                    <Card.Body
-                      onClick={() => navigate(`/viewproperty/${item._id}`)}
-                    >
+                    <Card.Body onClick={() => navigate(`/viewproperty/${item._id}`)}>
                       <Card.Title style={{ fontSize: "1rem" }}>
                         <strong>{item.title}</strong>
                       </Card.Title>
-                      <Card.Text style={{ margin: "0px" }}>₹{item.price}/-</Card.Text>
-                      <Card.Text style={{ margin: "0px" }}>{item.category}</Card.Text>
-                      <Card.Text style={{ margin: "0px" }}>Maximu Guest: {item.maxGuest}</Card.Text>
-
+                      <Card.Text style={{ margin: "0px" }}>
+                        ₹{item.price}/-
+                      </Card.Text>
+                      <Card.Text style={{ margin: "0px" }}>
+                        {item.category}
+                      </Card.Text>
+                      <Card.Text style={{ margin: "0px" }}>
+                        Maximum Guest: {item.maxGuest}
+                      </Card.Text>
                     </Card.Body>
                     <Card.Footer>
                       <small className="text-muted">
                         <i className="fas fa-map-marker-alt" /> {item.location}
                       </small>
                       <i
-                        className={`fas fa-heart ${
-                          wishlist.includes(item._id) ? "text-danger" : ""
-                        } float-end`}
+                        className={`fas fa-heart ${wishlist.includes(item._id) ? "text-danger" : ""} float-end`}
                         style={{ cursor: "pointer" }}
                         onClick={() => handleWishlistClick(item._id)}
                       />
@@ -264,7 +249,6 @@ function Properties() {
               ))}
         </div>
       </div>
-
       <Footer />
     </>
   );

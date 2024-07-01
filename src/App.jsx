@@ -31,15 +31,16 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/properties" element={<Properties />} />
           <Route path="/signin" element={<Registration />} />
-          <Route path="/contact" element={<ContactForm />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/contact" element={<ContactForm />} />
           <Route path="/viewproperty/:_id" element={<ViewProduct />} />
           <Route path="/confirmbooking/:id" element={<ConfirmBooking />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/profile" element={<UserPropfile />} />
           <Route path="/booking" element={<Bookings />} />
           <Route path="/about" element={<About />} />
-          <Route path="/category" element={<Category />} />
+          <Route path="/category/:id" element={<Category />} />
+          {/* <Route path="/demoLogin" element={<DemoLogin/>}/> */}
 
           {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />

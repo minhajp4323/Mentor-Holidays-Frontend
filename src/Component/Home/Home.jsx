@@ -25,6 +25,7 @@ function Home() {
       <div className="homeMain">
         <div className="contentWrapper">
           <Searchbar />
+          
           <div className="find">
             <section>
               <div className="findBoxMain d-flex justify-content-between">
@@ -57,7 +58,7 @@ function Home() {
         ) : (
           <>
             <CardComponent />
-            <ContactForm />
+            <ContactForm id="#contact" />
           </>
         )}
       </div>

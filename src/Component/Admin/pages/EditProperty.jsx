@@ -33,6 +33,7 @@ function EditProperty() {
           images,
           description,
           category,
+          maxGuest
         } = response.data.data;
         setPropertyData({
           title,
@@ -43,6 +44,7 @@ function EditProperty() {
           images,
           description,
           category,
+          maxGuest
         });
       } catch (error) {
         toast.error("Error fetching property details");
@@ -82,6 +84,7 @@ function EditProperty() {
     formData.append("bathroom", propertyData.bathroom);
     formData.append("category", propertyData.category);
     formData.append("description", propertyData.description);
+    formData.append("maxGuest", propertyData.maxGuest);
 
     for (let i = 0; i < propertyData.images.length; i++) {
       formData.append("images", propertyData.images[i]);
@@ -241,6 +244,19 @@ function EditProperty() {
                   id="category"
                   className="form-control"
                   value={propertyData.category}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="maxGuest" className="form-label">
+                Maximum no. of guest :
+                </label>
+                <input
+                  onChange={handleChange}
+                  type="number"
+                  id="maxGuest"
+                  className="form-control"
+                  value={propertyData.maxGuest}
                   required
                 />
               </div>

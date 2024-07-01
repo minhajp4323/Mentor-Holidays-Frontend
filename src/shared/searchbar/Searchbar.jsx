@@ -17,7 +17,7 @@ function Searchbar() {
             />
           </Grid>
           <Grid item xs={12} sm={3}>
-            <TextField fullWidth variant="outlined" type="date" label="Check-in" />
+            <TextField fullWidth variant="outlined" type="date"  />
           </Grid>
           <Grid item xs={12} sm={3}>
             <TextField fullWidth  variant="outlined" type="number" label="No. of guest" />

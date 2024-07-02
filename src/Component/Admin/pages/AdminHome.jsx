@@ -10,11 +10,11 @@ import "react-loading-skeleton/dist/skeleton.css";
 function AdminHome() {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
-  const [booking, setBooking] = useState([]);
+  const [booking, setBooking] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [totalRevenue, setTotalRevenue] = useState(0);
-
+  console.log(booking);
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -33,7 +33,8 @@ function AdminHome() {
         const response = await axios.get(
           "http://localhost:3333/api/admin/bookings"
         );
-        setBooking(response.data.data);
+        setBooking(response.data.dataCount);
+        console.log(response.data.dataCount);
       } catch (error) {
         console.error("Error fetching bookings", error);
         setError(error);
@@ -151,7 +152,7 @@ function AdminHome() {
               <Card.Header>ORDERS</Card.Header>
               <Card.Body onClick={() => navigate("/Admin/AllBookings")}>
                 <Card.Text>
-                  <h1>{booking.length}</h1>
+                  <h1>{booking}</h1>
                 </Card.Text>
               </Card.Body>
             </Card>

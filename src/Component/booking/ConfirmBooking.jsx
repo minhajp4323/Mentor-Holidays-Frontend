@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import Header from "../navbar/Navbar";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function ConfirmBooking() {
   const location = useLocation();
@@ -31,49 +32,54 @@ function ConfirmBooking() {
     const phonenumber = localStorage.getItem("phonenumber");
     const receipt = `${Date.now()}`;
 
-    const response = await axios.post(
-      "http://localhost:3333/api/user/payment",
-      {
-        title,
-        amount: totalPrice * 100,
-        currency: "INR",
-        receipt,
-        propertyId: property._id,
-        checkInDate,
-        checkOutDate,
-        guestNumber,
-        userId
-      }
-    );
-
-    const { data } = response.data;
-    const options = {
-      key: razorPayKey,
-      amount: data.amount,
-      currency: data.currency,
-      name: "Mentor Holidays",
-      description: "Test Transaction",
-      image: property.images[0],
-      order_id: data.id,
-      handler: () => {
-        alert("Payment successful");
-        navigate("/");
-      },
-      prefill: {
-        name: username,
-        email: email,
-        contact: phonenumber,
-      },
-      notes: {
-        address: "Razorpay Corporate Office",
-      },
-      theme: {
-        color: "#007bff",
-      },
-    };
-
-    const RzPay = new window.Razorpay(options);
-    RzPay.open();
+    try {
+      const response = await axios.post(
+        "http://localhost:3333/api/user/payment",
+        {
+          title,
+          amount: totalPrice * 100,
+          currency: "INR",
+          receipt,
+          propertyId: property._id,
+          checkInDate,
+          checkOutDate,
+          guestNumber,
+          userId
+        }
+      );
+      console.log(response)
+  
+      const { data } = response.data;
+      const options = {
+        key: razorPayKey,
+        amount: data.amount,
+        currency: data.currency,
+        name: "Mentor Holidays",
+        description: "Test Transaction",
+        image: property.images[0],
+        order_id: data.id,
+        handler: () => {
+          alert("Payment successful");
+          navigate("/");
+        },
+        prefill: {
+          name: username,
+          email: email,
+          contact: phonenumber,
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#007bff",
+        },
+      };
+  
+      const RzPay = new window.Razorpay(options);
+      RzPay.open();
+    } catch (error) {
+      toast.error(error.response.data.message)
+    }
   };
 
   return (

@@ -159,7 +159,7 @@ function Login() {
                     disabled={loading}
                     sx={{ mb: 2 }}
                   >
-                    {loading ? <ClipLoader size={20} color={"#fff"} /> : "Sign in"}
+                    {loading ? <ClipLoader size={20} color={"#fff"} /> : "Login"}
                   </Button>
                 </form>
                 <Typography sx={{ textAlign: 'center' }}>

@@ -12,7 +12,6 @@ function ConfirmBooking() {
   const navigate = useNavigate();
   const razorPayKey = import.meta.env.VITE_RAZOR_PAY_KEY_ID;
 
-  // Calculate the number of nights
   const getNumberOfNights = (checkIn, checkOut) => {
     const checkInDate = new Date(checkIn);
     const checkOutDate = new Date(checkOut);
@@ -23,17 +22,17 @@ function ConfirmBooking() {
 
   const totalNights = getNumberOfNights(checkInDate, checkOutDate);
   const totalPrice = totalNights * property.price;
-  const title = property.title
+  const title = property.title;
 
   const handlePayment = async () => {
     const userId = localStorage.getItem("userid");
     const username = localStorage.getItem("username");
     const email = localStorage.getItem("email");
     const phonenumber = localStorage.getItem("phonenumber");
-    const receipt = `${Date.now()}`;
+    const receipt = `RCPT_Mentor${Date.now()}`;
 
     try {
-      const response = await axios.post(
+      const paymentResponse = await axios.post(
         "http://localhost:3333/api/user/payment",
         {
           title,
@@ -44,12 +43,11 @@ function ConfirmBooking() {
           checkInDate,
           checkOutDate,
           guestNumber,
-          userId
+          userId,
         }
       );
-      console.log(response)
-  
-      const { data } = response.data;
+
+      const { data } = paymentResponse.data;
       const options = {
         key: razorPayKey,
         amount: data.amount,
@@ -58,9 +56,34 @@ function ConfirmBooking() {
         description: "Test Transaction",
         image: property.images[0],
         order_id: data.id,
-        handler: () => {
-          alert("Payment successful");
-          navigate("/");
+        handler: async (response) => {
+          try {
+            const bookingResponse = await axios.post(
+              "http://localhost:3333/api/user/booking",
+              {
+                title,
+                checkInDate,
+                checkOutDate,
+                guestNumber,
+                amount: totalPrice,
+                currency: "INR",
+                receipt,
+                propertyId: property._id,
+                userId,
+                paymentId: response.razorpay_payment_id,
+                orderId: response.razorpay_order_id,
+              }
+            );
+
+            if (bookingResponse.data.status === "success") {
+              toast.success("Booking confirmed!");
+              navigate("/");
+            } else {
+              toast.error("Booking failed. Please try again.");
+            }
+          } catch (error) {
+            toast.error("Booking failed. Please try again.");
+          }
         },
         prefill: {
           name: username,
@@ -74,11 +97,11 @@ function ConfirmBooking() {
           color: "#007bff",
         },
       };
-  
+
       const RzPay = new window.Razorpay(options);
       RzPay.open();
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error("Payment initiation failed. Please try again.");
     }
   };
 

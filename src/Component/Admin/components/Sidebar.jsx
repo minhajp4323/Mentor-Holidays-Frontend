@@ -46,7 +46,7 @@ const SideBar = () => {
                 Add Properties
               </CDBSidebarMenuItem>
             </NavLink>
-            <NavLink to="">
+            <NavLink to="/Admin/Revenue">
               <CDBSidebarMenuItem icon="dollar" iconType="solid">
                 Revenue
               </CDBSidebarMenuItem>

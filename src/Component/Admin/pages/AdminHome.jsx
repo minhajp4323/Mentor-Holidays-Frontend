@@ -10,7 +10,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 function AdminHome() {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
-  const [booking, setBooking] = useState('');
+  const [booking, setBooking] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [totalRevenue, setTotalRevenue] = useState(0);
@@ -48,8 +48,9 @@ function AdminHome() {
         const response = await axios.get(
           "http://localhost:3333/api/admin/total-revenue"
         );
-        setTotalRevenue(response.data.data[0].total); 
-        console.log(response.data.data[0].total)
+        const total = response.data.data[0]?.total || 0;
+        setTotalRevenue(total);
+        console.log(total);
       } catch (error) {
         console.error("Error fetching total revenue", error);
         setError(error);

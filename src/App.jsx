@@ -21,6 +21,7 @@ import BookingList from "./Component/Admin/pages/BookingList.jsx";
 import About from "./Component/Home/About.jsx";
 import Category from "./Component/properties/Category.jsx";
 import ContactForm from "./Component/Home/contact/ContactForm.jsx";
+import PropertyRevenue from "./Component/Admin/pages/revenue/Revenue.jsx";
 
 function App() {
   return (
@@ -40,7 +41,6 @@ function App() {
           <Route path="/booking" element={<Bookings />} />
           <Route path="/about" element={<About />} />
           <Route path="/category/:id" element={<Category />} />
-          {/* <Route path="/demoLogin" element={<DemoLogin/>}/> */}
 
           {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />
@@ -51,6 +51,7 @@ function App() {
           <Route path="/Admin/EditProperty/:id" element={<EditProperty />} />
           <Route path="/Admin/AllUser" element={<AllUser />} />
           <Route path="/Admin/AllBookings" element={<BookingList />} />
+          <Route path="/Admin/Revenue" element={<PropertyRevenue />} />
         </Routes>
       </div>
     </>

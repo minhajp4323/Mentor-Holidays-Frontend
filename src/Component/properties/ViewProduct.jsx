@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
 import {
   Card,
   CardContent,
@@ -131,7 +130,6 @@ function ViewProduct() {
   const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("userid");
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -162,27 +160,41 @@ function ViewProduct() {
     }
   }, [checkInDate, checkOutDate, property]);
 
- 
-  const handleBookNow = () => {
+  const handleBookNow = async () => {
     if (totalDays <= 0) {
       toast.info("Please choose valid dates.");
       return;
     }
-    if (userId) {
-      navigate(`/confirmbooking/${_id}`, {
-        state: {
-          property,
-          guestNumber,
-          checkInDate: checkInDate.toISOString().split("T")[0],
-          checkOutDate: checkOutDate.toISOString().split("T")[0],
-        },
-      });
-    }else{
-      toast.error("Login to book property")
-      navigate('/login')
-    }
 
-    
+    try {
+      // const response = await axios.post('http://localhost:3333/api/check-date-availability', {
+      //   propertyId: _id,
+      //   checkInDate: checkInDate.toISOString().split("T")[0],
+      //   checkOutDate: checkOutDate.toISOString().split("T")[0],
+      // });
+
+      // if (response.data.status !== "Success") {
+      //   toast.error(response.data.message);
+      //   return;
+      // }
+
+      if (userId) {
+        navigate(`/confirmbooking/${_id}`, {
+          state: {
+            property,
+            guestNumber,
+            checkInDate: checkInDate.toISOString().split("T")[0],
+            checkOutDate: checkOutDate.toISOString().split("T")[0],
+          },
+        });
+      } else {
+        toast.error("Login to book property");
+        navigate('/login');
+      }
+    } catch (error) {
+      toast.error("Error checking date availability");
+      console.error("Error checking date availability:", error);
+    }
   };
 
   const incrementGuestNumber = () => {
@@ -263,7 +275,7 @@ function ViewProduct() {
                     </Typography>
                     <br />
                     <Typography variant="body3" fontSize="1.2rem">
-                      Bedrroms : {property.bedroom}
+                      Bedrooms : {property.bedroom}
                     </Typography>
                     <Typography variant="body2" fontSize="1rem">
                       <i className="fas fa-map-marker-alt"></i>{" "}

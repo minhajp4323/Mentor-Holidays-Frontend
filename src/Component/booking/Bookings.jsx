@@ -30,6 +30,7 @@ function Bookings() {
         );
         setBookings(response.data.data);
         setLoading(false);
+        console.log(response.data.data)
       } catch (error) {
         console.error("Error fetching bookings:", error);
         setLoading(false);

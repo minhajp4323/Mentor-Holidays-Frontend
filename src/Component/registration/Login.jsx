@@ -80,6 +80,9 @@ function Login() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          marginTop:"5%",
+          width:"60%"
+          
         }}
       >
         <Card
@@ -117,6 +120,7 @@ function Login() {
                 order: isSmallScreen ? 1 : 1,
                 zIndex: 2,
                 padding: isSmallScreen ? '16px' : '0',
+                // width:"60%"
               }}
             >
               <CardContent>
@@ -148,7 +152,8 @@ function Login() {
                     </Typography>
                   )}
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                    <Button component="a" href="#" variant="text">Forgot password?</Button>
+                    {/* <Button component="a" href="#" variant="text">Forgot password?</Button> */}
+
                     <Box></Box>
                   </Box>
                   <Button

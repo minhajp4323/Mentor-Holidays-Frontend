@@ -37,7 +37,7 @@ function Properties() {
   const [properties, setProperties] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(new URLSearchParams(location.search).get('search') || ""); // Set initial search term from URL
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState(["All"]);
   const [hoveredProperty, setHoveredProperty] = useState(null); // State to track hovered property

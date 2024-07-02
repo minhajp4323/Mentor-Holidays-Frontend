@@ -4,9 +4,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
-import {  TextField, Button, Typography, Link } from "@mui/material";
+import { TextField, Button, Typography, Link } from "@mui/material";
 import { styled } from "@mui/system";
-import styles from "./Signin.module.css";  
+import styles from "./Signin.module.css";
+import sideImage from "./../../assets/Property Photos/LoginWall.jpeg.jpg";
+import Logo from "./../../assets/Mentor Long Logo White.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMapMarkerAlt,
@@ -77,7 +79,7 @@ function SignIn() {
           formData,
           { headers: { "Content-Type": "application/json" } }
         );
-        console.log(response)
+        console.log(response);
         setEmail(formData.email);
         setOtpSent(true);
         setErrorMessage("");
@@ -86,7 +88,8 @@ function SignIn() {
         console.error("Error during registration", error);
         if (error.response) {
           setErrorMessage(
-            error.response.data?.error || "An error occurred during registration"
+            error.response.data?.error ||
+              "An error occurred during registration"
           );
         } else if (error.request) {
           setErrorMessage("No response from server. Please try again later.");
@@ -109,7 +112,7 @@ function SignIn() {
         { email, otp },
         { headers: { "Content-Type": "application/json" } }
       );
-      console.log(response)
+      console.log(response);
       navigate("/login");
       toast.success("User successfully registered");
     } catch (error) {
@@ -117,7 +120,8 @@ function SignIn() {
       toast.error("Error during OTP verification");
       if (error.response) {
         setErrorMessage(
-          error.response.data?.error || "An error occurred during OTP verification"
+          error.response.data?.error ||
+            "An error occurred during OTP verification"
         );
       } else if (error.request) {
         setErrorMessage("No response from server. Please try again later.");
@@ -134,26 +138,6 @@ function SignIn() {
       <Header />
       <div className={styles.container}>
         <div className={styles.form}>
-          <div className={styles.contactInfo}>
-            <h3 className={styles.title}>Sign In</h3>
-            <p className={styles.text}>
-              Mentor Holidays ensures that every aspect of the tour is meticulously planned and executed.
-            </p>
-            <div className={styles.info}>
-              <div className={styles.information}>
-                <FontAwesomeIcon icon={faMapMarkerAlt} />
-                <p>Karuvankallu, Kondotty, Malappuram</p>
-              </div>
-              <div className={styles.information}>
-                <FontAwesomeIcon icon={faEnvelope} />
-                <p>mentorholidays@gmail.com</p>
-              </div>
-              <div className={styles.information}>
-                <FontAwesomeIcon icon={faPhone} />
-                <p>+919072107041, +919061350111</p>
-              </div>
-            </div>
-          </div>
           <div className={styles.contactForm}>
             <form onSubmit={handleSubmit}>
               <div className={styles.inputContainer}>
@@ -244,15 +228,44 @@ function SignIn() {
                   width: "100%",
                 }}
               >
-                {loading ? <ClipLoader size={20} color={"#fff"} /> : otpSent ? "Verify OTP" : "Submit"}
+                {loading ? (
+                  <ClipLoader size={20} color={"#fff"} />
+                ) : otpSent ? (
+                  "Verify OTP"
+                ) : (
+                  "Submit"
+                )}
               </Button>
-              <Typography className="forgot text-right mt-2" style={{ textAlign: "right" }}>
+              <Typography
+                className="forgot text-right mt-2"
+                style={{ textAlign: "right", color: "white" }}
+              >
                 Already have an account?{" "}
-                <Link component="button" variant="body2" onClick={() => navigate("/login")}>
+                <Link
+                  component="button"
+                  variant="body2"
+                  style={{ color: "white" }}
+                  onClick={() => navigate("/login")}
+                >
                   Login here
                 </Link>
               </Typography>
             </form>
+            <div className="d-flex" style={{ justifyContent: "center" }}>
+              <img
+                src={Logo}
+                alt="Logo"
+                className="d-flex"
+                style={{ width: "70%" }}
+              />
+            </div>
+          </div>
+          <div>
+            <img
+              src={sideImage}
+              alt="img"
+              style={{ height: "100%", objectFit: "cover" }}
+            />
           </div>
         </div>
       </div>

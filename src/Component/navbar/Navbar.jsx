@@ -50,9 +50,9 @@ function Header() {
             >
               About
             </Nav.Link>
-            <Nav.Link href="#deets" className={styles.navLink}>
+            {/* <Nav.Link href="#deets" className={styles.navLink}>
               Services
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link
               href="#contact"
               onClick={() => navigate("/contact")}

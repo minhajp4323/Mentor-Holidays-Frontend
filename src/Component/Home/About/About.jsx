@@ -1,40 +1,62 @@
-// import  { useEffect } from "react";
-// import AOS from "aos";
+import { useEffect } from "react";
+import AOS from "aos";
 import "aos/dist/aos.css";
-// import img1 from "https://i.pinimg.com/564x/df/32/3e/df323e78345cdf65ff866f479dce4b14.jpg";  
-// import img2 from "../../../assets/Property Photos/Abaad Munnar 1.avif";
-// import img3 from "../../../assets/Property Photos/Abaad Munnar 1.avif";
-
-// import 
+import img1 from "../../../assets/Property Photos/LoginWall.jpeg.jpg";
+import img2 from "../../../assets/homeCatergoryDtl/Houseboat Cover.jpg";
+import img3 from "../../../assets/homeCatergoryDtl/resort Cover.jpg";
+import styles from "./About.module.css";
+import Header from "../../navbar/Navbar";
+import Footer from "../../Admin/components/Footer";
 
 function About() {
-//   useEffect(() => {
-//     AOS.init({ duration: 1000 });
-//   }, []);
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
 
   return (
-    <div className="about-container">
-      <div className="about-main">
-        <h3 className="about-head">ABOUT ExploreEpic</h3>
-        <h1 className="about-sub">World Best Travel Group</h1>
-        <p className="about-para">
-          Explore Epic is your ultimate travel companion, guiding you to
-          discover hidden gems and iconic landmarks worldwide. Our expertly
-          curated itineraries ensure you embark on unforgettable adventures
-          and create lasting memories. At Explore Epic, we take you beyond
-          the ordinary, bringing you closer to the heart of every
-          destination. We handle every detail of your journey, allowing you
-          to unwind and relax, ensuring a seamless and enjoyable travel
-          experience.
+    <>
+    <Header />
+    <div className={styles["about-container"]}>
+      <div className={styles.aboutMain}>
+        <h3 className={styles.aboutHead}>Who we are??</h3>
+        <h1 className={styles.aboutSub}>World Best Travel Group</h1>
+        <p className={styles.aboutPara}>
+          Mentor Holidays is a premier travel company dedicated to crafting
+          unforgettable journeys and experiences for groups and colleges. We
+          specialize in offering a diverse range of travel services, including
+          meticulously planned tour packages, luxurious resort bookings, and
+          convenient train ticket reservations. Our mission is to provide
+          seamless and enriching travel experiences, ensuring every trip is
+          memorable and hassle-free.
         </p>
-        <button className="about-but">Discover More</button>
+        {/* <button className={styles["about-but"]}>Discover More</button> */}
       </div>
-      <div className="image1">
-        <img src={img1} alt="About Image 1" className="img1" data-aos="fade-up" />
-        {/* <img src={img2} alt="About Image 2" className="img2" data-aos="fade-up" data-aos-delay="350" /> */}
-        {/* <img src={img3} alt="About Image 3" className="img3" data-aos="fade-up" data-aos-delay="700" /> */}
+      <div className={styles.image1}>
+        <img
+          src={img1}
+          alt="About Image 1"
+          className={styles.img1}
+          data-aos="fade-up"
+        />
+        <img
+          src={img2}
+          alt="About Image 2"
+          className={styles.img2}
+          data-aos="fade-up"
+          data-aos-delay="350"
+        />
+        <img
+          src={img3}
+          alt="About Image 3"
+          className={styles.img3}
+          data-aos="fade-up"
+          data-aos-delay="700"
+        />
       </div>
     </div>
+    <Footer/>
+    </>
+
   );
 }
 

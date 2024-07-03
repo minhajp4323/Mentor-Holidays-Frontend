@@ -4,11 +4,13 @@ import Table from "react-bootstrap/Table";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Sidebar from "../../components/Sidebar.jsx";
+import { Form } from "react-bootstrap";
 
 function PropertyRevenue() {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [timeframe, setTimeframe] = useState("weekly");
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -28,6 +30,48 @@ function PropertyRevenue() {
 
     fetchProperties();
   }, []);
+
+  const handleTimeframeChange = (e) => {
+    setTimeframe(e.target.value);
+  };
+
+  const filterPropertiesByTimeframe = (properties) => {
+    const now = new Date();
+    let filteredProperties = properties;
+
+    switch (timeframe) {
+      case "weekly":
+        filteredProperties = properties.filter((property) =>
+          property.bookings.some((booking) => {
+            const checkInDate = new Date(booking.checkInDate);
+            return now - checkInDate <= 7 * 24 * 60 * 60 * 1000;
+          })
+        );
+        break;
+      case "monthly":
+        filteredProperties = properties.filter((property) =>
+          property.bookings.some((booking) => {
+            const checkInDate = new Date(booking.checkInDate);
+            return now - checkInDate <= 30 * 24 * 60 * 60 * 1000;
+          })
+        );
+        break;
+      case "yearly":
+        filteredProperties = properties.filter((property) =>
+          property.bookings.some((booking) => {
+            const checkInDate = new Date(booking.checkInDate);
+            return now - checkInDate <= 365 * 24 * 60 * 60 * 1000;
+          })
+        );
+        break;
+      default:
+        break;
+    }
+
+    return filteredProperties;
+  };
+
+  const filteredProperties = filterPropertiesByTimeframe(properties);
 
   if (loading) {
     return (
@@ -74,10 +118,22 @@ function PropertyRevenue() {
   return (
     <div className="d-flex">
       <Sidebar />
-      <div className="d-flex flex-wrap mt-5 w-100" style={{ margin: "3%" }}>
-        <Table striped bordered hover>
+      <div className="d-flex flex-wrap mt-5 w-100" style={{ margin: "3%", marginBottom:0 }}>
+        <Form.Group controlId="timeframeSelect" className="mb-3">
+          <Form.Label>Filter by Timeframe</Form.Label>
+          <Form.Control
+            as="select"
+            value={timeframe}
+            onChange={handleTimeframeChange}
+          >
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+          </Form.Control>
+        </Form.Group>
+        <Table striped bordered hover >
           <thead>
-            <tr>
+            <tr style={{fontSize:"1.2rem"}}>
               <th>Name</th>
               <th>Total Revenue</th>
               <th>Check-in Date</th>
@@ -85,11 +141,11 @@ function PropertyRevenue() {
             </tr>
           </thead>
           <tbody>
-            {properties.map((property) => (
+            {filteredProperties.map((property) => (
               <React.Fragment key={property._id}>
-                <tr>
-                  <td rowSpan={property.bookings.length + 1}>{property.name}</td>
-                  <td rowSpan={property.bookings.length + 1}>₹{property.totalRevenue.toLocaleString()}</td>
+                <tr >
+                  <td  rowSpan={property.bookings.length + 1}>{property.name}</td>
+                  <td rowSpan={property.bookings.length + 1}> <strong>₹ {property.totalRevenue.toLocaleString()}</strong> </td>
                 </tr>
                 {property.bookings.map((booking) => (
                   <tr key={booking._id}>

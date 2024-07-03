@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
+import BG from "./../../../assets/Property Photos/LoginWall.jpeg.jpg";
 import {
   Box,
   TextField,
@@ -33,12 +34,10 @@ function AdminLogin() {
   };
 
   const handleLoginSuccess = (token, userDetails) => {
-    const { _id, username, email, phonenumber } = userDetails;
+    const { _id, username } = userDetails;
     localStorage.setItem("admintoken", token);
     localStorage.setItem("adminuserid", _id);
     localStorage.setItem("adminusername", username);
-    localStorage.setItem("adminemail", email);
-    localStorage.setItem("adminphonenumber", phonenumber);
   };
 
   const handleSubmit = async (e) => {
@@ -68,123 +67,130 @@ function AdminLogin() {
   return (
     <>
       <Header />
-      <Box
-        className="login-container"
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      <div
+        className="d-flex"
+        style={{
+          justifyContent: "center",
+          padding: "5%",
+          backgroundColor: { BG },
+          height: "100vh",
+        }}
       >
-        <form
-          onSubmit={handleSubmit}
-          className="login-form"
-          style={{ width: "100%", maxWidth: "600px" }}
+        <Box
+          className="login-container"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            border: "1px solid black",
+            borderRadius: "10px",
+            width: "50%",
+            alignContent: "center",
+            height: "70%",
+          }}
         >
-          <Box className="login-content" sx={{ p: 3 }}>
-            <Typography
-              variant="h5"
-              component="h3"
-              className="login-title"
-              sx={{ mb: 3 }}
-            >
-              Admin Login
-            </Typography>
-            <TextField
-              label="Username"
-              name="username"
-              variant="outlined"
-              fullWidth
-              required
-              onChange={handleChange}
-              value={formData.username}
-              sx={{ mb: 2 }}
-            />
-            <TextField
-              label="Password"
-              name="password"
-              type="password"
-              variant="outlined"
-              fullWidth
-              required
-              onChange={handleChange}
-              value={formData.password}
-              sx={{ mb: 2 }}
-            />
-            {errorMessage && (
-              <Typography color="error" sx={{ mb: 2 }}>
-                {errorMessage}
-              </Typography>
-            )}
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              fullWidth
-              disabled={loading}
-              sx={{ mb: 2 }}
-            >
-              {loading ? <ClipLoader size={20} color={"#fff"} /> : "Login"}
-            </Button>
-            <div className="d-flex justify-between">
+          <form
+            onSubmit={handleSubmit}
+            className="login-form"
+            style={{ width: "100%", maxWidth: "600px" }}
+          >
+            <Box className="login-content" sx={{ p: 3 }}>
               <Typography
-                className="forgot text-right mt-2"
-                sx={{ textAlign: "right" }}
+                variant="h5"
+                component="h3"
+                className="login-title"
+                sx={{ mb: 3 }}
               >
-                <Link
-                  component="button"
-                  variant="body2"
-                  onClick={() => setResetPasswordDialogOpen(true)}
-                >
-                  Forgot Password?
-                </Link>
+                Admin Login
               </Typography>
-              <Typography
-                className="forgot text-right mt-2"
-                sx={{ textAlign: "left" }}
+              <TextField
+                label="Username"
+                name="username"
+                variant="outlined"
+                fullWidth
+                required
+                onChange={handleChange}
+                value={formData.username}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                label="Password"
+                name="password"
+                type="password"
+                variant="outlined"
+                fullWidth
+                required
+                onChange={handleChange}
+                value={formData.password}
+                sx={{ mb: 2 }}
+              />
+              {errorMessage && (
+                <Typography color="error" sx={{ mb: 2 }}>
+                  {errorMessage}
+                </Typography>
+              )}
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+                disabled={loading}
+                sx={{ mb: 2 }}
               >
-                Not a member ?
-                <Link
-                  component="button"
-                  variant="body2"
-                  onClick={() => navigate("/admin/signin")}
+                {loading ? <ClipLoader size={20} color={"#fff"} /> : "Login"}
+              </Button>
+              <div className="d-flex justify-between">
+                <Typography
+                  className="forgot text-right mt-2"
+                  sx={{ textAlign: "left" }}
                 >
-                  Sign up
-                </Link>
-              </Typography>
-            </div>
-          </Box>
-        </form>
-      </Box>
+                  Not a member ?
+                  <Link
+                    component="button"
+                    variant="body2"
+                    onClick={() => navigate("/admin/signin")}
+                  >
+                    Sign up
+                  </Link>
+                </Typography>
+              </div>
+            </Box>
+          </form>
+        </Box>
 
-      {/* Forgot Password Dialog */}
-      <Dialog
-        open={resetPasswordDialogOpen}
-        onClose={() => setResetPasswordDialogOpen(false)}
-      >
-        <DialogTitle>Forgot Password?</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Enter your email"
-            type="email"
-            variant="outlined"
-            fullWidth
-            value={resetPasswordEmail}
-            onChange={(e) => setResetPasswordEmail(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => setResetPasswordDialogOpen(false)}
-            color="secondary"
-          >
-            Cancel
-          </Button>
-          <Button
-            //  onClick={handleForgotPassword}
-            color="primary"
-          >
-            Send Reset Email
-          </Button>
-        </DialogActions>
-      </Dialog>
+        {/* Forgot Password Dialog */}
+        <Dialog
+          open={resetPasswordDialogOpen}
+          onClose={() => setResetPasswordDialogOpen(false)}
+        >
+          <DialogTitle>Forgot Password?</DialogTitle>
+          <DialogContent>
+            <TextField
+              label="Enter your email"
+              type="email"
+              variant="outlined"
+              fullWidth
+              value={resetPasswordEmail}
+              onChange={(e) => setResetPasswordEmail(e.target.value)}
+              sx={{ mb: 2 }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => setResetPasswordDialogOpen(false)}
+              color="secondary"
+            >
+              Cancel
+            </Button>
+            <Button
+              //  onClick={handleForgotPassword}
+              color="primary"
+            >
+              Send Reset Email
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </>
   );
 }

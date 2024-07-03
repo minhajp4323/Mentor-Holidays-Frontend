@@ -34,8 +34,8 @@ function BookingList() {
   return (
     <div className="d-flex w-full">
       <SideBar />
-      <div className="container  m-5" style={{ padding: "0px" }}>
-        <h1 >All Bookings</h1>
+      <div className="container m-5" style={{ padding: "0px" }}>
+        <h1>All Bookings</h1>
         <div style={{ marginBottom: "20px" }}>
           <input
             type="text"
@@ -51,9 +51,9 @@ function BookingList() {
             }}
           />
         </div>
-        <table className="table booking-table " >
+        <table className="table booking-table">
           <thead>
-            <tr >
+            <tr>
               <th scope="col">
                 <h3>Username</h3>
               </th>
@@ -62,9 +62,6 @@ function BookingList() {
               </th>
               <th scope="col">
                 <h3>Hotel Name</h3>
-              </th>
-              <th scope="col">
-                <h3>Booking Id</h3>
               </th>
               <th scope="col">
                 <h3>CheckIn Date</h3>
@@ -91,13 +88,10 @@ function BookingList() {
                     <td>{user.username}</td>
                     <td>{user.email}</td>
                     <td>{booking.title}</td>
-                    <td>{booking.bookingId}</td>
                     <td>{new Date(booking.checkInDate).toLocaleDateString()}</td>
                     <td>{new Date(booking.checkOutDate).toLocaleDateString()}</td>
                     <td>{booking.receipt}</td>
-                    <td>
-                      {booking.amount} {booking.currency}
-                    </td>
+                    <td>{booking.amount} {booking.currency}</td>
                     <td>
                       {new Date(booking.paymentDate).toLocaleDateString()}
                       {booking.paymentTime ? ` ${booking.paymentTime}` : ""}
@@ -114,13 +108,10 @@ function BookingList() {
                       <td>{user.username}</td>
                       <td>{user.email}</td>
                       <td>{booking.title}</td>
-                      <td>{booking.bookingId}</td>
                       <td>{new Date(booking.checkInDate).toLocaleDateString()}</td>
                       <td>{new Date(booking.checkOutDate).toLocaleDateString()}</td>
                       <td>{booking.receipt}</td>
-                      <td>
-                        {booking.amount} {booking.currency}
-                      </td>
+                      <td>{booking.amount} {booking.currency}</td>
                       <td>
                         {new Date(booking.paymentDate).toLocaleDateString()}
                         {booking.paymentTime ? ` ${booking.paymentTime}` : ""}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import SideBar from "../components/Sidebar";
 import axios from "axios";
-// import { toast } from "react-toastify";
+import "./AllUser.css"; // Import the CSS file
 
 function AllUser() {
   const [users, setUsers] = useState([]);
@@ -30,7 +30,7 @@ function AllUser() {
   return (
     <div className="d-flex w-full">
       <SideBar />
-      <div className="container mt-5" style={{ padding: "50px" }}>
+      <div className="container" style={{ padding: "50px" }}>
         <h1>All Users</h1>
         <div style={{ marginBottom: "20px" }}>
           <input
@@ -47,7 +47,7 @@ function AllUser() {
             }}
           />
         </div>
-        <table className="table">
+        <table className="table custom-table">
           <thead>
             <tr>
               <th scope="col"><h3>Username</h3></th>
@@ -56,8 +56,8 @@ function AllUser() {
             </tr>
           </thead>
           <tbody>
-            {filteredUsers.map((user) => (
-              <tr key={user._id}>
+            {filteredUsers.map((user, index) => (
+              <tr key={user._id} className={index % 2 === 0 ? "even-row" : "odd-row"}>
                 <td>{user.username}</td>
                 <td>{user.email}</td>
                 <td>{user.phonenumber}</td>

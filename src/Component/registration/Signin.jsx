@@ -9,12 +9,6 @@ import { styled } from "@mui/system";
 import styles from "./Signin.module.css";
 import sideImage from "./../../assets/Property Photos/LoginWall.jpeg.jpg";
 import Logo from "./../../assets/Mentor Long Logo White.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMapMarkerAlt,
-  faEnvelope,
-  faPhone,
-} from "@fortawesome/free-solid-svg-icons";
 
 const CssTextField = styled(TextField)({
   "& label.Mui-outlined": {

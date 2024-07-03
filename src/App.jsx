@@ -35,7 +35,7 @@ function App() {
           <Route path="/signin" element={<Registration />} />
           <Route path="/login" element={<Login />} />
           <Route path="/contact" element={<ContactForm />} />
-          {/* <Route path="/about" element={<About />} /> */}
+          <Route path="/about" element={<About />} />
           <Route path="/viewproperty/:_id" element={<ViewProduct />} />
           <Route path="/confirmbooking/:id" element={<ConfirmBooking />} />
           <Route path="/wishlist" element={<Wishlist />} />

@@ -1,3 +1,5 @@
+// ViewProduct.js
+
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -162,21 +164,25 @@ function ViewProduct() {
 
   const handleBookNow = async () => {
     if (totalDays <= 0) {
+      
       toast.info("Please choose valid dates.");
       return;
     }
 
     try {
-      // const response = await axios.post('http://localhost:3333/api/check-date-availability', {
-      //   propertyId: _id,
-      //   checkInDate: checkInDate.toISOString().split("T")[0],
-      //   checkOutDate: checkOutDate.toISOString().split("T")[0],
-      // });
+      const availabilityResponse = await axios.post(
+        "http://localhost:3333/api/user/check-availablity",
+        {
+          propertyId: _id,
+          checkInDate: checkInDate.toISOString().split("T")[0],
+          checkOutDate: checkOutDate.toISOString().split("T")[0],
+        }
+      );
 
-      // if (response.data.status !== "Success") {
-      //   toast.error(response.data.message);
-      //   return;
-      // }
+      if (availabilityResponse.data.status === "unavailable") {
+        toast.info(availabilityResponse.data.message);
+        return;
+      }
 
       if (userId) {
         navigate(`/confirmbooking/${_id}`, {
@@ -189,7 +195,7 @@ function ViewProduct() {
         });
       } else {
         toast.error("Login to book property");
-        navigate('/login');
+        navigate("/login");
       }
     } catch (error) {
       toast.error("Error checking date availability");

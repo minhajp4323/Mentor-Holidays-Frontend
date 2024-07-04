@@ -6,15 +6,16 @@ import {
   CDBSidebarMenuItem,
   CDBSidebarFooter,
 } from "cdbreact";
-// import "./sidebar.css";
 import { NavLink } from "react-router-dom";
+import "./Sidebar.css"; // Import the CSS file
 
 const SideBar = () => {
   const handleLogout = () => {
     localStorage.removeItem("admintoken");
   };
+
   return (
-    <div className="sidebar_main" style={{ height: "100vh" }}>
+    <div className="sidebar_main sticky-sidebar">
       <CDBSidebar className="sidebar">
         <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>
           Admin Dashboard
@@ -24,9 +25,6 @@ const SideBar = () => {
             <NavLink to="/Admin/Home">
               <CDBSidebarMenuItem icon="home">Home</CDBSidebarMenuItem>
             </NavLink>
-            {/* <NavLink>
-              <CDBSidebarMenuItem icon="th">Orders</CDBSidebarMenuItem>
-            </NavLink> */}
             <NavLink to="/Admin/AllBookings">
               <CDBSidebarMenuItem icon="list">
                 Booking Details
@@ -35,7 +33,6 @@ const SideBar = () => {
             <NavLink to="/Admin/AllUser">
               <CDBSidebarMenuItem icon="user">Users</CDBSidebarMenuItem>
             </NavLink>
-
             <NavLink to="/Admin/AdminProperties">
               <CDBSidebarMenuItem icon="building">
                 Properties
@@ -51,7 +48,6 @@ const SideBar = () => {
                 Revenue
               </CDBSidebarMenuItem>
             </NavLink>
-          
             <NavLink onClick={handleLogout} to="/">
               <CDBSidebarMenuItem icon="sign-out" iconType="solid">
                 Logout
@@ -59,7 +55,6 @@ const SideBar = () => {
             </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
-
         <CDBSidebarFooter style={{ textAlign: "center" }}>
           <div className="sidebar-btn-wrapper" style={{ padding: "20px 5px" }}>
             Sidebar Footer

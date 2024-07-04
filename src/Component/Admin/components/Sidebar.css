@@ -1,0 +1,15 @@
+/* Sidebar.css */
+.sidebar_main {
+    height: 100vh;
+  }
+  
+  .sticky-sidebar {
+    position: sticky;
+    top: 0;
+  }
+  
+  .sidebar {
+    height: 100%;
+  }
+  
+  

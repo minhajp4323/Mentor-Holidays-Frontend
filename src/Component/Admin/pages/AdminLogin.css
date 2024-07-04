@@ -1,0 +1,40 @@
+.login-container {
+   background-image: url('../../../assets/AdminBg.webp'); /* Adjust the path to your image */; 
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    text-align: center;
+    color: black;
+  }
+  
+  .login-content {
+    backdrop-filter: blur(10px); 
+    background-color: rgba(97, 95, 95, 0.5);
+    border: 1px solid rgb(92, 92, 92);
+    border-radius: 10px;
+    width: 80%; 
+    max-width: 600px;
+    padding: 20px; 
+    box-sizing: border-box;
+  }
+  
+  .login-form {
+    width: 100%;
+  }
+  
+  .login-title {
+    margin-bottom: 20px;
+
+  }
+  
+  @media (max-width: 768px) {
+    .login-content {
+      width: 90%; 
+    }
+  }
+  

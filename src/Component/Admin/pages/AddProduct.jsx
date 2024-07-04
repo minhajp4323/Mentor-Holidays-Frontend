@@ -2,6 +2,7 @@ import { useState } from "react";
 import SideBar from "../components/Sidebar";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { TextField, Button, Grid, Typography, Paper, Box, useMediaQuery, useTheme } from "@mui/material";
 
 function AddProduct() {
   const [propertyData, setPropertyData] = useState({
@@ -74,169 +75,146 @@ function AddProduct() {
     }
   };
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <div
       className="d-flex w-full"
       style={{ display: "flex", justifyContent: "center" }}
     >
-      <div>
-        <SideBar />
-      </div>
-      <div
-        className="container mt-5"
+      <SideBar />
+      <Paper
+        elevation={3}
         style={{
-          display: "flex",
-          justifyContent: "space-evenly",
-          padding: "0 50px 0 50px",
+          padding: "10px",
+          marginTop: isSmallScreen ? "10px" : "20px",
+          width: "90%",
         }}
       >
-        <div style={{ border: 1, width: "100%" }}>
-          <div
-            style={{
-              backgroundColor: "blue",
-              color: "white",
-              padding: 5,
-              borderRadius: 5,
-            }}
-          >
-            <h2 className="mb-0">Add a Property</h2>
-          </div>
-          <div className="card-body" style={{ color: "yellow" }}>
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label htmlFor="title" className="form-label">
-                  Title:
-                </label>
-                <input
-                  onChange={handleChange}
-                  type="text"
-                  id="title"
-                  className="form-control"
-                  value={propertyData.title}
-                  required
-                />
-              </div>
-
-              <div className="mb-3">
-                <label className="form-label">Location:</label>
-                <input
-                  onChange={handleChange}
-                  type="text"
-                  id="location"
-                  className="form-control"
-                  value={propertyData.location}
-                  required
-                />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="price" className="form-label">
-                  Price:
-                </label>
-                <input
-                  onChange={handleChange}
-                  type="number"
-                  id="price"
-                  className="form-control"
-                  value={propertyData.price}
-                  min="0"
-                  required
-                />
-              </div>
-
-              <div className="mb-3 d-flex justify-content-between">
-                <div style={{ width: "48%" }}>
-                  <label htmlFor="bedroom" className="form-label">
-                    Bedroom:
-                  </label>
-                  <input
-                    onChange={handleChange}
-                    type="number"
-                    id="bedroom"
-                    className="form-control"
-                    value={propertyData.bedroom}
-                    min="0"
-                    required
-                  />
-                </div>
-                <div style={{ width: "48%" }}>
-                  <label htmlFor="bathroom" className="form-label">
-                    Bathroom:
-                  </label>
-                  <input
-                    onChange={handleChange}
-                    type="number"
-                    id="bathroom"
-                    className="form-control"
-                    value={propertyData.bathroom}
-                    min="0"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="images" className="form-label">
-                  Images:
-                </label>
-                <input
-                  onChange={handleChange}
-                  accept="image/*"
-                  type="file"
-                  id="images"
-                  className="form-control"
-                  multiple
-                  required
-                />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="description" className="form-label">
-                  Description:
-                </label>
-                <textarea
-                  onChange={handleChange}
-                  id="description"
-                  className="form-control"
-                  value={propertyData.description}
-                  required
-                />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="category" className="form-label">
-                  Category:
-                </label>
-                <input
-                  onChange={handleChange}
-                  type="text"
-                  id="category"
-                  className="form-control"
-                  value={propertyData.category}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="maxGuest" className="form-label">
-                maxGuest:
-                </label>
-                <input
-                  onChange={handleChange}
-                  type="text"
-                  id="maxGuest"
-                  className="form-control"
-                  value={propertyData.maxGuest}
-                  required
-                />
-              </div>
-
-              <button type="submit" className="btn btn-primary">
+        <Box textAlign="center" mt={1}>
+          <Typography variant="h4" component="h2">
+            Add a Property
+          </Typography>
+        </Box>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Title"
+                id="title"
+                value={propertyData.title}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Location"
+                id="location"
+                value={propertyData.location}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Price"
+                id="price"
+                type="number"
+                value={propertyData.price}
+                onChange={handleChange}
+                required
+                inputProps={{ min: "0" }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Bedroom"
+                id="bedroom"
+                type="number"
+                value={propertyData.bedroom}
+                onChange={handleChange}
+                required
+                inputProps={{ min: "0" }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Bathroom"
+                id="bathroom"
+                type="number"
+                value={propertyData.bathroom}
+                onChange={handleChange}
+                required
+                inputProps={{ min: "0" }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Category"
+                id="category"
+                value={propertyData.category}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Max Guest"
+                id="maxGuest"
+                value={propertyData.maxGuest}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Description"
+                id="description"
+                multiline
+                rows={4}
+                value={propertyData.description}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <input
+                accept="image/*"
+                id="images"
+                type="file"
+                multiple
+                onChange={handleChange}
+                style={{ display: "none" }}
+              />
+              <label htmlFor="images">
+                <Button variant="contained" component="span" fullWidth>
+                  Upload Images
+                </Button>
+              </label>
+            </Grid>
+            <Grid item xs={6}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+              >
                 Add Property
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Paper>
     </div>
   );
 }

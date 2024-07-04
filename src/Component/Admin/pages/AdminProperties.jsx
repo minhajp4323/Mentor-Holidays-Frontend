@@ -39,8 +39,8 @@ function AdminProperties() {
   return (
     <div className="d-flex w-full">
       <SideBar />
-      <div className="container mt-5" style={{ padding: 50 }}>
-        <h1>All Properties</h1>
+      <div className="container " style={{ padding: 50 }}>
+        {/* <h1>All Properties</h1> */}
         <div className="row">
           {properties.map((property) => (
             <div className="col-md-4 mb-4" key={property._id}>

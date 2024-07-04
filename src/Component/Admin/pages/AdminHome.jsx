@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function AdminHome() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function AdminHome() {
   const [error, setError] = useState(null);
   const [totalRevenue, setTotalRevenue] = useState(0);
   console.log(booking);
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -67,59 +69,50 @@ function AdminHome() {
       <>
         <div className="d-flex">
           <Sidebar />
-          <div className="d-flex mt-5 w-80">
-            <div>
-              <Card
-                style={{ width: "18rem" }}
-                className="mb-2 m-2 bg-secondary"
-              >
-                <Card.Header>
-                  <Skeleton width={80} />
-                </Card.Header>
-                <Card.Body>
-                  <Card.Text>
-                    <h1>
-                      <Skeleton />
-                    </h1>
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </div>
-
-            <div>
-              <Card
-                style={{ width: "18rem" }}
-                className="mb-2 m-2 bg-secondary"
-              >
-                <Card.Header>
-                  <Skeleton width={80} />
-                </Card.Header>
-                <Card.Body>
-                  <Card.Text>
-                    <h1>
-                      <Skeleton />
-                    </h1>
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </div>
-
-            <div>
-              <Card
-                style={{ width: "18rem" }}
-                className="mb-2 m-2 bg-secondary"
-              >
-                <Card.Header>
-                  <Skeleton width={80} />
-                </Card.Header>
-                <Card.Body>
-                  <Card.Text>
-                    <h1>
-                      <Skeleton />
-                    </h1>
-                  </Card.Text>
-                </Card.Body>
-              </Card>
+          <div className="container mt-5 w-80">
+            <div className="row">
+              <div className="col-12 col-sm-6 col-lg-4 mb-2">
+                <Card className="bg-secondary">
+                  <Card.Header>
+                    <Skeleton width={80} />
+                  </Card.Header>
+                  <Card.Body>
+                    <Card.Text>
+                      <h1>
+                        <Skeleton />
+                      </h1>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </div>
+              <div className="col-12 col-sm-6 col-lg-4 mb-2">
+                <Card className="bg-secondary">
+                  <Card.Header>
+                    <Skeleton width={80} />
+                  </Card.Header>
+                  <Card.Body>
+                    <Card.Text>
+                      <h1>
+                        <Skeleton />
+                      </h1>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </div>
+              <div className="col-12 col-sm-6 col-lg-4 mb-2">
+                <Card className="bg-secondary">
+                  <Card.Header>
+                    <Skeleton width={80} />
+                  </Card.Header>
+                  <Card.Body>
+                    <Card.Text>
+                      <h1>
+                        <Skeleton />
+                      </h1>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </div>
             </div>
           </div>
         </div>
@@ -136,42 +129,42 @@ function AdminHome() {
     <>
       <div className="d-flex">
         <Sidebar />
-        <div className="d-flex mt-5 w-80">
-          <div>
-            <Card style={{ width: "18rem" }} className="mb-2 m-2 bg-secondary">
-              <Card.Header>USERS</Card.Header>
-              <Card.Body onClick={() => navigate("/Admin/AllUser")}>
-                <Card.Text>
-                  <h1>{users.length}</h1>
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-
-          <div>
-            <Card style={{ width: "18rem" }} className="mb-2 m-2 bg-secondary">
-              <Card.Header>ORDERS</Card.Header>
-              <Card.Body onClick={() => navigate("/Admin/AllBookings")}>
-                <Card.Text>
-                  <h1>{booking}</h1>
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-
-          <div>
-            <Card style={{ width: "18rem" }} className="mb-2 m-2 bg-secondary">
-              <Card.Header>Total Revenue</Card.Header>
-              <Card.Body>
-                <Card.Text>
-                  <h1>₹{totalRevenue.toLocaleString()}</h1>
-                </Card.Text>
-              </Card.Body>
-            </Card>
+        <div className="container mt-5 w-80">
+          <div className="row">
+            <div className="col-12 col-sm-6 col-lg-4 mb-2">
+              <Card className="bg-secondary">
+                <Card.Header>USERS</Card.Header>
+                <Card.Body onClick={() => navigate("/Admin/AllUser")}>
+                  <Card.Text>
+                    <h1>{users.length}</h1>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </div>
+            <div className="col-12 col-sm-6 col-lg-4 mb-2">
+              <Card className="bg-secondary">
+                <Card.Header>ORDERS</Card.Header>
+                <Card.Body onClick={() => navigate("/Admin/AllBookings")}>
+                  <Card.Text>
+                    <h1>{booking}</h1>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </div>
+            <div className="col-12 col-sm-6 col-lg-4 mb-2">
+              <Card className="bg-secondary">
+                <Card.Header>Total Revenue</Card.Header>
+                <Card.Body>
+                  <Card.Text>
+                    <h1>₹{totalRevenue.toLocaleString()}</h1>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

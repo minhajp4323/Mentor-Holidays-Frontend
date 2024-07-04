@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import SideBar from "../components/Sidebar";
 import axios from "axios";
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
 import "./BookingList.css"; // Import the CSS file
 
 function BookingList() {
@@ -34,49 +36,45 @@ function BookingList() {
   return (
     <div className="d-flex w-full">
       <SideBar />
-      <div className="container m-5" style={{ padding: "0px" }}>
-        <h1>All Bookings</h1>
-        <div style={{ marginBottom: "20px" }}>
-          <input
-            type="text"
-            placeholder="Search by username or title..."
-            value={searchTerm}
-            onChange={handleSearchChange}
-            style={{
-              width: "80%",
-              padding: "10px",
-              fontSize: "1rem",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
-          />
-        </div>
+      <div className="container mt-3 " >
+        <h1 >All Bookings</h1>
+        <Grid container spacing={2} style={{ marginBottom: "20px" }}>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Search by username or title..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+          </Grid>
+        </Grid>
         <table className="table booking-table">
           <thead>
-            <tr>
+            <tr >
               <th scope="col">
-                <h3>Username</h3>
+                <h5>Username</h5>
               </th>
               <th scope="col">
-                <h3>Email</h3>
+                <h5>Email</h5>
               </th>
               <th scope="col">
-                <h3>Hotel Name</h3>
+                <h5>Hotel Name</h5>
               </th>
               <th scope="col">
-                <h3>CheckIn Date</h3>
+                <h5>CheckIn Date</h5>
               </th>
               <th scope="col">
-                <h3>CheckOut Date</h3>
+                <h5>CheckOut Date</h5>
               </th>
               <th scope="col">
-                <h3>Receipt ID</h3>
+                <h5>Receipt ID</h5>
               </th>
               <th scope="col">
-                <h3>Amount Paid</h3>
+                <h5>Amount Paid</h5>
               </th>
               <th scope="col">
-                <h3>Payment Date & Time</h3>
+                <h5>Payment Date & Time</h5>
               </th>
             </tr>
           </thead>

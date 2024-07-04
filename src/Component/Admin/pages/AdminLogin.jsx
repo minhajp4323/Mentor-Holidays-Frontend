@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
-import BG from "./../../../assets/Property Photos/LoginWall.jpeg.jpg";
 import {
   Box,
   TextField,
@@ -16,6 +15,7 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material";
+import "./AdminLogin.css"; // Import the CSS file
 
 function AdminLogin() {
   const navigate = useNavigate();
@@ -67,102 +67,61 @@ function AdminLogin() {
   return (
     <>
       <Header />
-      <div
-        className="d-flex"
-        style={{
-          justifyContent: "center",
-          padding: "5%",
-          backgroundColor: { BG },
-          height: "100vh",
-        }}
-      >
-        <Box
-          className="login-container"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            border: "1px solid black",
-            borderRadius: "10px",
-            width: "50%",
-            alignContent: "center",
-            height: "70%",
-          }}
-        >
-          <form
-            onSubmit={handleSubmit}
-            className="login-form"
-            style={{ width: "100%", maxWidth: "600px" }}
-          >
-            <Box className="login-content" sx={{ p: 3 }}>
-              <Typography
-                variant="h5"
-                component="h3"
-                className="login-title"
-                sx={{ mb: 3 }}
-              >
-                Admin Login
+      <div className="login-container">
+        <Box className="login-content">
+          <form onSubmit={handleSubmit} className="login-form">
+            <Typography variant="h5" component="h3" className="login-title">
+              Admin Login
+            </Typography>
+            <TextField
+              label="Username"
+              name="username"
+              variant="outlined"
+              fullWidth
+              required
+              onChange={handleChange}
+              value={formData.username}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              label="Password"
+              name="password"
+              type="password"
+              variant="outlined"
+              fullWidth
+              required
+              onChange={handleChange}
+              value={formData.password}
+              sx={{ mb: 2 }}
+            />
+            {errorMessage && (
+              <Typography color="error" sx={{ mb: 2 }}>
+                {errorMessage}
               </Typography>
-              <TextField
-                label="Username"
-                name="username"
-                variant="outlined"
-                fullWidth
-                required
-                onChange={handleChange}
-                value={formData.username}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                label="Password"
-                name="password"
-                type="password"
-                variant="outlined"
-                fullWidth
-                required
-                onChange={handleChange}
-                value={formData.password}
-                sx={{ mb: 2 }}
-              />
-              {errorMessage && (
-                <Typography color="error" sx={{ mb: 2 }}>
-                  {errorMessage}
-                </Typography>
-              )}
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-                disabled={loading}
-                sx={{ mb: 2 }}
-              >
-                {loading ? <ClipLoader size={20} color={"#fff"} /> : "Login"}
-              </Button>
-              <div className="d-flex justify-between">
-                <Typography
-                  className="forgot text-right mt-2"
-                  sx={{ textAlign: "left" }}
-                >
-                  Not a member ?
-                  <Link
-                    component="button"
-                    variant="body2"
-                    onClick={() => navigate("/admin/signin")}
-                  >
-                    Sign up
-                  </Link>
-                </Typography>
-              </div>
-            </Box>
+            )}
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              disabled={loading}
+              sx={{ mb: 2 }}
+            >
+              {loading ? <ClipLoader size={20} color={"#fff"} /> : "Login"}
+            </Button>
+            <div className="d-flex justify-between">
+              <Typography className="forgot text-right mt-2" sx={{ textAlign: "left" }}>
+                Not a member ?
+                <Link component="button" variant="body2" onClick={() => navigate("/admin/signin")}>
+                  Sign up
+                </Link>
+              </Typography>
+            </div>
           </form>
         </Box>
 
         {/* Forgot Password Dialog */}
-        <Dialog
-          open={resetPasswordDialogOpen}
-          onClose={() => setResetPasswordDialogOpen(false)}
-        >
+        <Dialog open={resetPasswordDialogOpen} onClose={() => setResetPasswordDialogOpen(false)}>
           <DialogTitle>Forgot Password?</DialogTitle>
           <DialogContent>
             <TextField
@@ -176,14 +135,11 @@ function AdminLogin() {
             />
           </DialogContent>
           <DialogActions>
-            <Button
-              onClick={() => setResetPasswordDialogOpen(false)}
-              color="secondary"
-            >
+            <Button onClick={() => setResetPasswordDialogOpen(false)} color="secondary">
               Cancel
             </Button>
             <Button
-              //  onClick={handleForgotPassword}
+              // onClick={handleForgotPassword}
               color="primary"
             >
               Send Reset Email

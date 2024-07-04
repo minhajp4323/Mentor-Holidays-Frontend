@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import Card from "react-bootstrap/Card";
+import { Grid, Card, CardMedia, CardContent, Typography, IconButton, Container, Box } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import SideBar from "../components/Sidebar";
 
 function AdminProperties() {
@@ -20,6 +20,7 @@ function AdminProperties() {
       console.error("Error fetching properties", error);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -29,7 +30,6 @@ function AdminProperties() {
       try {
         await axios.delete(`http://localhost:3333/api/admin/properties/${id}`);
         setProperties(properties.filter((property) => property._id !== id));
-        //render error        
       } catch (error) {
         console.error("Error deleting property", error);
       }
@@ -39,60 +39,49 @@ function AdminProperties() {
   return (
     <div className="d-flex w-full">
       <SideBar />
-      <div className="container " style={{ padding: 50 }}>
-        {/* <h1>All Properties</h1> */}
-        <div className="row">
+      <Container style={{ padding: "50px" }}>
+        <Grid container spacing={4}>
           {properties.map((property) => (
-            <div className="col-md-4 mb-4" key={property._id}>
-              <Card style={{ position: "relative" }}>
-                <Card.Img
-                  variant="top"
-                  src={property.images[0]}
-                  alt=""
-                  style={{
-                    height: "200px",
-                    objectFit: "cover",
-                  }}
+            <Grid item xs={12} sm={6} md={4} key={property._id}>
+              <Card>
+                <CardMedia
+                  component="img"
+                  height="200px"
+                  image={property.images[0]}
+                  alt={property.title}
                 />
-                <Card.Body>
-                  <Card.Title>{property.title}</Card.Title>
-                  <Card.Text>₹{property.price}/-</Card.Text>
-                  <Card.Text>{property.category}</Card.Text>
-                  <Card.Text>
-                    <i className="fas fa-map-marker-alt" /> {property.location}
-                  </Card.Text>
-                </Card.Body>
-                <FontAwesomeIcon
-                  icon={faEdit}
-                  style={{
-                    position: "absolute",
-                    bottom: "10px",
-                    right: "10px",
-                    cursor: "pointer",
-                    fontSize: "20px",
-                    color: "#007bff",
-                  }}
-                  onClick={() =>
-                    navigate(`/Admin/EditProperty/${property._id}`)
-                  }
-                />
-                <FontAwesomeIcon
-                  icon={faTrash}
-                  style={{
-                    position: "absolute",
-                    bottom: "10px",
-                    left: "10px",
-                    cursor: "pointer",
-                    fontSize: "20px",
-                    color: "red",
-                  }}
-                  onClick={() => handleDelete(property._id)}
-                />
+                <CardContent>
+                  <Typography variant="h6">{property.title}</Typography>
+                  <Typography variant="body2">₹{property.price}/-</Typography>
+                  <Typography variant="body2">{property.category}</Typography>
+                  <Typography variant="body2">
+                    <Box component="span" mr={1}>
+                      <i className="fas fa-map-marker-alt" />
+                    </Box>
+                    {property.location}
+                  </Typography>
+                </CardContent>
+                <Box display="flex" justifyContent="space-between" px={2} pb={2}>
+                  <IconButton
+                    color="primary"
+                    onClick={() =>
+                      navigate(`/Admin/EditProperty/${property._id}`)
+                    }
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    color="secondary"
+                    onClick={() => handleDelete(property._id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Box>
               </Card>
-            </div>
+            </Grid>
           ))}
-        </div>
-      </div>
+        </Grid>
+      </Container>
     </div>
   );
 }

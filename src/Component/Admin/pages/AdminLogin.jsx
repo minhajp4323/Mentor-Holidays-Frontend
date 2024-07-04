@@ -33,11 +33,9 @@ function AdminLogin() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleLoginSuccess = (token, userDetails) => {
-    const { _id, username } = userDetails;
+  const handleLoginSuccess = (token) => {
     localStorage.setItem("admintoken", token);
-    localStorage.setItem("adminuserid", _id);
-    localStorage.setItem("adminusername", username);
+
   };
 
   const handleSubmit = async (e) => {

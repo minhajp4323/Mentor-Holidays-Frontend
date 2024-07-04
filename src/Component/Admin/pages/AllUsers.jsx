@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import SideBar from "../components/Sidebar";
 import axios from "axios";
-import "./AllUser.css"; // Import the CSS file
+import "./AllUser.css"; 
 
 function AllUser() {
   const [users, setUsers] = useState([]);

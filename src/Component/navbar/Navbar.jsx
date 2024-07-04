@@ -62,30 +62,13 @@ function Header() {
             </Nav.Link>
           </Nav>
 
-          <Nav
-            className="my-2 my-lg-0"
-            style={{ maxHeight: "100px" }}
-            navbarScroll
-          >
+          <Nav className="my-2 my-lg-0" style={{ maxHeight: "100px" }} navbarScroll>
             <NavDropdown
-              onDoubleClick={() => navigate("/Admin/Login")}
-              title={
-                username ? (
-                  <b>{username}</b>
-                ) : (
-                  <b onClick={() => navigate("/login")}>Login</b>
-                )
-              }
+              title={username ? <b>{username}</b> : <b>Login</b>}
               id="NavbarScrollingDropdown"
             >
               {username && (
                 <>
-                  <NavDropdown.Item
-                    onClick={() => navigate("/profile")}
-                    className={styles.dropdownItem}
-                  >
-                    My Profile
-                  </NavDropdown.Item>
                   <NavDropdown.Item
                     onClick={() => navigate("/wishlist")}
                     className={styles.dropdownItem}
@@ -112,6 +95,16 @@ function Header() {
                     <i className="fas fa-sign-out-alt" /> Logout
                   </NavDropdown.Item>
                 </>
+              )}
+              {!username && (
+                <NavDropdown.Item onClick={() => navigate("/login")}>
+                  Login
+                </NavDropdown.Item>
+              )}
+              {!username && (
+                <NavDropdown.Item onClick={() => navigate("/Admin/Login")}>
+                  Admin
+                </NavDropdown.Item>
               )}
             </NavDropdown>
           </Nav>

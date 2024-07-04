@@ -95,7 +95,7 @@ function EditProperty() {
         `http://localhost:3333/api/admin/properties/${id}`,
         formData
       );
-      //   toast.success("property editted");
+        toast.success("property editted");
       console.log(response);
       toast.success(response.data.message);
         setTimeout(() => navigate('/Admin/AdminProperties'), 2000);

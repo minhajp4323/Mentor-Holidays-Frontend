@@ -27,15 +27,15 @@
 
 @media (max-width: 600px) {
   .container {
-    padding: 0px; /* Decrease padding on smaller screens */
+    padding: 0px; 
   }
 
   .custom-table {
-    margin: 1px; /* Decrease margin on smaller screens */
+    margin: 1px; 
   }
 
   .custom-table th,
   .custom-table td {
-    padding: 8px; /* Adjust padding for better fit on smaller screens */
+    padding: 8px;
   }
 }

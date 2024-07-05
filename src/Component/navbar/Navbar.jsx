@@ -5,6 +5,7 @@ import MentorMain from "./../../assets/Menort Main Logo.png";
 import styles from "./navbar.module.css";
 import { useNavigate } from "react-router-dom";
 import { NavDropdown } from "react-bootstrap";
+import { FaBars } from 'react-icons/fa'; // Import the icon from react-icons
 
 function Header() {
   const username = localStorage.getItem("username");
@@ -21,15 +22,16 @@ function Header() {
   };
 
   return (
-    <Navbar collapseOnSelect expand="lg" className={styles.navbarMain}>
+    <Navbar collapseOnSelect expand="sm" className={styles.navbarMain}>
       <Container>
         <Navbar.Brand onClick={() => navigate("/")} href="#home">
           <img src={MentorMain} style={{ width: "90px" }} alt="" />
         </Navbar.Brand>
         <Navbar.Toggle
-          style={{ backgroundColor: "grey" }}
           aria-controls="responsive-navbar-nav"
-        />
+        >
+          <FaBars />
+        </Navbar.Toggle>
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link onClick={() => navigate("/")} className={styles.navLink}>
@@ -50,9 +52,6 @@ function Header() {
             >
               About
             </Nav.Link>
-            {/* <Nav.Link href="#deets" className={styles.navLink}>
-              Services
-            </Nav.Link> */}
             <Nav.Link
               href="#contact"
               onClick={() => navigate("/contact")}

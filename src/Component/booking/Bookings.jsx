@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Header from "../navbar/Navbar";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import {
@@ -15,6 +14,7 @@ import {
 } from "mdb-react-ui-kit";
 import "react-loading-skeleton/dist/skeleton.css";
 import moment from "moment";
+import userInstance from "../../Interceptors/UserInterceptors";
 
 function Bookings() {
   const navigate = useNavigate();
@@ -25,8 +25,8 @@ function Bookings() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3333/api/user/booking/${userId}`
+        const response = await userInstance.get(
+          `/user/booking/${userId}`
         );
         setBookings(response.data.data);
         setLoading(false);

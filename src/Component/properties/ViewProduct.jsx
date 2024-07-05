@@ -1,8 +1,5 @@
-// ViewProduct.js
-
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Skeleton from "react-loading-skeleton";
@@ -23,6 +20,7 @@ import Header from "../navbar/Navbar";
 import { styled } from "@mui/system";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
+import userInstance from "../../Interceptors/UserInterceptors";
 
 const blue = {
   100: "#daecff",
@@ -130,15 +128,15 @@ function ViewProduct() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [maxGuest, setMaxGuest] = useState(0);
   const userId = localStorage.getItem("userid");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3333/api/user/properties/${_id}`
-        );
+        const response = await userInstance.get(`/user/properties/${_id}`);
         setProperty(response.data.data);
+        setMaxGuest(response.data.data.maxGuest);
         console.log(response.data.data);
       } catch (err) {
         console.log(err);
@@ -163,15 +161,19 @@ function ViewProduct() {
   }, [checkInDate, checkOutDate, property]);
 
   const handleBookNow = async () => {
+    if (!userId) {
+      toast.info("Please login first");
+      navigate("/login");
+      return;
+    }
     if (totalDays <= 0) {
-      
       toast.info("Please choose valid dates.");
       return;
     }
 
     try {
-      const availabilityResponse = await axios.post(
-        "http://localhost:3333/api/user/check-availablity",
+      const availabilityResponse = await userInstance.post(
+        "/user/check-availablity",
         {
           propertyId: _id,
           checkInDate: checkInDate.toISOString().split("T")[0],
@@ -204,7 +206,7 @@ function ViewProduct() {
   };
 
   const incrementGuestNumber = () => {
-    if (guestNumber < 99) {
+    if (guestNumber < maxGuest) {
       setGuestNumber(guestNumber + 1);
     }
   };
@@ -214,6 +216,10 @@ function ViewProduct() {
       setGuestNumber(guestNumber - 1);
     }
   };
+
+  const today = new Date().toISOString().split("T")[0];
+  const minCheckOutDate = new Date(checkInDate);
+  minCheckOutDate.setDate(minCheckOutDate.getDate() + 1);
 
   return (
     <>
@@ -324,6 +330,9 @@ function ViewProduct() {
                           }
                           fullWidth
                           margin="normal"
+                          inputProps={{
+                            min: today,
+                          }}
                         />
                       </div>
                       <div
@@ -342,6 +351,9 @@ function ViewProduct() {
                           }
                           fullWidth
                           margin="normal"
+                          inputProps={{
+                            min: minCheckOutDate.toISOString().split("T")[0],
+                          }}
                         />
                       </div>
                       <div

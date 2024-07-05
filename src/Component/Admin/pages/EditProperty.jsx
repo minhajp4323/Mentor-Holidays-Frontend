@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import SideBar from "../components/Sidebar";
-import axios from "axios";
 import { toast } from "react-toastify";
+import adminInstance from "../../../Interceptors/AdminInterceptor";
 
 function EditProperty() {
   const { id } = useParams();
@@ -19,11 +19,12 @@ function EditProperty() {
   });
 
   useEffect(() => {
+    if (!localStorage.getItem("admintoken")) {
+      navigate("/Admin/Login");
+    }
     const fetchProperty = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3333/api/user/properties/${id}`
-        );
+        const response = await adminInstance.get(`/user/properties/${id}`);
         const {
           title,
           location,
@@ -33,7 +34,7 @@ function EditProperty() {
           images,
           description,
           category,
-          maxGuest
+          maxGuest,
         } = response.data.data;
         setPropertyData({
           title,
@@ -44,14 +45,14 @@ function EditProperty() {
           images,
           description,
           category,
-          maxGuest
+          maxGuest,
         });
       } catch (error) {
         toast.error("Error fetching property details");
       }
     };
     fetchProperty();
-  }, [id]);
+  }, [navigate, id]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -91,14 +92,14 @@ function EditProperty() {
     }
 
     try {
-      const response = await axios.put(
-        `http://localhost:3333/api/admin/properties/${id}`,
+      const response = await adminInstance.put(
+        `/admin/properties/${id}`,
         formData
       );
-        toast.success("property editted");
+      toast.success("property editted");
       console.log(response);
       toast.success(response.data.message);
-        setTimeout(() => navigate('/Admin/AdminProperties'), 2000);
+      setTimeout(() => navigate("/Admin/AdminProperties"), 2000);
     } catch (error) {
       toast.error("Error updating property");
       console.log(error);
@@ -249,7 +250,7 @@ function EditProperty() {
               </div>
               <div className="mb-3">
                 <label htmlFor="maxGuest" className="form-label">
-                Maximum no. of guest :
+                  Maximum no. of guest :
                 </label>
                 <input
                   onChange={handleChange}

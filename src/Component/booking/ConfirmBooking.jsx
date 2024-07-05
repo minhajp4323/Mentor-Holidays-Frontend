@@ -3,8 +3,9 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import Header from "../navbar/Navbar";
-import axios from "axios";
 import { toast } from "react-toastify";
+import userInstance from "../../Interceptors/UserInterceptors";
+import { useEffect } from "react";
 
 function ConfirmBooking() {
   const location = useLocation();
@@ -32,20 +33,17 @@ function ConfirmBooking() {
     const receipt = `RCPT_Mentor${Date.now()}`;
 
     try {
-      const paymentResponse = await axios.post(
-        "http://localhost:3333/api/user/payment",
-        {
-          title,
-          amount: totalPrice * 100,
-          currency: "INR",
-          receipt,
-          propertyId: property._id,
-          checkInDate,
-          checkOutDate,
-          guestNumber,
-          userId,
-        }
-      );
+      const paymentResponse = await userInstance.post("/user/payment", {
+        title,
+        amount: totalPrice * 100,
+        currency: "INR",
+        receipt,
+        propertyId: property._id,
+        checkInDate,
+        checkOutDate,
+        guestNumber,
+        userId,
+      });
 
       const { data } = paymentResponse.data;
       const options = {
@@ -58,22 +56,19 @@ function ConfirmBooking() {
         order_id: data.id,
         handler: async (response) => {
           try {
-            const bookingResponse = await axios.post(
-              "http://localhost:3333/api/user/booking",
-              {
-                title,
-                checkInDate,
-                checkOutDate,
-                guestNumber,
-                amount: totalPrice,
-                currency: "INR",
-                receipt,
-                propertyId: property._id,
-                userId,
-                paymentId: response.razorpay_payment_id,
-                orderId: response.razorpay_order_id,
-              }
-            );
+            const bookingResponse = await userInstance.post("/user/booking", {
+              title,
+              checkInDate,
+              checkOutDate,
+              guestNumber,
+              amount: totalPrice,
+              currency: "INR",
+              receipt,
+              propertyId: property._id,
+              userId,
+              paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id,
+            });
 
             if (bookingResponse.data.status === "success") {
               toast.success("Booking confirmed!");
@@ -104,6 +99,11 @@ function ConfirmBooking() {
       toast.error("Payment initiation failed. Please try again.");
     }
   };
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/Login");
+    }
+  });
 
   return (
     <>

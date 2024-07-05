@@ -1,10 +1,19 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { Grid, Card, CardMedia, CardContent, Typography, IconButton, Container, Box } from "@mui/material";
+import {
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  IconButton,
+  Container,
+  Box,
+} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SideBar from "../components/Sidebar";
+import adminInstance from "../../../Interceptors/AdminInterceptor";
 
 function AdminProperties() {
   const navigate = useNavigate();
@@ -12,9 +21,7 @@ function AdminProperties() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3333/api/admin/properties"
-      );
+      const response = await adminInstance.get("/admin/properties");
       setProperties(response.data.data);
     } catch (error) {
       console.error("Error fetching properties", error);
@@ -22,13 +29,17 @@ function AdminProperties() {
   };
 
   useEffect(() => {
+    if (!localStorage.getItem("admintoken")) {
+      navigate("/Admin/Login");
+    }
+
     fetchData();
-  }, []);
+  }, [navigate]);
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this property?")) {
       try {
-        await axios.delete(`http://localhost:3333/api/admin/properties/${id}`);
+        await adminInstance.delete(`/admin/properties/${id}`);
         setProperties(properties.filter((property) => property._id !== id));
       } catch (error) {
         console.error("Error deleting property", error);
@@ -61,7 +72,12 @@ function AdminProperties() {
                     {property.location}
                   </Typography>
                 </CardContent>
-                <Box display="flex" justifyContent="space-between" px={2} pb={2}>
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  px={2}
+                  pb={2}
+                >
                   <IconButton
                     color="primary"
                     onClick={() =>

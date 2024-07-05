@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Header from "../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
 import {
@@ -17,6 +16,7 @@ import {
   useMediaQuery,
   useTheme
 } from "@mui/material";
+import userInstance from "../../Interceptors/UserInterceptors";
 
 function Login() {
   const navigate = useNavigate();
@@ -45,23 +45,23 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:3333/api/user/login",
+      const response = await userInstance.post(
+        "/user/login",
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
 
+      const { token, data } = response.data;
+      handleLoginSuccess(token, data);
       navigate("/");
       toast.success("Successfully logged in");
-
-      const { token, data } = response.data;
-
-      handleLoginSuccess(token, data);
     } catch (error) {
       if (error.response) {
         setErrorMessage(error.response.data.message);
+        toast.error(error.response.data.message); // Show error toast
       } else {
         setErrorMessage("Error during login, please try again");
+        toast.error("Error during login, please try again"); // Show error toast
       }
     } finally {
       setLoading(false);
@@ -80,9 +80,8 @@ function Login() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          marginTop:"5%",
-          width:"60%"
-          
+          marginTop: "5%",
+          width: "60%"
         }}
       >
         <Card
@@ -153,7 +152,6 @@ function Login() {
                   )}
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                     {/* <Button component="a" href="#" variant="text">Forgot password?</Button> */}
-
                     <Box></Box>
                   </Box>
                   <Button

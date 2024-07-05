@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import Footer from "../../../shared/footer/Footer.jsx";
 import Sidebar from "../components/Sidebar.jsx";
 import Card from "react-bootstrap/Card";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import adminInstance from "../../../Interceptors/AdminInterceptor.jsx";
 
 function AdminHome() {
   const navigate = useNavigate();
@@ -17,11 +16,16 @@ function AdminHome() {
   const [totalRevenue, setTotalRevenue] = useState(0);
   console.log(booking);
 
+
   useEffect(() => {
+    if(!localStorage.getItem('admintoken')){
+      navigate('/Admin/Login')
+    }
+
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3333/api/admin/user"
+        const response = await adminInstance.get(
+          "/admin/user"
         );
         setUsers(response.data.data);
       } catch (error) {
@@ -32,8 +36,8 @@ function AdminHome() {
 
     const fetchBookings = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3333/api/admin/bookings"
+        const response = await adminInstance.get(
+          "/admin/bookings"
         );
         setBooking(response.data.dataCount);
         console.log(response.data.dataCount);
@@ -47,8 +51,8 @@ function AdminHome() {
 
     const fetchTotalRevenue = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3333/api/admin/total-revenue"
+        const response = await adminInstance.get(
+          "/admin/total-revenue"
         );
         const total = response.data.data[0]?.total || 0;
         setTotalRevenue(total);
@@ -62,7 +66,7 @@ function AdminHome() {
     fetchUsers();
     fetchBookings();
     fetchTotalRevenue();
-  }, []);
+  }, [navigate]);
 
   if (loading) {
     return (
@@ -115,8 +119,8 @@ function AdminHome() {
               </div>
             </div>
           </div>
+          
         </div>
-        <Footer />
       </>
     );
   }
@@ -164,6 +168,7 @@ function AdminHome() {
           </div>
         </div>
       </div>
+      {/* <Dashboard/> */}
       {/* <Footer /> */}
     </>
   );

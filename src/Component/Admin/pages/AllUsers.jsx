@@ -1,23 +1,29 @@
 import { useEffect, useState } from "react";
 import SideBar from "../components/Sidebar";
-import axios from "axios";
-import "./AllUser.css"; 
+import "./AllUser.css";
+import adminInstance from "../../../Interceptors/AdminInterceptor";
+import { useNavigate } from "react-router-dom";
 
 function AllUser() {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3333/api/admin/user");
+        const response = await adminInstance.get("/admin/user");
         setUsers(response.data.data);
       } catch (error) {
         console.error("Error fetching users", error);
       }
     };
+
+    if (!localStorage.getItem("admintoken")) {
+      navigate("/Admin/Login");
+    }
+
     fetchUsers();
-  }, []);
+  }, [navigate]);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -50,14 +56,23 @@ function AllUser() {
         <table className="table custom-table">
           <thead>
             <tr>
-              <th scope="col"><h3>Username</h3></th>
-              <th scope="col"><h3>Email</h3></th>
-              <th scope="col"><h3>Phone Number</h3></th>
+              <th scope="col">
+                <h3>Username</h3>
+              </th>
+              <th scope="col">
+                <h3>Email</h3>
+              </th>
+              <th scope="col">
+                <h3>Phone Number</h3>
+              </th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.map((user, index) => (
-              <tr key={user._id} className={index % 2 === 0 ? "even-row" : "odd-row"}>
+              <tr
+                key={user._id}
+                className={index % 2 === 0 ? "even-row" : "odd-row"}
+              >
                 <td>{user.username}</td>
                 <td>{user.email}</td>
                 <td>{user.phonenumber}</td>

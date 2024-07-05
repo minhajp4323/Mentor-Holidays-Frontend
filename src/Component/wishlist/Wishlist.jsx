@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -6,6 +5,7 @@ import Header from "../navbar/Navbar";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
+import userInstance from "../../Interceptors/UserInterceptors";
 
 function Wishlist() {
   const navigate = useNavigate();
@@ -15,9 +15,7 @@ function Wishlist() {
   useEffect(() => {
     const fetchWishlistProperties = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3333/api/user/wishlist/${userId}`
-        );
+        const response = await userInstance.get(`/user/wishlist/${userId}`);
         setProperties(response.data.data);
         console.log(response.data);
       } catch (error) {
@@ -29,9 +27,11 @@ function Wishlist() {
     fetchWishlistProperties();
   }, [userId]);
 
+  
+
   const handleWishlistClick = async (propertyId) => {
     try {
-      await axios.delete(`http://localhost:3333/api/user/wishlist/${userId}`, {
+      await userInstance.delete(`/user/wishlist/${userId}`, {
         data: { propertyId },
       });
       const updatedProperties = properties.filter(
@@ -53,9 +53,7 @@ function Wishlist() {
   return (
     <>
       <Header />
-      <h1 style={{ textAlign: "center", paddingTop: "20px" }}>
-        Wishlist
-      </h1>
+      <h1 style={{ textAlign: "center", paddingTop: "20px" }}>Wishlist</h1>
       <hr />
       <div className="homeMain">
         {properties.length === 0 ? (

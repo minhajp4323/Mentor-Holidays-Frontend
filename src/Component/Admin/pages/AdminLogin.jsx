@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
 import {
@@ -16,6 +15,7 @@ import {
   DialogActions,
 } from "@mui/material";
 import "./AdminLogin.css"; // Import the CSS file
+import adminInstance from "../../../Interceptors/AdminInterceptor";
 
 function AdminLogin() {
   const navigate = useNavigate();
@@ -35,18 +35,16 @@ function AdminLogin() {
 
   const handleLoginSuccess = (token) => {
     localStorage.setItem("admintoken", token);
-
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:3333/api/admin/login",
-        formData,
-        { headers: { "Content-Type": "application/json" } }
-      );
+      const response = await adminInstance.post("/admin/login", formData, {
+        headers: { "Content-Type": "application/json" },
+      });
       navigate("/Admin/Home");
       toast.success("Successfully logged in");
       const { token, data } = response.data;
@@ -108,9 +106,16 @@ function AdminLogin() {
               {loading ? <ClipLoader size={20} color={"#fff"} /> : "Login"}
             </Button>
             <div className="d-flex justify-between">
-              <Typography className="forgot text-right mt-2" sx={{ textAlign: "left" }}>
+              <Typography
+                className="forgot text-right mt-2"
+                sx={{ textAlign: "left" }}
+              >
                 Not a member ?
-                <Link component="button" variant="body2" onClick={() => navigate("/admin/signin")}>
+                <Link
+                  component="button"
+                  variant="body2"
+                  onClick={() => navigate("/admin/signin")}
+                >
                   Sign up
                 </Link>
               </Typography>
@@ -119,7 +124,10 @@ function AdminLogin() {
         </Box>
 
         {/* Forgot Password Dialog */}
-        <Dialog open={resetPasswordDialogOpen} onClose={() => setResetPasswordDialogOpen(false)}>
+        <Dialog
+          open={resetPasswordDialogOpen}
+          onClose={() => setResetPasswordDialogOpen(false)}
+        >
           <DialogTitle>Forgot Password?</DialogTitle>
           <DialogContent>
             <TextField
@@ -133,7 +141,10 @@ function AdminLogin() {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setResetPasswordDialogOpen(false)} color="secondary">
+            <Button
+              onClick={() => setResetPasswordDialogOpen(false)}
+              color="secondary"
+            >
               Cancel
             </Button>
             <Button

@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom"; // Import useLocati
 import Card from "react-bootstrap/Card";
 import Header from "../navbar/Navbar";
 import Footer from "../Admin/components/Footer";
-import axios from "axios";
 import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
+import userInstance from "../../Interceptors/UserInterceptors"
 import {
   FormControl,
   InputLabel,
@@ -46,7 +46,7 @@ function Properties() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3333/api/user/properties");
+        const response = await userInstance.get("/user/properties");
         setProperties(response.data.data);
 
         const uniqueCategories = [
@@ -59,7 +59,7 @@ function Properties() {
         if (storedWishlist) {
           setWishlist(JSON.parse(storedWishlist));
         } else if (userId) {
-          const wishlistResponse = await axios.get(`http://localhost:3333/api/user/${userId}/wishlist`);
+          const wishlistResponse = await userInstance.get(`/user/${userId}/wishlist`);
           const wishlistIds = wishlistResponse.data.data.map((property) => property._id);
           setWishlist(wishlistIds);
           localStorage.setItem("wishlist", JSON.stringify(wishlistIds));
@@ -92,14 +92,14 @@ function Properties() {
       let updateWishlist = [...wishlist];
       if (updateWishlist.includes(propertyId)) {
         updateWishlist = updateWishlist.filter((wishId) => wishId !== propertyId);
-        await axios.delete(`http://localhost:3333/api/user/wishlist/${userId}`, {
+        await userInstance.delete(`/user/wishlist/${userId}`, {
           data: { propertyId },
         });
         localStorage.setItem("wishlist", JSON.stringify(updateWishlist));
         toast.error("Removed from Wishlist");
       } else {
         updateWishlist.push(propertyId);
-        await axios.post(`http://localhost:3333/api/user/wishlist/${userId}`, {
+        await userInstance.post(`/user/wishlist/${userId}`, {
           propertyId,
         });
         toast.success("Property added to wishlist");

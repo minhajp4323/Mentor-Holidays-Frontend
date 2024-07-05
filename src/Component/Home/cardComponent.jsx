@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import axios from "axios";
 import Skeleton from "@mui/material/Skeleton";
 import styles from "./CardComponent.module.css";
+import userInstance from "../../Interceptors/UserInterceptors";
 
 
 const CardComponent = () => {
@@ -15,7 +15,7 @@ const CardComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3333/api/user/properties");
+        const response = await userInstance.get("/user/properties");
         setProperties(response.data.data);
       } catch (error) {
         console.error("Error fetching properties:", error);

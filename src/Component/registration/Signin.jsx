@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Header from "../navbar/Navbar";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -9,6 +8,7 @@ import { styled } from "@mui/system";
 import styles from "./Signin.module.css";
 import sideImage from "./../../assets/Property Photos/LoginWall.jpeg.jpg";
 import Logo from "./../../assets/Mentor Long Logo White.png";
+import userInstance from "../../Interceptors/UserInterceptors";
 
 const CssTextField = styled(TextField)({
   "& label.Mui-outlined": {
@@ -68,8 +68,8 @@ function SignIn() {
     setLoading(true);
     if (!otpSent) {
       try {
-        const response = await axios.post(
-          "http://localhost:3333/api/user/register",
+        const response = await userInstance.post(
+          "/user/register",
           formData,
           { headers: { "Content-Type": "application/json" } }
         );
@@ -101,8 +101,8 @@ function SignIn() {
   const handleOtpSubmit = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:3333/api/user/verifyotp",
+      const response = await userInstance.post(
+        "/user/verifyotp",
         { email, otp },
         { headers: { "Content-Type": "application/json" } }
       );

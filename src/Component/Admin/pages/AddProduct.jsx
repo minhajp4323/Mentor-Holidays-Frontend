@@ -1,8 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SideBar from "../components/Sidebar";
-import axios from "axios";
 import { toast } from "react-toastify";
-import { TextField, Button, Grid, Typography, Paper, Box, useMediaQuery, useTheme } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Grid,
+  Typography,
+  Paper,
+  Box,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import adminInstance from "../../../Interceptors/AdminInterceptor";
+import { useNavigate } from "react-router-dom";
 
 function AddProduct() {
   const [propertyData, setPropertyData] = useState({
@@ -37,6 +47,14 @@ function AddProduct() {
     }
   };
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("admintoken")) {
+      navigate("/Admin/Login");
+    }
+  },[navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -55,7 +73,7 @@ function AddProduct() {
     }
 
     try {
-      await axios.post("http://localhost:3333/api/admin/properties", formData);
+      await adminInstance.post("/admin/properties", formData);
       toast.success("Property added successfully");
 
       // Reset form inputs
@@ -76,7 +94,7 @@ function AddProduct() {
   };
 
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <div

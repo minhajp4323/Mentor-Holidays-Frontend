@@ -22,6 +22,7 @@ import BookingList from "./Component/Admin/pages/BookingList.jsx";
 import ContactForm from "./Component/Home/contact/ContactForm.jsx";
 import PropertyRevenue from "./Component/Admin/pages/revenue/Revenue.jsx";
 import About from "./Component/Home/About/About.jsx";
+import Chart from "./Component/Admin/pages/RevenueGraph/Chart.jsx";
 
 function App() {
   return (
@@ -52,6 +53,10 @@ function App() {
           <Route path="/Admin/AllUser" element={<AllUser />} />
           <Route path="/Admin/AllBookings" element={<BookingList />} />
           <Route path="/Admin/Revenue" element={<PropertyRevenue />} />
+
+
+
+          <Route path="Chart" element={<Chart/>} />
         </Routes>
       </div>
     </>

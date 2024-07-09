@@ -30,7 +30,7 @@ function AdminProperties() {
 
   useEffect(() => {
     if (!localStorage.getItem("admintoken")) {
-      navigate("/Admin/Login");
+      navigate("/Admin/Login"); 
     }
 
     fetchData();

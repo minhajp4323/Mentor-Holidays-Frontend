@@ -13,7 +13,7 @@ function AllUser() {
       try {
         const response = await adminInstance.get("/admin/user");
         setUsers(response.data.data);
-      } catch (error) {
+      } catch (error) { 
         console.error("Error fetching users", error);
       }
     };

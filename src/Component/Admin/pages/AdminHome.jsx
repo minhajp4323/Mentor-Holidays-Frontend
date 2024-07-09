@@ -4,8 +4,9 @@ import Card from "react-bootstrap/Card";
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import adminInstance from "../../../Interceptors/AdminInterceptor.jsx";
+import Chart from "./RevenueGraph/Chart.jsx";
 
 function AdminHome() {
   const navigate = useNavigate();
@@ -16,17 +17,14 @@ function AdminHome() {
   const [totalRevenue, setTotalRevenue] = useState(0);
   console.log(booking);
 
-
   useEffect(() => {
-    if(!localStorage.getItem('admintoken')){
-      navigate('/Admin/Login')
+    if (!localStorage.getItem("admintoken")) {
+      navigate("/Admin/Login");
     }
 
     const fetchUsers = async () => {
       try {
-        const response = await adminInstance.get(
-          "/admin/user"
-        );
+        const response = await adminInstance.get("/admin/user");
         setUsers(response.data.data);
       } catch (error) {
         console.error("Error fetching users", error);
@@ -36,9 +34,7 @@ function AdminHome() {
 
     const fetchBookings = async () => {
       try {
-        const response = await adminInstance.get(
-          "/admin/bookings"
-        );
+        const response = await adminInstance.get("/admin/bookings");
         setBooking(response.data.dataCount);
         console.log(response.data.dataCount);
       } catch (error) {
@@ -51,9 +47,7 @@ function AdminHome() {
 
     const fetchTotalRevenue = async () => {
       try {
-        const response = await adminInstance.get(
-          "/admin/total-revenue"
-        );
+        const response = await adminInstance.get("/admin/total-revenue");
         const total = response.data.data[0]?.total || 0;
         setTotalRevenue(total);
         console.log(total);
@@ -73,7 +67,7 @@ function AdminHome() {
       <>
         <div className="d-flex">
           <Sidebar />
-          <div className="container mt-5 w-80">
+          <div className="container mt-5" style={{ width: "80%" }}>
             <div className="row">
               <div className="col-12 col-sm-6 col-lg-4 mb-2">
                 <Card className="bg-secondary">
@@ -119,7 +113,6 @@ function AdminHome() {
               </div>
             </div>
           </div>
-          
         </div>
       </>
     );
@@ -133,7 +126,7 @@ function AdminHome() {
     <>
       <div className="d-flex">
         <Sidebar />
-        <div className="container mt-5 w-80">
+        <div className="container mt-5" style={{ width: "80%" }}>
           <div className="row">
             <div className="col-12 col-sm-6 col-lg-4 mb-2">
               <Card className="bg-secondary">
@@ -166,10 +159,13 @@ function AdminHome() {
               </Card>
             </div>
           </div>
+          <div className="row">
+            <div className="col-12">
+              <Chart />
+            </div>
+          </div>
         </div>
       </div>
-      {/* <Dashboard/> */}
-      {/* <Footer /> */}
     </>
   );
 }

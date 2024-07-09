@@ -151,7 +151,7 @@ function AdminHome() {
             <div className="col-12 col-sm-6 col-lg-4 mb-2">
               <Card className="bg-secondary">
                 <Card.Header>Total Revenue</Card.Header>
-                <Card.Body>
+                <Card.Body onClick={()=>{navigate('/Admin/Revenue')}}>
                   <Card.Text>
                     <h1>₹{totalRevenue.toLocaleString()}</h1>
                   </Card.Text>

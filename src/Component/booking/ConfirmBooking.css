@@ -1,0 +1,36 @@
+.confirmationPage {
+    padding: 50px 20px;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+  }
+  
+  .booking-card {
+    width: 100%;
+    max-width: 900px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .booking-card-header {
+    background-color: #5384b9;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .property-image {
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .confirmationPage {
+      padding: 20px;
+    }
+  }
+  

@@ -58,7 +58,7 @@ function Home() {
         ) : (
           <>
             <CardComponent />
-            <ContactForm id="#contact" />
+            {/* <ContactForm  /> */}
           </>
         )}
       </div>

@@ -15,6 +15,8 @@ import TextField from "@mui/material/TextField";
 import { styled } from "@mui/system";
 import Button from "@mui/material/Button";
 import Logo from "../../../assets/Mentor Long Logo.png";
+import Header from "../../navbar/Navbar";
+import Footer from "../../Admin/components/Footer";
 // import Header from "../../navbar/Navbar";
 
 const CssTextField = styled(TextField)({
@@ -43,7 +45,7 @@ const CssTextField = styled(TextField)({
 const ContactForm = () => {
   return (
     <>
-    {/* <Header/> */}
+    <Header/>
       <div className={styles.container} id="contact">
         <span className={styles.bigCircle}></span>
         <div className={styles.form}>
@@ -156,6 +158,7 @@ const ContactForm = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

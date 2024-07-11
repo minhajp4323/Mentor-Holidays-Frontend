@@ -8,6 +8,7 @@ import {
 } from "cdbreact";
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css"; // Import the CSS file
+import Logo from "../../../assets/Mentor Long Logo White.png";
 
 const SideBar = () => {
   const handleLogout = () => {
@@ -55,9 +56,9 @@ const SideBar = () => {
             </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
-        <CDBSidebarFooter style={{ textAlign: "center" }}>
-          <div className="sidebar-btn-wrapper" style={{ padding: "20px 5px" }}>
-            Sidebar Footer
+        <CDBSidebarFooter>
+          <div style={{display:"flex", justifyContent:"center", paddingBottom:"10%"}}>
+            <img src={Logo} alt="" style={{ width: "70%" }} />
           </div>
         </CDBSidebarFooter>
       </CDBSidebar>

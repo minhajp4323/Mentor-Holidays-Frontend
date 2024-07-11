@@ -81,7 +81,7 @@ function Login() {
           justifyContent: 'center',
           alignItems: 'center',
           marginTop: "5%",
-          width: "60%"
+          // width: "60%"
         }}
       >
         <Card

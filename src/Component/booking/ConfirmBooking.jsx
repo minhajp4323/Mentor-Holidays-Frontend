@@ -1,11 +1,10 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import ListGroup from "react-bootstrap/ListGroup";
+import { Card, Button, ListGroup, Col, Row, Container } from "react-bootstrap";
 import Header from "../navbar/Navbar";
 import { toast } from "react-toastify";
 import userInstance from "../../Interceptors/UserInterceptors";
 import { useEffect } from "react";
+import './ConfirmBooking.css';  
 
 function ConfirmBooking() {
   const location = useLocation();
@@ -99,6 +98,7 @@ function ConfirmBooking() {
       toast.error("Payment initiation failed. Please try again.");
     }
   };
+
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/Login");
@@ -108,121 +108,53 @@ function ConfirmBooking() {
   return (
     <>
       <Header />
-      <div
-        className="confirmationPage d-flex justify-content-center align-items-center"
-        style={{
-          width: "100%",
-          padding: "50px 100px",
-          borderRadius: 50,
-          backgroundColor: "#f8f9fa",
-          minHeight: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <Container fluid className="confirmationPage d-flex justify-content-center align-items-center">
         {property && (
-          <Card style={{ width: "70%", borderRadius: 10 }}>
-            <Card.Header
-              as="h5"
-              style={{
-                backgroundColor: "#007bff",
-                color: "#fff",
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
-              }}
-            >
+          <Card className="booking-card">
+            <Card.Header className="booking-card-header">
               Booking Confirmation
             </Card.Header>
-            <Card.Body style={{ padding: 20 }}>
-              <div className="d-flex">
-                <div style={{ width: "60%" }}>
+            <Card.Body>
+              <Row>
+                <Col xs={12} md={6} className="mb-3">
+                  <Card.Img variant="top" src={property.images[0]} className="property-image" />
+                </Col>
+                <Col xs={12} md={6}>
                   <Card.Title>{property.title}</Card.Title>
                   <Card.Text>₹{property.price}/- per night</Card.Text>
                   <Card.Text>{property.category}</Card.Text>
                   <Card.Text>
                     <i className="fas fa-map-marker-alt" /> {property.location}
                   </Card.Text>
-                </div>
-                <div
-                  style={{
-                    width: "40%",
-                    padding: "0 20px",
-                    borderLeft: "1px solid #ddd",
-                  }}
-                >
-                  <ListGroup variant="flush">
-                    <ListGroup.Item
-                      style={{ border: "none", padding: "10px 0" }}
-                    >
-                      <strong>Guests:</strong> {guestNumber}
-                    </ListGroup.Item>
-                    <ListGroup.Item
-                      style={{ border: "none", padding: "10px 0" }}
-                    >
-                      <strong>Check-in Date:</strong> {checkInDate}
-                    </ListGroup.Item>
-                    <ListGroup.Item
-                      style={{ border: "none", padding: "10px 0" }}
-                    >
-                      <strong>Check-out Date:</strong> {checkOutDate}
-                    </ListGroup.Item>
-                    <ListGroup.Item
-                      style={{ border: "none", padding: "10px 0" }}
-                    >
-                      <strong>Total Nights: </strong> {totalNights}
-                    </ListGroup.Item>
-                    <ListGroup.Item
-                      style={{ border: "none", padding: "10px 0" }}
-                    >
-                      <strong>Total Price: </strong> ₹{totalPrice}
-                    </ListGroup.Item>
+                  <ListGroup variant="flush" className="mt-3">
+                    <ListGroup.Item><strong>Guests:</strong> {guestNumber}</ListGroup.Item>
+                    <ListGroup.Item><strong>Check-in Date:</strong> {checkInDate}</ListGroup.Item>
+                    <ListGroup.Item><strong>Check-out Date:</strong> {checkOutDate}</ListGroup.Item>
+                    <ListGroup.Item><strong>Total Nights:</strong> {totalNights}</ListGroup.Item>
+                    <ListGroup.Item><strong>Total Price:</strong> ₹{totalPrice}</ListGroup.Item>
                   </ListGroup>
-                </div>
-                <div
-                  style={{
-                    width: "40%",
-                    padding: "0 20px",
-                    borderLeft: "1px solid #ddd",
-                  }}
-                >
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col xs={12}>
                   <ListGroup variant="flush">
-                    <ListGroup.Item
-                      style={{ border: "none", padding: "10px 0" }}
-                    >
-                      <p>
-                        <strong>Guest Name:</strong>{" "}
-                        {localStorage.getItem("username")}
-                      </p>
-                      <p>
-                        <strong>Email: </strong>
-                        {localStorage.getItem("email")}
-                      </p>
-                      <p>
-                        <strong>Phone: </strong>
-                        {localStorage.getItem("phonenumber")}
-                      </p>
-                    </ListGroup.Item>
+                    <ListGroup.Item><strong>Guest Name:</strong> {localStorage.getItem("username")}</ListGroup.Item>
+                    <ListGroup.Item><strong>Email:</strong> {localStorage.getItem("email")}</ListGroup.Item>
+                    <ListGroup.Item><strong>Phone:</strong> {localStorage.getItem("phonenumber")}</ListGroup.Item>
                   </ListGroup>
-                </div>
-              </div>
-              <div className="d-flex justify-content-end mt-3">
-                <Button
-                  variant="primary"
-                  onClick={handlePayment}
-                  style={{
-                    width: "100%",
-                    backgroundColor: "#007bff",
-                    borderColor: "#007bff",
-                  }}
-                >
-                  Proceed to pay
-                </Button>
-              </div>
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col xs={12}>
+                  <Button variant="primary" onClick={handlePayment} className="w-100">
+                    Proceed to Pay
+                  </Button>
+                </Col>
+              </Row>
             </Card.Body>
           </Card>
         )}
-      </div>
+      </Container>
     </>
   );
 }

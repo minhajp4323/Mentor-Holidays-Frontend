@@ -6,16 +6,14 @@ import { MdOutlineChangeCircle } from "react-icons/md";
 import Header from "../navbar/Navbar.jsx";
 import Footer from "../Admin/components/Footer.jsx";
 import CardComponent from "./cardComponent.jsx";
-import ContactForm from "./contact/ContactForm.jsx";
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading or any async operations
     setTimeout(() => {
-      setIsLoading(false); // Set loading state to false after loading
-    }, 2000); // Adjust timeout as needed
+      setIsLoading(false);
+    }, 2000); 
   }, []);
 
   return (

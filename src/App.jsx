@@ -41,7 +41,6 @@ function App() {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/profile" element={<UserPropfile />} />
           <Route path="/booking" element={<Bookings />} />
-          {/* <Route path="/about" element={<About />} /> */}
 
           {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />

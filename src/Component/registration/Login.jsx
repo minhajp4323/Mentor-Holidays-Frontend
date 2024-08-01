@@ -58,10 +58,10 @@ function Login() {
     } catch (error) {
       if (error.response) {
         setErrorMessage(error.response.data.message);
-        toast.error(error.response.data.message); // Show error toast
+        toast.error(error.response.data.message); 
       } else {
         setErrorMessage("Error during login, please try again");
-        toast.error("Error during login, please try again"); // Show error toast
+        toast.error("Error during login, please try again"); 
       }
     } finally {
       setLoading(false);

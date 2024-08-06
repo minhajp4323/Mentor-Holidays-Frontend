@@ -1,11 +1,5 @@
-import {
-  Box,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Container,
-} from "@mui/material";
+import React from "react";
+import { Box, Typography, List, ListItem, ListItemText, Container } from "@mui/material";
 import Header from "../../navbar/Navbar";
 import { GiSpookyHouse } from "react-icons/gi";
 
@@ -15,8 +9,9 @@ const Services = () => {
       <Header />
       <div
         style={{
-            bgcolor: "#001f48",
-            alignItems: "center",
+          background: "linear-gradient(to bottom right, #0c164f, #1f3c88)",
+          minHeight: "100vh",
+          color: "white",
         }}
       >
         <Container
@@ -24,7 +19,7 @@ const Services = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            bgcolor: "#001f48",
+            bgcolor: "transparent", // Remove background color to allow gradient to show
             color: "white",
             py: 4,
             mx: 0, // Remove default horizontal margins
@@ -36,7 +31,7 @@ const Services = () => {
             component="h2"
             sx={{ mb: 2, textAlign: "center" }}
           >
-            Our Service
+            Our Services
           </Typography>
           <Box
             sx={{
@@ -53,10 +48,11 @@ const Services = () => {
                 m: 1,
                 minWidth: 280,
                 maxWidth: 400,
-                bgcolor: "#0d2b56",
                 p: 2,
                 borderRadius: 2,
                 textAlign: "left",
+                backgroundImage: "linear-gradient(to bottom right, #1f3c88, #0c164f)",
+                color: "white",
               }}
             >
               <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -174,10 +170,11 @@ const Services = () => {
                 m: 1,
                 minWidth: 280,
                 maxWidth: 400,
-                bgcolor: "#0d2b56",
                 p: 2,
                 borderRadius: 2,
                 textAlign: "left",
+                backgroundImage: "linear-gradient(to bottom right, #1f3c88, #0c164f)",
+                color: "white",
               }}
             >
               <Box sx={{ display: "flex", justifyContent: "center" }}>

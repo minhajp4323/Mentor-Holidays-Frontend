@@ -1,11 +1,11 @@
+import React from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import MentorMain from "./../../assets/Menort Main Logo.png";
-import styles from "./navbar.module.css";
 import { useNavigate } from "react-router-dom";
-// import { NavDropdown } from "react-bootstrap";
-import { FaBars } from "react-icons/fa"; // Import the icon from react-icons
+import MentorMain from "./../../assets/Menort Main Logo.png";
+import { FaBars } from "react-icons/fa";
+import styles from "./navbar.module.css";
 
 function Header() {
   // const username = localStorage.getItem("username");
@@ -22,10 +22,10 @@ function Header() {
   // };
 
   return (
-    <Navbar collapseOnSelect expand="sm" className={styles.navbarMain}>
+    <Navbar collapseOnSelect expand="sm" style={{position:"sticky"}} className={styles.navbarMain}>
       <Container>
         <Navbar.Brand onClick={() => navigate("/")} href="#home">
-          <img src={MentorMain} style={{ width: "90px" }} alt="" />
+          <img src={MentorMain} style={{ width: "120px" }} alt="Logo" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav">
           <FaBars />
@@ -42,31 +42,17 @@ function Header() {
               Book Now
             </Nav.Link> */}
           </Nav>
-
           <Nav>
-            <Nav.Link
-              onClick={() => navigate("/about")}
-              className={styles.navLink}
-            >
+            <Nav.Link onClick={() => navigate("/about")} className={styles.navLink}>
               About
             </Nav.Link>
-            <Nav.Link
-              onClick={() => navigate("/contact")}
-              className={styles.navLink}
-            >
+            <Nav.Link onClick={() => navigate("/contact")} className={styles.navLink}>
               Contact
             </Nav.Link>
-            <Nav.Link
-              onClick={() => navigate("/team")}
-              className={styles.navLink}
-            >
+            <Nav.Link onClick={() => navigate("/team")} className={styles.navLink}>
               Team
             </Nav.Link>
-            <Nav.Link
-              href="#contact"
-              onClick={() => navigate("/service")}
-              className={styles.navLink}
-            >
+            <Nav.Link onClick={() => navigate("/service")} className={styles.navLink}>
               Services
             </Nav.Link>
           </Nav>

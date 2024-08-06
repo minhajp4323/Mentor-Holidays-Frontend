@@ -1,4 +1,5 @@
-import { Box, Typography, Grid, Avatar, Container } from "@mui/material";
+import React from "react";
+import { Box, Typography, Grid, Avatar } from "@mui/material";
 import Header from "../../navbar/Navbar";
 import Haris from "../../../assets/Team/Haris.jpg";
 import Minhaj from "../../../assets/Team/Minhaj.jpg";
@@ -85,6 +86,7 @@ const Team = () => {
             borderRadius: "8px",
             textAlign: "center",
             margin: "8px",
+            animation: "fadeIn 0.8s ease-out",
           }}
         >
           <Typography variant="h3" component="h1" gutterBottom>
@@ -92,11 +94,29 @@ const Team = () => {
           </Typography>
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={4}>
-              <Avatar
-                alt="Muhammed Haris"
-                src={Haris}
-                sx={{ width: 220, height: 220, margin: "auto" }}
-              />
+              <Box
+                sx={{
+                  transition: "transform 0.3s, box-shadow 0.3s",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    // boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
+                  },
+                  padding: "1rem",
+                  borderRadius: "8px",
+                  animation: "fadeIn 0.8s ease-out",
+                }}
+              >
+                <Avatar
+                  alt="Muhammed Haris"
+                  src={Haris}
+                  sx={{
+                    width: 220,
+                    height: 220,
+                    margin: "auto",
+                    boxShadow: "0px 4px 20px rgba(1, 1, 10, 03)",
+                  }}
+                />
+              </Box>
               <Typography
                 variant="h6"
                 component="h2"
@@ -130,7 +150,6 @@ const Team = () => {
         <Box
           sx={{
             background: "linear-gradient(40deg, #1f3c88, #0c164f)",
-
             color: "white",
             padding: "2rem",
             borderRadius: "8px",
@@ -144,19 +163,37 @@ const Team = () => {
           <Grid container spacing={4} justifyContent="center">
             {teamMembers.map((member, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
-                <Avatar
-                  alt={member.name}
-                  src={member.image}
-                  sx={{ width: 200, height: 200, margin: "auto" }}
-                />
-                <Typography
-                  variant="h6"
-                  component="h2"
-                  sx={{ marginTop: "1rem" }}
+                <Box
+                  sx={{
+                    transition: "transform 0.3s, box-shadow 0.3s",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                      //   boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
+                    },
+                    padding: "1rem",
+                    borderRadius: "8px",
+                    animation: "fadeIn 0.8s ease-out",
+                  }}
                 >
-                  {member.name}
-                </Typography>
-                <Typography variant="body1">{member.role}</Typography>
+                  <Avatar
+                    alt={member.name}
+                    src={member.image}
+                    sx={{
+                      width: 200,
+                      height: 200,
+                      margin: "auto",
+                      boxShadow: "0px 4px 20px rgba(1, 1, 10, 03)",
+                    }}
+                  />
+                  <Typography
+                    variant="h6"
+                    component="h2"
+                    sx={{ marginTop: "1rem" }}
+                  >
+                    {member.name}
+                  </Typography>
+                  <Typography variant="body1">{member.role}</Typography>
+                </Box>
               </Grid>
             ))}
           </Grid>
@@ -168,5 +205,7 @@ const Team = () => {
     </>
   );
 };
+
+// Keyframes for fade-in animation
 
 export default Team;

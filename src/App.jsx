@@ -23,6 +23,8 @@ import ContactForm from "./Component/Home/contact/ContactForm.jsx";
 import PropertyRevenue from "./Component/Admin/pages/revenue/Revenue.jsx";
 import About from "./Component/Home/About/About.jsx";
 import Chart from "./Component/Admin/pages/RevenueGraph/Chart.jsx";
+import Services from "./Component/Home/Services/Service.jsx";
+import Team from "./Component/Home/Team/Team.jsx";
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/profile" element={<UserPropfile />} />
           <Route path="/booking" element={<Bookings />} />
+          <Route path="/service" element={<Services />} />
+          <Route path="/team" element={<Team />} />
 
           {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />
@@ -53,9 +57,7 @@ function App() {
           <Route path="/Admin/AllBookings" element={<BookingList />} />
           <Route path="/Admin/Revenue" element={<PropertyRevenue />} />
 
-
-
-          <Route path="Chart" element={<Chart/>} />
+          <Route path="Chart" element={<Chart />} />
         </Routes>
       </div>
     </>

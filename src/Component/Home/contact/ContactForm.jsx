@@ -8,7 +8,8 @@ import {
 import {
   faFacebookF,
   faInstagram,
-  faLinkedinIn,
+  // faLinkedinIn,
+  faGoogle, 
   faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
 import TextField from "@mui/material/TextField";
@@ -88,7 +89,7 @@ const ContactForm = () => {
                   <FontAwesomeIcon icon={faInstagram} />
                 </a>
                 <a href="#">
-                  <FontAwesomeIcon icon={faLinkedinIn} />
+                  <FontAwesomeIcon icon={faGoogle } />
                 </a>
               </div>
             </div>

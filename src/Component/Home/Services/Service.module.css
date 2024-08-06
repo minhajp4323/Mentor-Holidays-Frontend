@@ -1,0 +1,72 @@
+.ourServiceContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #001f48;
+    color: white;
+    padding: 20px;
+}
+
+.ourServiceTitle {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.ourServiceContent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.serviceSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    margin: 10px;
+    min-width: 280px;
+    max-width: 400px;
+    background-color: #0d2b56;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.serviceIcon {
+    font-size: 5rem;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.serviceSection h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.serviceSection ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.serviceSection ul li {
+    margin: 5px 0;
+    position: relative;
+    padding-left: 1.5em; /* Adjust spacing for the dot */
+}
+
+.serviceSection ul li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.8em; /* Dot size */
+    height: 0.8em; /* Dot size */
+    border-radius: 50%;
+    background: transparent;
+    border: 2px solid white; /* Outline color */
+}

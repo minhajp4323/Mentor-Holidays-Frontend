@@ -41,10 +41,14 @@ export default function Testimonial() {
       <MDBRow className="d-flex justify-content-center">
         <MDBCol md="12">
           <div className="text-center mb-4 pb-2">
-            <MDBIcon fas icon="quote-left" size="6x" className="text-blue" />
+            <MDBIcon fas icon="quote-left" size="4x" className="text-blue" />
           </div>
           <MDBCard>
             <MDBCardBody className="px-4 py-5">
+              <div style={{display:"flex", justifyContent:"center"}}>
+                <h1>Testimonials</h1>
+              </div>
+
               <MDBCarousel showIndicators showControls dark>
                 {testiData.map((data, index) => (
                   <MDBCarouselItem

@@ -1,0 +1,42 @@
+.container {
+    min-height: 100vh;
+    background-color: #243056; /* dark blue */
+    color: white;
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+  }
+  
+  .navLinks {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .title {
+    font-size: 3rem;
+    margin-top: 20px;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    margin-bottom: 40px;
+  }
+  
+  .portfolioGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1rem;
+  }
+  

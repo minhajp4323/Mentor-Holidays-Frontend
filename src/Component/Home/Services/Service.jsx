@@ -11,6 +11,7 @@ import Header from "../../navbar/Navbar";
 import { GiSpookyHouse } from "react-icons/gi";
 import { FaPassport, FaTicketAlt } from "react-icons/fa";
 import { MdOutlineCardTravel } from "react-icons/md";
+import Footer from "../../Admin/components/Footer";
 
 
 const servicesData = [
@@ -143,6 +144,7 @@ const Services = () => {
           </Grid>
         </Container>
       </div>
+      <Footer/>
     </>
   );
 };

@@ -16,8 +16,6 @@ import { styled } from "@mui/system";
 import Button from "@mui/material/Button";
 import Logo from "../../../assets/Mentor Long Logo.png";
 import Header from "../../navbar/Navbar";
-import Footer from "../../Admin/components/Footer";
-// import Header from "../../navbar/Navbar";
 
 const CssTextField = styled(TextField)({
   "& label.Mui-outlined": {
@@ -158,7 +156,6 @@ const ContactForm = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

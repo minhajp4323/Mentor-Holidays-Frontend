@@ -1,123 +1,98 @@
 import {
   MDBFooter,
   MDBContainer,
-  MDBRow,
   MDBCol,
+  MDBRow,
+  MDBBtn,
   MDBIcon,
 } from "mdb-react-ui-kit";
 
+const socialLinks = [
+  {
+    icon: "facebook-f",
+    href: "https://www.facebook.com/profile.php?id=100063877939367",
+  },
+  {
+    icon: "google",
+    href: "https://mail.google.com/mail/?view=cm&fs=1&to=mentorholidays@gmail.com&su=Inquiry&body=Hello, I would like to know more about...",
+  },
+  { icon: "instagram", href: "https://www.instagram.com/mentorholidays/" },
+  { icon: "whatsapp", href: "https://wa.me/9072107041" },
+];
+
+const topPackages1 = ["GOA", "BANGALORE", "KOCHI", "CHENNAI", "HYDERABAD"];
+
+const topPackages2 = ["MALAYSIA", "MALDIVES", "THAILAND", "BANGKOK"];
+
 export default function Footer() {
   return (
-    <MDBFooter bgColor="light" className="text-center text-lg-start text-muted">
-      <section className="d-flex justify-content-center justify-content-lg-between p-4 m-20 border-bottom">
-        <div className="me-5 d-none d-lg-block">
-          <span>Get connected with us on social networks:</span>
-        </div>
+    <MDBFooter
+      bgColor="primary"
+      className="text-white text-center text-lg-left"
+      style={{ paddingTop: "3%", backgroundColor: "#1d9a5b", margin: "0px" }} // Slightly lighter shade
+    >
+      {socialLinks.map((link, index) => (
+        <MDBBtn
+          key={index}
+          outline
+          color="light"
+          floating
+          className="ml-5 mr-5"
+          href={link.href}
+          role="button"
+        >
+          <MDBIcon fab icon={link.icon} />
+        </MDBBtn>
+      ))}
 
-        <div>
-          <a
-            href="https://www.facebook.com/profile.php?id=100063877939367"
-            className="me-4 text-reset"
-          >
-            <MDBIcon color="secondary" fab icon="facebook-f" />
-          </a>
+      <MDBContainer className="p-4">
+        <MDBRow>
+          <MDBCol lg="6" md="12" className="mb-4 mb-md-0">
+            <section className="mb-4"></section>
+            <h5 className="text-uppercase"></h5>
 
-          <a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=mentorholidays@gmail.com&su=Inquiry&body=Hello, I would like to know more about..."
-            className="me-4 text-reset"
-          >
-            <MDBIcon color="secondary" fab icon="google" />
-          </a>
+            <p>
+              Mentor Holidays stands out as a trusted partner for wanderlust
+              enthusiasts looking to explore the world. Embark on your next
+              adventure with Mentor Holidays and let their expertise elevate
+              your travel experience.
+            </p>
+          </MDBCol>
 
-          <a
-            href="https://www.instagram.com/mentorholidays/"
-            className="me-4 text-reset"
-          >
-            <MDBIcon color="secondary" fab icon="instagram" />
-          </a>
+          <MDBCol lg="3" md="6" className="mb-4 mb-md-0">
+            <h5 className="text-uppercase">Top Packages</h5>
 
-          <a href="https://wa.me/9072107041" className="me-4 text-reset">
-            <MDBIcon color="secondary" fab icon="whatsapp" />
-          </a>
-        </div>
-      </section>
+            <ul className="list-unstyled mb-0">
+              {topPackages1.map((packageName, index) => (
+                <li key={index}>
+                  <a href="#!" className="text-white">
+                    {packageName}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </MDBCol>
 
-      <section className="">
-        <MDBContainer className="text-center text-md-start mt-5">
-          <MDBRow className="mt-3">
-            <MDBCol md="3" lg="4" xl="3" className="mx-auto mb-4">
-              <h6 className="text-uppercase fw-bold mb-4">
-                <MDBIcon
-                  color="secondary"
-                  icon="./../../../assets/Mentor Simple.png"
-                  className="me-3"
-                />
-                Mentor Holidays
-              </h6>
-              <p>
-                Mentor Holidays ensures that every aspect of the tour is
-                meticulously planned and executed. The experienced team provides
-                excellent customer service, addressing all queries and ensuring
-                the student`s comfort and safety throughout the trip. The
-                packages are competitively priced, offering great value for the
-                unforgettable experiences provided.
-              </p>
-            </MDBCol>
+          <MDBCol lg="3" md="6" className="mb-4 mb-md-0">
+            <h5 className="text-uppercase mb-0">Top Packages</h5>
 
-            <MDBCol md="2" lg="2" xl="2" className="mx-auto mb-4">
-              <h6 className="text-uppercase fw-bold mb-4">
-                International Tour
-              </h6>
-              <p>MALAYSIA</p>
-              <p>SINGAPORE</p>
-              <p>THAILAND</p>
-              <p>BALI</p>
-              <p>MALDIVES</p>
-            </MDBCol>
+            <ul className="list-unstyled">
+              {topPackages2.map((packageName, index) => (
+                <li key={index}>
+                  <a href="#!" className="text-white">
+                    {packageName}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
 
-            <MDBCol md="3" lg="2" xl="2" className="mx-auto mb-4">
-              <h6 className="text-uppercase fw-bold mb-4">Useful links</h6>
-              <p>Pricing</p>
-              <p>Settings</p>
-              <p>Orders</p>
-              <p>Help</p>
-            </MDBCol>
-
-            <MDBCol md="4" lg="3" xl="3" className="mx-auto mb-md-0 mb-4">
-              <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
-              <p>
-                <MDBIcon color="secondary" icon="home" className="me-3" />
-                Kondotty, Kerala, India
-              </p>
-              <p>
-                <MDBIcon color="secondary" icon="envelope" className="me-3" />
-                mentorholidays@gmail.com
-              </p>
-              <p>
-                <MDBIcon color="secondary" icon="phone" className="me-3" />
-                +91 9072107041
-              </p>
-              <p>
-                <MDBIcon
-                  color="secondary"
-                  fab
-                  icon="whatsapp"
-                  className="me-3"
-                />
-                +91 9061350444
-              </p>
-            </MDBCol>
-          </MDBRow>
-        </MDBContainer>
-      </section>
-
-      <div
-        className="text-center p-4"
-        style={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
-      >
-        © 2024 Copyright:
-        <a className="text-reset fw-bold" href="https://mdbootstrap.com/">
-          Mentor Holidays
+      <div className="text-center p-3" style={{ backgroundColor: "#243056" }}>
+        &copy; {new Date().getFullYear()} Copyright:{" "}
+        <a className="text-white" href="">
+          mentorholidays.com
         </a>
       </div>
     </MDBFooter>

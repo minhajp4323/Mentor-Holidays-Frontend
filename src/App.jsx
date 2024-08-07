@@ -25,6 +25,7 @@ import About from "./Component/Home/About/About.jsx";
 import Chart from "./Component/Admin/pages/RevenueGraph/Chart.jsx";
 import Services from "./Component/Home/Services/Service.jsx";
 import Team from "./Component/Home/Team/Team.jsx";
+import PortFolio from "./Component/Home/PortFolio/Portfolio.jsx";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="/booking" element={<Bookings />} />
           <Route path="/service" element={<Services />} />
           <Route path="/team" element={<Team />} />
+          <Route path="/portfolio" element={<PortFolio />} />
 
           {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />

@@ -21,9 +21,18 @@ function Header() {
   // };
 
   return (
-    <Navbar collapseOnSelect expand="sm" style={{position:"sticky"}} className={styles.navbarMain}>
+    <Navbar
+      collapseOnSelect
+      expand="sm"
+      style={{ position: "sticky",
+        backgroundColor: "rgba(255, 255, 255, 0.3)", 
+        backdropFilter: "blur(10px)",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)" 
+      }}
+      className={styles.navbarMain}
+    >
       <Container>
-        <Navbar.Brand onClick={() => navigate("/")} href="#home">
+        <Navbar.Brand onClick={() => navigate("/")}>
           <img src={MentorMain} style={{ width: "120px" }} alt="Logo" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav">
@@ -42,16 +51,34 @@ function Header() {
             </Nav.Link> */}
           </Nav>
           <Nav>
-            <Nav.Link onClick={() => navigate("/about")} className={styles.navLink}>
+            <Nav.Link
+              onClick={() => navigate("/about")}
+              className={styles.navLink}
+            >
               About
             </Nav.Link>
-            <Nav.Link onClick={() => navigate("/contact")} className={styles.navLink}>
+            <Nav.Link
+              onClick={() => navigate("/contact")}
+              className={styles.navLink}
+            >
               Contact
             </Nav.Link>
-            <Nav.Link onClick={() => navigate("/team")} className={styles.navLink}>
+            {/* <Nav.Link
+              onClick={() => navigate("/portfolio")}
+              className={styles.navLink}
+            >
+              PortFolio
+            </Nav.Link> */}
+            <Nav.Link
+              onClick={() => navigate("/team")}
+              className={styles.navLink}
+            >
               Team
             </Nav.Link>
-            <Nav.Link onClick={() => navigate("/service")} className={styles.navLink}>
+            <Nav.Link
+              onClick={() => navigate("/service")}
+              className={styles.navLink}
+            >
               Services
             </Nav.Link>
           </Nav>

@@ -15,20 +15,28 @@ export default function Footer() {
         </div>
 
         <div>
-          <a href="" className="me-4 text-reset">
+          <a
+            href="https://www.facebook.com/profile.php?id=100063877939367"
+            className="me-4 text-reset"
+          >
             <MDBIcon color="secondary" fab icon="facebook-f" />
           </a>
-          <a href="" className="me-4 text-reset">
-            <MDBIcon color="secondary" fab icon="twitter" />
-          </a>
-          <a href="" className="me-4 text-reset">
+
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=mentorholidays@gmail.com&su=Inquiry&body=Hello, I would like to know more about..."
+            className="me-4 text-reset"
+          >
             <MDBIcon color="secondary" fab icon="google" />
           </a>
-          <a href="" className="me-4 text-reset">
+
+          <a
+            href="https://www.instagram.com/mentorholidays/"
+            className="me-4 text-reset"
+          >
             <MDBIcon color="secondary" fab icon="instagram" />
           </a>
 
-          <a href="" className="me-4 text-reset">
+          <a href="https://wa.me/9072107041" className="me-4 text-reset">
             <MDBIcon color="secondary" fab icon="whatsapp" />
           </a>
         </div>
@@ -82,16 +90,21 @@ export default function Footer() {
                 Kondotty, Kerala, India
               </p>
               <p>
-                <MDBIcon color="secondary"  icon="envelope" className="me-3" />
+                <MDBIcon color="secondary" icon="envelope" className="me-3" />
                 mentorholidays@gmail.com
               </p>
               <p>
-                <MDBIcon color="secondary" icon="phone" className="me-3" />+91
-                9072107041
+                <MDBIcon color="secondary" icon="phone" className="me-3" />
+                +91 9072107041
               </p>
               <p>
-                <MDBIcon color="secondary" fab icon="whatsapp" className="me-3" />+91
-                9061350444
+                <MDBIcon
+                  color="secondary"
+                  fab
+                  icon="whatsapp"
+                  className="me-3"
+                />
+                +91 9061350444
               </p>
             </MDBCol>
           </MDBRow>

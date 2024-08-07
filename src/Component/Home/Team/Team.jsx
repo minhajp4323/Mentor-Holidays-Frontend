@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Typography, Grid, Avatar } from "@mui/material";
 import Header from "../../navbar/Navbar";
 import Haris from "../../../assets/Team/Haris.jpg";
@@ -13,6 +12,7 @@ import Danish from "../../../assets/Team/Danish.jpg";
 import Mubarish from "../../../assets/Team/Mubarish.jpg";
 import Rishan from "../../../assets/Team/Rishan.jpg";
 import Swalih from "../../../assets/Team/Swalih.jpg";
+import mentorLogo from "../../../assets/Mentor Long Logo White.png";
 
 const teamMembers = [
   {
@@ -197,9 +197,10 @@ const Team = () => {
               </Grid>
             ))}
           </Grid>
-          <Typography variant="body2" sx={{ marginTop: "2rem" }}>
-            www.mentorholidays.com
-          </Typography>
+
+          <div className="d flex justify-center" style={{ height: "4vh" }}>
+            <img src={mentorLogo} alt="wq" />
+          </div>
         </Box>
       </div>
     </>

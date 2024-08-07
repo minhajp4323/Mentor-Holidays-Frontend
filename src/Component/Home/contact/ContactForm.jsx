@@ -2,14 +2,13 @@ import styles from "./ContactForm.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMapMarkerAlt,
-  faEnvelope,
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebookF,
   faInstagram,
   // faLinkedinIn,
-  faGoogle, 
+  faGoogle,
   faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
 import TextField from "@mui/material/TextField";
@@ -46,7 +45,7 @@ const CssTextField = styled(TextField)({
 const ContactForm = () => {
   return (
     <>
-    <Header/>
+      <Header />
       <div className={styles.container} id="contact">
         <span className={styles.bigCircle}></span>
         <div className={styles.form}>
@@ -65,10 +64,10 @@ const ContactForm = () => {
                 <FontAwesomeIcon icon={faMapMarkerAlt} />
                 <p>Karuvankallu, Kondotty, Malappuram</p>
               </div>
-              <div className={styles.information}>
+              {/* <div className={styles.information}>
                 <FontAwesomeIcon icon={faEnvelope} /> &nbsp;&nbsp;
                 <p>mentorholidays@gmail.com</p>
-              </div>
+              </div> */}
               <div className={styles.information}>
                 <FontAwesomeIcon icon={faPhone} />
                 &nbsp;&nbsp;
@@ -82,14 +81,14 @@ const ContactForm = () => {
                 <a href="https://www.facebook.com/profile.php?id=100063877939367">
                   <FontAwesomeIcon icon={faFacebookF} />
                 </a>
-                <a href="#">
+                <a href="https://wa.me/9072107041">
                   <FontAwesomeIcon icon={faWhatsapp} />
                 </a>
                 <a href="https://www.instagram.com/mentorholidays/">
                   <FontAwesomeIcon icon={faInstagram} />
                 </a>
-                <a href="#">
-                  <FontAwesomeIcon icon={faGoogle } />
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=mentorholidays@gmail.com&su=Inquiry&body=Hello, I would like to know more about...">
+                  <FontAwesomeIcon icon={faGoogle} />
                 </a>
               </div>
             </div>
@@ -159,7 +158,7 @@ const ContactForm = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

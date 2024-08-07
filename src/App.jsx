@@ -2,7 +2,7 @@ import Home from "./Component/Home/Home.jsx";
 import "../src/App.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Properties from "./Component/properties/Properties.jsx";
 import AdminLogin from "./Component/Admin/pages/AdminLogin.jsx";
 import AdminHome from "./Component/Admin/pages/AdminHome.jsx";
@@ -26,8 +26,24 @@ import Chart from "./Component/Admin/pages/RevenueGraph/Chart.jsx";
 import Services from "./Component/Home/Services/Service.jsx";
 import Team from "./Component/Home/Team/Team.jsx";
 import PortFolio from "./Component/Home/PortFolio/Portfolio.jsx";
+import ReactGA from "react-ga";
+import { useEffect } from "react";
+
+const TRACKING_ID = "G-QTTLQ6K9B9"; // Replace with your actual tracking ID
+
+ReactGA.initialize(TRACKING_ID, { debug: true });
+
+const usePageTracking = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.pageview(location.pathname + location.search);
+    console.log(`Pageview tracked: ${location.pathname + location.search}`);
+  }, [location]);
+};
 
 function App() {
+  usePageTracking();
   return (
     <>
       <div className="App">

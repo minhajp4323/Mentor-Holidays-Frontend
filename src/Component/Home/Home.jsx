@@ -78,10 +78,10 @@ function Home() {
           <> <CardComponent /> </>
         )} */}
       </div>
+      <Services />
       <About />
       <Testimonial />
       <ContactForm />
-      <Services />
       <Footer />
     </div>
   );

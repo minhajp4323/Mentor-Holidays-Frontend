@@ -82,7 +82,7 @@ const Services = () => {
           <Typography
             variant="h2"
             component="h2"
-            sx={{ mb: 4, textAlign: "center" }}
+            sx={{ mb: 4, textAlign: "center", fontSize:30 }}
           >
             <strong>Our Services</strong>
           </Typography>

@@ -15,7 +15,6 @@ import TextField from "@mui/material/TextField";
 import { styled } from "@mui/system";
 import Button from "@mui/material/Button";
 import Logo from "../../../assets/Mentor Long Logo.png";
-import Header from "../../navbar/Navbar";
 
 const CssTextField = styled(TextField)({
   "& label.Mui-outlined": {
@@ -43,7 +42,6 @@ const CssTextField = styled(TextField)({
 const ContactForm = () => {
   return (
     <>
-      <Header />
       <div className={styles.container} id="contact">
         <span className={styles.bigCircle}></span>
         <div className={styles.form}>
@@ -60,7 +58,7 @@ const ContactForm = () => {
             <div className={styles.info}>
               <div className={styles.information}>
                 <FontAwesomeIcon icon={faMapMarkerAlt} />
-                <p>Karuvankallu, Kondotty, Malappuram</p>
+                <p>Near Calicut international airport,KARUVANKALLU,Kondotty,Kerala,673638</p>
               </div>
               {/* <div className={styles.information}>
                 <FontAwesomeIcon icon={faEnvelope} /> &nbsp;&nbsp;

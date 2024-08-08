@@ -3,25 +3,27 @@ import { useState, useEffect } from "react";
 // import "./../Home/Home.css";
 // import { FaTags } from "react-icons/fa";
 // import { MdOutlineChangeCircle } from "react-icons/md";
-import Header from "../navbar/Navbar.jsx";
 import Footer from "../Admin/components/Footer.jsx";
 // import CardComponent from "./cardComponent.jsx";
 import Testimonial from "./Testimonials/Testimonials.jsx";
 import styles from "./Home.module.css";
 import Logo from "../../assets/Mentor Main Logo White.PNG";
+import About from "./About/About.jsx";
+import ContactForm from "../Home/contact/ContactForm.jsx";
+import Services from "../Home/Services/Service.jsx";
 
 function Home() {
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
-      setIsLoading(false);
+      // setIsLoading(false);
     }, 2000);
   }, []);
 
   return (
     <div id="Home">
-      <Header />
+      {/* <Header /> */}
 
       <div className={styles.homeMain}>
         <div className={styles.contentWrapper}>
@@ -67,16 +69,19 @@ function Home() {
             </div>
           </section> */}
         </div>
-        {isLoading ? (
+        {/* {isLoading ? (
           <div className="loadingAnimation">
             <div className="spinner"></div>
             <p>Loading...</p>
           </div>
         ) : (
-          <>{/* <CardComponent /> */}</>
-        )}
+          <> <CardComponent /> </>
+        )} */}
       </div>
+      <About />
       <Testimonial />
+      <ContactForm />
+      <Services />
       <Footer />
     </div>
   );

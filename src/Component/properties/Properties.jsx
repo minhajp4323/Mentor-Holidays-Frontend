@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom"; // Import useLocation
 import Card from "react-bootstrap/Card";
-import Header from "../navbar/Navbar";
 import Footer from "../Admin/components/Footer";
 import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
@@ -141,7 +140,7 @@ function Properties() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="container">
         <h1 className="text-center mt-4 mb-4">All Properties</h1>
         <div className="row justify-content-center">

@@ -28,6 +28,7 @@ import Team from "./Component/Home/Team/Team.jsx";
 import PortFolio from "./Component/Home/PortFolio/Portfolio.jsx";
 import ReactGA from "react-ga";
 import { useEffect } from "react";
+import Header from "./Component/navbar/Navbar.jsx";
 
 const TRACKING_ID = "G-QTTLQ6K9B9"; // Replace with your actual tracking ID
 
@@ -47,6 +48,7 @@ function App() {
   return (
     <>
       <div className="App">
+        <Header />
         <Routes>
           {/* user */}
           <Route path="/" element={<Home />} />

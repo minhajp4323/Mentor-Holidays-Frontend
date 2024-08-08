@@ -7,11 +7,9 @@ import {
   ListItemText,
   Container,
 } from "@mui/material";
-import Header from "../../navbar/Navbar";
 import { GiSpookyHouse } from "react-icons/gi";
 import { FaPassport, FaTicketAlt } from "react-icons/fa";
 import { MdOutlineCardTravel } from "react-icons/md";
-import Footer from "../../Admin/components/Footer";
 
 
 const servicesData = [
@@ -66,7 +64,6 @@ const servicesData = [
 const Services = () => {
   return (
     <>
-      <Header />
       <div
         style={{
           background: "linear-gradient(to top right, #3f7acf, #164282)",
@@ -144,7 +141,6 @@ const Services = () => {
           </Grid>
         </Container>
       </div>
-      <Footer/>
     </>
   );
 };

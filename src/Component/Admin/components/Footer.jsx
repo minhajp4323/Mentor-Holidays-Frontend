@@ -20,9 +20,10 @@ const socialLinks = [
   { icon: "whatsapp", href: "https://wa.me/9072107041" },
 ];
 
-const topPackages1 = ["GOA", "BANGALORE", "KOCHI", "CHENNAI", "HYDERABAD"];
+const southIndian = ["GOA", "BANGALORE", "KOCHI", "CHENNAI", "HYDERABAD"];
+const northIndian = ["Jammu & Kashmir", "Manali", "Punjab", "Delhi", "Agra"];
 
-const topPackages2 = ["MALAYSIA", "MALDIVES", "THAILAND", "BANGKOK"];
+const interNational = ["MALAYSIA", "MALDIVES", "THAILAND", "BANGKOK"];
 
 export default function Footer() {
   return (
@@ -47,8 +48,7 @@ export default function Footer() {
 
       <MDBContainer className="p-4">
         <MDBRow>
-          <MDBCol lg="6" md="12" className="mb-4 mb-md-0">
-            <section className="mb-4"></section>
+          <MDBCol lg="3" md="12" className="mb-4 mb-md-0">
             <h5 className="text-uppercase"></h5>
 
             <p>
@@ -60,10 +60,10 @@ export default function Footer() {
           </MDBCol>
 
           <MDBCol lg="3" md="6" className="mb-4 mb-md-0">
-            <h5 className="text-uppercase">Top Packages</h5>
+            <h5 className="text-uppercase">South Indian Packages</h5>
 
             <ul className="list-unstyled mb-0">
-              {topPackages1.map((packageName, index) => (
+              {southIndian.map((packageName, index) => (
                 <li key={index}>
                   <a href="#!" className="text-white">
                     {packageName}
@@ -74,10 +74,23 @@ export default function Footer() {
           </MDBCol>
 
           <MDBCol lg="3" md="6" className="mb-4 mb-md-0">
-            <h5 className="text-uppercase mb-0">Top Packages</h5>
+            <h5 className="text-uppercase mb-0">North Indian</h5>
 
             <ul className="list-unstyled">
-              {topPackages2.map((packageName, index) => (
+              {northIndian.map((packageName, index) => (
+                <li key={index}>
+                  <a href="#!" className="text-white">
+                    {packageName}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </MDBCol>
+          <MDBCol lg="3" md="6" className="mb-4 mb-md-0">
+            <h5 className="text-uppercase mb-0">International Packages</h5>
+
+            <ul className="list-unstyled">
+              {interNational.map((packageName, index) => (
                 <li key={index}>
                   <a href="#!" className="text-white">
                     {packageName}

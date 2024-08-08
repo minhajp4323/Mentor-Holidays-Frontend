@@ -1,5 +1,4 @@
 import { Box, Typography, Grid, Avatar } from "@mui/material";
-import Header from "../../navbar/Navbar";
 import Haris from "../../../assets/Team/Haris.jpg";
 import Minhaj from "../../../assets/Team/Minhaj.jpg";
 import Rashid from "../../../assets/Team/Rashid.jpg";
@@ -75,7 +74,6 @@ const teamMembers = [
 const Team = () => {
   return (
     <>
-      <Header />
       <div>
         {/* Founder Section */}
         <Box

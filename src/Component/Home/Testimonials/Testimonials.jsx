@@ -45,7 +45,7 @@ export default function Testimonial() {
           </div>
           <MDBCard>
             <MDBCardBody className="px-4 py-5">
-              <div style={{display:"flex", justifyContent:"center"}}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <h1>Testimonials</h1>
               </div>
 
@@ -76,9 +76,11 @@ export default function Testimonial() {
                             xl="8"
                             className="text-center text-lg-start mx-auto mx-lg-0"
                           >
-                            <h4 className="mb-4">
-                              {data.name} - {data.position}
-                            </h4>
+                            <h4 className="mb-2">{data.name}</h4>
+                            <p>
+                              {" "}
+                              <strong> {data.position}</strong>
+                            </p>
                             <p className="mb-0 pb-3">{data.saying}</p>
                           </MDBCol>
                         </MDBRow>

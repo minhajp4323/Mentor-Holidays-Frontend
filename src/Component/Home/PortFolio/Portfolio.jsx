@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./Portfolio.module.css";
-import Header from "../../navbar/Navbar";
 
 const PortFolio = () => {
   const portfolioImages = [
@@ -20,7 +19,6 @@ const PortFolio = () => {
 
   return (
     <>
-      <Header />
       <div className={styles.container}>
         <div>
           <Typography variant="h2" className={styles.title}>

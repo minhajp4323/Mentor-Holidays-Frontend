@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Header from "../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -129,7 +128,6 @@ function SignIn() {
 
   return (
     <>
-      <Header />
       <div className={styles.container}>
         <div className={styles.form}>
           <div className={styles.contactForm}>

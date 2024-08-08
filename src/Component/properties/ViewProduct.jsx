@@ -16,7 +16,6 @@ import {
   Button,
 } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-import Header from "../navbar/Navbar";
 import { styled } from "@mui/system";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
@@ -223,7 +222,6 @@ function ViewProduct() {
 
   return (
     <>
-      <Header />
       <Container maxWidth="lg" style={{ marginTop: "50px" }}>
         {loading ? (
           <Card style={{ margin: "10px", width: "100%" }}>

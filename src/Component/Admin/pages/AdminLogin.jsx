@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import Header from "../../navbar/Navbar";
+import {  useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -8,13 +7,12 @@ import {
   TextField,
   Button,
   Typography,
-  Link,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
 } from "@mui/material";
-import "./AdminLogin.css"; // Import the CSS file
+import "./AdminLogin.css"; 
 import adminInstance from "../../../Interceptors/AdminInterceptor";
 
 function AdminLogin() {
@@ -62,7 +60,6 @@ function AdminLogin() {
 
   return (
     <>
-      <Header />
       <div className="login-container">
         <Box className="login-content">
           <form onSubmit={handleSubmit} className="login-form">
@@ -106,24 +103,11 @@ function AdminLogin() {
               {loading ? <ClipLoader size={20} color={"#fff"} /> : "Login"}
             </Button>
             <div className="d-flex justify-between">
-              <Typography
-                className="forgot text-right mt-2"
-                sx={{ textAlign: "left" }}
-              >
-                Not a member ?
-                <Link
-                  component="button"
-                  variant="body2"
-                  onClick={() => navigate("/admin/signin")}
-                >
-                  Sign up
-                </Link>
-              </Typography>
+              
             </div>
           </form>
         </Box>
 
-        {/* Forgot Password Dialog */}
         <Dialog
           open={resetPasswordDialogOpen}
           onClose={() => setResetPasswordDialogOpen(false)}

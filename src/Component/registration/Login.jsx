@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Header from "../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -73,7 +72,6 @@ function Login() {
 
   return (
     <>
-      <Header />
       <Container
         sx={{
           height: isSmallScreen ? '100vh' : '70vh',

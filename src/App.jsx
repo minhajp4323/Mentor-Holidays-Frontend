@@ -29,7 +29,8 @@ import ReactGA from "react-ga";
 import { useEffect } from "react";
 import Header from "./Component/navbar/Navbar.jsx";
 
-const TRACKING_ID = "G-QTTLQ6K9B9"; 
+
+const TRACKING_ID = "G-QTTLQ6K9B9";
 
 ReactGA.initialize(TRACKING_ID, { debug: true });
 
@@ -64,6 +65,7 @@ function App() {
           <Route path="/service" element={<Services />} />
           <Route path="/team" element={<Team />} />
           <Route path="/portfolio" element={<PortFolio />} />
+        
 
           {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />
@@ -75,7 +77,6 @@ function App() {
           <Route path="/Admin/AllUser" element={<AllUser />} />
           <Route path="/Admin/AllBookings" element={<BookingList />} />
           <Route path="/Admin/Revenue" element={<PropertyRevenue />} />
-
           <Route path="Chart" element={<Chart />} />
         </Routes>
       </div>

@@ -5,20 +5,21 @@ import { useNavigate } from "react-router-dom";
 import MentorMain from "./../../assets/Menort Main Logo.png";
 import { FaBars } from "react-icons/fa";
 import styles from "./navbar.module.css";
+import { NavDropdown } from "react-bootstrap";
 
 function Header() {
-  // const username = localStorage.getItem("username");
+  const username = localStorage.getItem("username");
   const navigate = useNavigate();
 
-  // const handleLogout = () => {
-  //   localStorage.removeItem("userid");
-  //   localStorage.removeItem("username");
-  //   localStorage.removeItem("email");
-  //   localStorage.removeItem("phonenumber");
-  //   localStorage.removeItem("token");
-  //   localStorage.removeItem("wishlist");
-  //   navigate("/");
-  // };
+  const handleLogout = () => {
+    localStorage.removeItem("userid");
+    localStorage.removeItem("username");
+    localStorage.removeItem("email");
+    localStorage.removeItem("phonenumber");
+    localStorage.removeItem("token");
+    localStorage.removeItem("wishlist");
+    navigate("/");
+  };
 
   return (
     <Navbar
@@ -43,12 +44,12 @@ function Header() {
             {/* <Nav.Link onClick={() => navigate("/")} className={styles.navLink}>
               Home
             </Nav.Link> */}
-            {/* <Nav.Link
+            <Nav.Link
               onClick={() => navigate("/properties")}
               className={styles.navLink}
             >
-              Book Now
-            </Nav.Link> */}
+              Book Hotels
+            </Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link
@@ -83,7 +84,7 @@ function Header() {
             </Nav.Link>
           </Nav>
 
-          {/* <Nav className="my-2 my-lg-0" style={{ maxHeight: "100px" }} navbarScroll>
+          <Nav className="my-2 my-lg-0" style={{ maxHeight: "100px" }} navbarScroll>
             <NavDropdown
               title={username ? <b>{username}</b> : <b>Login</b>}
               id="NavbarScrollingDropdown"
@@ -128,7 +129,7 @@ function Header() {
                 </NavDropdown.Item>
               )}
             </NavDropdown>
-          </Nav> */}
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

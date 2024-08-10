@@ -18,7 +18,6 @@ import UserPropfile from "./Component/profile/UserPropfile.jsx";
 import ConfirmBooking from "./Component/booking/ConfirmBooking.jsx";
 import Bookings from "./Component/booking/Bookings.jsx";
 import BookingList from "./Component/Admin/pages/BookingList.jsx";
-// import About from "./Component/Home/About.jsx";
 import ContactForm from "./Component/Home/contact/ContactForm.jsx";
 import PropertyRevenue from "./Component/Admin/pages/revenue/Revenue.jsx";
 import About from "./Component/Home/About/About.jsx";
@@ -30,7 +29,7 @@ import ReactGA from "react-ga";
 import { useEffect } from "react";
 import Header from "./Component/navbar/Navbar.jsx";
 
-const TRACKING_ID = "G-QTTLQ6K9B9"; // Replace with your actual tracking ID
+const TRACKING_ID = "G-QTTLQ6K9B9"; 
 
 ReactGA.initialize(TRACKING_ID, { debug: true });
 

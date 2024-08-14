@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-// import Searchbar from "./../../shared/searchbar/Searchbar.jsx";
+import {  useEffect, useState } from "react";
+import Searchbar from "./../../shared/searchbar/Searchbar.jsx";
 // import "./../Home/Home.css";
-// import { FaTags } from "react-icons/fa";
-// import { MdOutlineChangeCircle } from "react-icons/md";
+import { FaTags } from "react-icons/fa";
+import { MdOutlineChangeCircle } from "react-icons/md";
 import Footer from "../Admin/components/Footer.jsx";
-// import CardComponent from "./cardComponent.jsx";
+import CardComponent from "./cardComponent.jsx";
 import Testimonial from "./Testimonials/Testimonials.jsx";
 import styles from "./Home.module.css";
 import Logo from "../../assets/Mentor Main Logo White.PNG";
@@ -13,11 +13,11 @@ import ContactForm from "../Home/contact/ContactForm.jsx";
 import Services from "../Home/Services/Service.jsx";
 
 function Home() {
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
-      // setIsLoading(false);
+      setIsLoading(false);
     }, 2000);
   }, []);
 
@@ -69,14 +69,8 @@ function Home() {
             </div>
           </section> */}
         </div>
-        {/* {isLoading ? (
-          <div className="loadingAnimation">
-            <div className="spinner"></div>
-            <p>Loading...</p>
-          </div>
-        ) : (
+        
           <> <CardComponent /> </>
-        )} */}
       </div>
       <Services />
       <About />

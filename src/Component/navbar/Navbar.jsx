@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import MentorMain from "./../../assets/Menort Main Logo.png";
 import { FaBars } from "react-icons/fa";
 import styles from "./navbar.module.css";
@@ -9,7 +9,14 @@ import { NavDropdown } from "react-bootstrap";
 
 function Header() {
   const username = localStorage.getItem("username");
+  const location = useLocation();
+
   const navigate = useNavigate();
+  const isAdminPath = location.pathname.startsWith("/Admin");
+
+  if (isAdminPath) {
+    return null;
+  }
 
   const handleLogout = () => {
     localStorage.removeItem("userid");
@@ -25,10 +32,11 @@ function Header() {
     <Navbar
       collapseOnSelect
       expand="sm"
-      style={{ position: "sticky",
-        backgroundColor: "rgba(255, 255, 255, 0.3)", 
+      style={{
+        position: "sticky",
+        backgroundColor: "rgba(255, 255, 255, 0.3)",
         backdropFilter: "blur(10px)",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)" 
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
       }}
       className={styles.navbarMain}
     >
@@ -41,15 +49,14 @@ function Header() {
         </Navbar.Toggle>
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            {/* <Nav.Link onClick={() => navigate("/")} className={styles.navLink}>
-              Home
-            </Nav.Link> */}
-            <Nav.Link
-              onClick={() => navigate("/properties")}
-              className={styles.navLink}
-            >
-              Book Hotels
-            </Nav.Link>
+            <NavDropdown title="Book Now">
+              <NavDropdown.Item onClick={() => navigate("/packages")}>
+                Top Packages
+              </NavDropdown.Item>
+              <NavDropdown.Item onClick={() => navigate("/properties")}>
+                Tour Resorts
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
           <Nav>
             <Nav.Link
@@ -84,7 +91,11 @@ function Header() {
             </Nav.Link>
           </Nav>
 
-          <Nav className="my-2 my-lg-0" style={{ maxHeight: "100px" }} navbarScroll>
+          <Nav
+            className="my-2 my-lg-0"
+            style={{ maxHeight: "100px" }}
+            navbarScroll
+          >
             <NavDropdown
               title={username ? <b>{username}</b> : <b>Login</b>}
               id="NavbarScrollingDropdown"

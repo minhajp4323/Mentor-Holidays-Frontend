@@ -9,7 +9,7 @@ import userInstance from "../../Interceptors/UserInterceptors";
 const CardComponent = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [properties, setProperties] = useState([]);
-  const [loading, setLoading] = useState(true); // State for loading indicator
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const CardComponent = () => {
       } catch (error) {
         console.error("Error fetching properties:", error);
       } finally {
-        setLoading(false); // Turn off loading indicator
+        setLoading(false); 
       }
     };
     fetchData();
@@ -45,11 +45,10 @@ const CardComponent = () => {
     <div className={styles.cardWrap}>
       <div className={styles.cardRow}>
         {loading ? (
-          // Skeleton loading while data is being fetched
           Array.from({ length: 4 }).map((_, index) => (
             <div key={index} className={styles.cardContainer}>
               <Card className={styles.card}>
-                <Skeleton variant="rectangular" width="100%" height={280} animation="wave" />
+                <Skeleton variant="rectangular" width="220px" height={280} animation="wave" />
                 <div className={styles.cardInfo}>
                   <Skeleton variant="text" width="80%" height={40} animation="wave" />
                 </div>

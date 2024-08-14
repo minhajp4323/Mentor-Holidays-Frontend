@@ -44,6 +44,16 @@ const SideBar = () => {
                 Add Properties
               </CDBSidebarMenuItem>
             </NavLink>
+            <NavLink to="/Admin/Package">
+              <CDBSidebarMenuItem icon="plus">
+                Add Package
+              </CDBSidebarMenuItem>
+            </NavLink>
+            <NavLink to="/Admin/AllPackage">
+              <CDBSidebarMenuItem icon="box">
+                Packages
+              </CDBSidebarMenuItem>
+            </NavLink>
             <NavLink to="/Admin/Revenue">
               <CDBSidebarMenuItem icon="dollar" iconType="solid">
                 Revenue

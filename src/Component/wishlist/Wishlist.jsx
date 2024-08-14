@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Header from "../navbar/Navbar";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
@@ -52,7 +51,6 @@ function Wishlist() {
 
   return (
     <>
-      <Header />
       <h1 style={{ textAlign: "center", paddingTop: "20px" }}>Wishlist</h1>
       <hr />
       <div className="homeMain">

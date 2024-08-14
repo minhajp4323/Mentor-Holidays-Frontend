@@ -21,30 +21,31 @@ import BookingList from "./Component/Admin/pages/BookingList.jsx";
 import ContactForm from "./Component/Home/contact/ContactForm.jsx";
 import PropertyRevenue from "./Component/Admin/pages/revenue/Revenue.jsx";
 import About from "./Component/Home/About/About.jsx";
-import Chart from "./Component/Admin/pages/RevenueGraph/Chart.jsx";
 import Services from "./Component/Home/Services/Service.jsx";
 import Team from "./Component/Home/Team/Team.jsx";
 import PortFolio from "./Component/Home/PortFolio/Portfolio.jsx";
-import ReactGA from "react-ga";
-import { useEffect } from "react";
+// import ReactGA from "react-ga";
+// import { useEffect } from "react";
 import Header from "./Component/navbar/Navbar.jsx";
+import AddPackage from "./Component/Admin/pages/Packages/AddPackage.jsx";
+import AdminPackages from "./Component/Admin/pages/Packages/AllPackages.jsx";
+import Packages from "./Component/Packages/Packages.jsx";
 
+// const TRACKING_ID = "G-QTTLQ6K9B9";
 
-const TRACKING_ID = "G-QTTLQ6K9B9";
+// ReactGA.initialize(TRACKING_ID, { debug: true });
 
-ReactGA.initialize(TRACKING_ID, { debug: true });
+// const usePageTracking = () => {
+//   const location = useLocation();
 
-const usePageTracking = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    ReactGA.pageview(location.pathname + location.search);
-    console.log(`Pageview tracked: ${location.pathname + location.search}`);
-  }, [location]);
-};
+//   useEffect(() => {
+//     ReactGA.pageview(location.pathname + location.search);
+//     console.log(`Pageview tracked: ${location.pathname + location.search}`);
+//   }, [location]);
+// };
 
 function App() {
-  usePageTracking();
+  // usePageTracking();
   return (
     <>
       <div className="App">
@@ -65,7 +66,7 @@ function App() {
           <Route path="/service" element={<Services />} />
           <Route path="/team" element={<Team />} />
           <Route path="/portfolio" element={<PortFolio />} />
-        
+          <Route path="/packages" element={<Packages />} />
 
           {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />
@@ -77,7 +78,9 @@ function App() {
           <Route path="/Admin/AllUser" element={<AllUser />} />
           <Route path="/Admin/AllBookings" element={<BookingList />} />
           <Route path="/Admin/Revenue" element={<PropertyRevenue />} />
-          <Route path="Chart" element={<Chart />} />
+          <Route path="/Admin/Package" element={<AddPackage />} />
+          <Route path="/Admin/AllPackage" element={<AdminPackages />} />
+          {/* <Route path="Chart" element={<Chart />} /> */}
         </Routes>
       </div>
     </>

@@ -31,15 +31,15 @@ const MenuProps = {
 };
 
 function Properties() {
-  const location = useLocation(); // Get the location object
+  const location = useLocation();
   const navigate = useNavigate();
   const [properties, setProperties] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState(new URLSearchParams(location.search).get('search') || ""); // Set initial search term from URL
+  const [searchTerm, setSearchTerm] = useState(new URLSearchParams(location.search).get('search') || ""); 
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState(["All"]);
-  const [hoveredProperty, setHoveredProperty] = useState(null); // State to track hovered property
+  const [hoveredProperty, setHoveredProperty] = useState(null);
   const userId = localStorage.getItem("userid");
 
   useEffect(() => {
@@ -199,7 +199,7 @@ function Properties() {
                   style={{ padding: "5px" }}
                 >
                   <Card
-                    className={styles.card} // Apply the CSS Module class
+                    className={styles.card} 
                     onMouseEnter={() => handleMouseEnter(item._id)}
                     onMouseLeave={handleMouseLeave}
                   >

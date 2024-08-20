@@ -30,6 +30,8 @@ import Header from "./Component/navbar/Navbar.jsx";
 import AddPackage from "./Component/Admin/pages/Packages/AddPackage.jsx";
 import AdminPackages from "./Component/Admin/pages/Packages/AllPackages.jsx";
 import Packages from "./Component/Packages/Packages.jsx";
+// import ProductDetail from "./Component/Packages/PackageView.jsx";
+import PackageView from "./Component/Packages/PackageView.jsx";
 
 // const TRACKING_ID = "G-QTTLQ6K9B9";
 
@@ -67,6 +69,7 @@ function App() {
           <Route path="/team" element={<Team />} />
           <Route path="/portfolio" element={<PortFolio />} />
           <Route path="/packages" element={<Packages />} />
+          <Route path="/packages/:id" element={<PackageView/>} />
 
           {/* admin */}
           <Route path="/Admin/Login" element={<AdminLogin />} />

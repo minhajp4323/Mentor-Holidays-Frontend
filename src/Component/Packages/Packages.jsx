@@ -1,99 +1,115 @@
-import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-import {
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  IconButton,
-  Container,
-  Box,
-} from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { useEffect, useState } from "react";
 import userInstance from "../../Interceptors/UserInterceptors";
+import { useNavigate } from "react-router-dom";
 
 function Packages() {
-//   const navigate = useNavigate();
   const [packages, setPackage] = useState([]);
+  
+  const [hoveredPackage, setHoveredPackage] = useState(null);
+  const [activeImageIndex, setActiveImageIndex] = useState({});
+  const [expandedDescription, setExpandedDescription] = useState({});
+  const navigate = useNavigate();
 
-  const fetchData = async () => {
-    try {
-      const response = await userInstance.get("/admin/package");
-      setPackage(response.data.data);
-    } catch (error) {
-      console.error("Error fetching properties", error);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await userInstance.get("/user/package");
+        setPackage(response.data.data);
+        console.log(response);
+        
+      } catch (error) {
+        console.error("Error fetching properties", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    let interval;
+    if (hoveredPackage !== null) {
+      interval = setInterval(() => {
+        setActiveImageIndex((prevIndex) => {
+          const newIndex = { ...prevIndex };
+          const currentPackageImages = packages[hoveredPackage].images;
+          newIndex[hoveredPackage] =
+            (newIndex[hoveredPackage] + 1) % currentPackageImages.length;
+          return newIndex;
+        });
+      }, 2000);
     }
+    return () => clearInterval(interval);
+  }, [hoveredPackage, packages]);
+
+  const handleMouseEnter = (index) => {
+    setHoveredPackage(index);
+    setActiveImageIndex((prevIndex) => ({
+      ...prevIndex,
+      [index]: 0,
+    }));
   };
-  fetchData();
 
+  const handleMouseLeave = () => {
+    setHoveredPackage(null);
+  };
 
- 
-
-  //   const handleDelete = async (id) => {
-  //     if (window.confirm("Are you sure you want to delete this property?")) {
-  //       try {
-  //         await adminInstance.delete(`/admin/properties/${id}`);
-  //         setPackage(packages.filter((package) => package._id !== id));
-  //       } catch (error) {
-  //         console.error("Error deleting property", error);
-  //       }
-  //     }
-  //   };
+  const toggleDescription = (index) => {
+    setExpandedDescription((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
+  };
 
   return (
-    <div className="d-flex w-full">
-      <Container style={{ padding: "50px" }}>
-        <Grid container spacing={4}>
-          {packages.map((packages) => (
-            <Grid item xs={12} sm={6} md={4} key={packages._id}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="200px"
-                  image={packages.images[0]}
-                  alt={packages.destination}
+    <div className="flex justify-center w-full">
+      <div className="container px-6 py-12 mx-auto">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
+          {packages.map((packageItem, index) => (
+            <div
+              key={packageItem._id}
+              className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md rounded-xl"
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className="relative h-56 mx-4 -mt-6 overflow-hidden rounded-xl shadow-lg">
+                <img
+                  src={packageItem.images[activeImageIndex[index] || 0]}
+                  alt={packageItem.destination}
+                  className="object-cover w-full h-full transition-all duration-500 ease-in-out"
                 />
-                <CardContent>
-                  <Typography variant="body2">
-                    {packages.destination} - {packages.duration} day
-                  </Typography>
-                  <Typography variant="body2">₹{packages.price}/-</Typography>
-                  <Typography variant="body2">{packages.category}</Typography>
-                  {/* <Typography variant="body2">
-                    <Box component="span" mr={1}>
-                      <i className="fas fa-map-marker-alt" />
-                    </Box>
-                    {packages.location}
-                  </Typography> */}
-                </CardContent>
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  px={2}
-                  pb={2}
+              </div>
+              <div className="p-6">
+                <h5 className="mb-2 text-xl font-semibold leading-snug text-blue-gray-900">
+                  {packageItem.destination} - {packageItem.duration} day
+                </h5>
+                <p
+                  className={`text-base font-light leading-relaxed text-gray-700 ${
+                    expandedDescription[index] ? "" : "line-clamp-3"
+                  }`}
                 >
-                  <IconButton
-                    color="primary"
-                    // onClick={() =>
-                    //   navigate(`/Admin/EditProperty/${packages._id}`)
-                    // }
+                  {packageItem.description}
+                </p>
+                {packageItem.description.split(" ").length > 20 && (
+                  <button
+                    onClick={() => toggleDescription(index)}
+                    className="mt-2 text-blue-500 hover:underline"
                   >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    color="secondary"
-                    // onClick={() => handleDelete(packages._id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Box>
-              </Card>
-            </Grid>
+                    {expandedDescription[index] ? "Read Less" : "..."}
+                  </button>
+                )}
+              </div>
+              <div className="p-6 pt-0">
+                <button
+                  className="px-6 py-3 text-xs font-bold text-center text-white uppercase transition-all bg-gray-900 rounded-lg shadow-md hover:shadow-lg focus:opacity-85 active:opacity-85"
+                  type="button"
+                  onClick={() => navigate(`/packages/${packageItem._id}`)}
+                >
+                  Read More
+                </button>
+              </div>
+            </div>
           ))}
-        </Grid>
-      </Container>
+        </div>
+      </div>
     </div>
   );
 }

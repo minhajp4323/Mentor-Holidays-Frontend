@@ -1,185 +1,111 @@
 import { useEffect, useState } from "react";
-import { AiOutlineHeart } from "react-icons/ai";
-import { BiShoppingBag } from "react-icons/bi";
-import ReactImageGallery from "react-image-gallery";
-// import Rater from "react-rater";
+import { AiOutlineHeart, AiOutlineWhatsApp } from "react-icons/ai";
+import Rater from "react-rater";
 import "react-rater/lib/react-rater.css";
+import ReactImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 import userInstance from "../../Interceptors/UserInterceptors";
 import { useParams } from "react-router-dom";
 
 const PackageView = () => {
   const { id } = useParams();
-  console.log(id,"fghjk");
-
-  const [packages, setPackage] = useState([]);
-  // console.log("_id");
+  const [packages, setPackage] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await userInstance.get(`/user/package/${id}`);
         setPackage(response.data.data);
-        console.log("merhiowt", response);
       } catch (error) {
         console.log("Error fetching properties", error);
-        // console.error("_id");
       }
     };
     fetchData();
   }, [id]);
-  const productDetailItem = {
-    images: [
-      {
-        original:
-          "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600",
-        thumbnail:
-          "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600",
-      },
-      {
-        original:
-          "https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=600",
-        thumbnail:
-          "https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=600",
-      },
-      {
-        original:
-          "https://images.pexels.com/photos/2697787/pexels-photo-2697787.jpeg?auto=compress&cs=tinysrgb&w=600",
-        thumbnail:
-          "https://images.pexels.com/photos/2697787/pexels-photo-2697787.jpeg?auto=compress&cs=tinysrgb&w=600",
-      },
-      {
-        original:
-          "https://images.pexels.com/photos/3373736/pexels-photo-3373736.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        thumbnail:
-          "https://images.pexels.com/photos/3373736/pexels-photo-3373736.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      },
-      {
-        original:
-          "https://images.pexels.com/photos/3910071/pexels-photo-3910071.jpeg?auto=compress&cs=tinysrgb&w=600",
-        thumbnail:
-          "https://images.pexels.com/photos/3910071/pexels-photo-3910071.jpeg?auto=compress&cs=tinysrgb&w=600",
-      },
-    ],
-    title: "BIG ITALIAN SOFA",
-    reviews: "150",
-    availability: true,
-    brand: "apex",
-    category: "Sofa",
-    sku: "BE45VGTRK",
-    price: 450,
-    previousPrice: 599,
-    description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem exercitationem voluptate sint eius ea assumenda provident eos repellendus qui neque! Velit ratione illo maiores voluptates commodi eaque illum, laudantium non!",
-    size: ["XS", "S", "M", "L", "XL"],
-    color: ["gray", "violet", "red"],
-  };
+
+  const images =
+    packages.images?.map((url) => ({
+      original: url,
+      thumbnail: url,
+    })) || [];
+
   const plusMinuceButton =
     "flex h-8 w-8 cursor-pointer items-center justify-center border duration-100 hover:bg-neutral-100 focus:ring-2 focus:ring-gray-500 active:ring-2 active:ring-gray-500";
+
+  const renderCustomItem = (item) => {
+    return (
+      <img
+        src={item.original}
+        alt=""
+        className="w-full h-96 object-cover"
+      />
+    );
+  };
+
   return (
     <section className="container flex-grow mx-auto max-w-[1200px] border-b py-5 lg:grid lg:grid-cols-2 lg:py-10">
-      {/* image gallery */}
-      <div className="container mx-auto px-4">
+      <div className="mx-auto lg:mx-0">
         <ReactImageGallery
+          items={images}
           showBullets={false}
-          showFullscreenButton={false}
+          showFullscreenButton={true}
           showPlayButton={false}
-          items={productDetailItem.images}
+          renderItem={renderCustomItem}  // Custom render method
         />
-
-        {/* /image gallery  */}
       </div>
-      {/* description  */}
 
       <div className="mx-auto px-5 lg:px-5">
         <h2 className="pt-3 text-2xl font-bold lg:pt-0">
-          {productDetailItem.title}
+          {packages.destination} - {packages.duration} day
         </h2>
         <div className="mt-1">
           <div className="flex items-center">
-            {/* <Rater
+            <Rater
               style={{ fontSize: "20px" }}
               total={5}
               interactive={false}
               rating={3.5}
-            /> */}
-
-            <p className="ml-3 text-sm text-gray-400">
-              ({productDetailItem.reviews})
-            </p>
+            />
+            <p className="ml-3 text-sm text-gray-400">(150 reviews)</p>
           </div>
         </div>
-        <p className="mt-5 font-bold">
+        {/* <p className="mt-5 font-bold">
           Availability:{" "}
-          {productDetailItem.availability ? (
-            <span className="text-green-600">In Stock </span>
+          {packages.availability ? (
+            <span className="text-green-600">In Stock</span>
           ) : (
             <span className="text-red-600">Expired</span>
           )}
-        </p>
+        </p> */}
+
         <p className="font-bold">
-          Brand: <span className="font-normal">{productDetailItem.brand}</span>
+          Category: <span className="font-normal">{packages.category}</span>
         </p>
-        <p className="font-bold">
-          Cathegory:{" "}
-          <span className="font-normal">{productDetailItem.category}</span>
-        </p>
-        <p className="font-bold">
-          SKU: <span className="font-normal">{productDetailItem.sku}</span>
-        </p>
+
         <p className="mt-4 text-4xl font-bold text-violet-900">
-          ${productDetailItem.price}{" "}
-          <span className="text-xs text-gray-400 line-through">
-            ${productDetailItem.previousPrice}
-          </span>
+          ₹{packages.price}
+          {"/- "}
         </p>
         <p className="pt-5 text-sm leading-5 text-gray-500">
-          {productDetailItem.description}
+          {packages.description}
         </p>
-        <div className="mt-6">
-          <p className="pb-2 text-xs text-gray-500">Size</p>
-          <div className="flex gap-1">
-            {productDetailItem.size.map((x, index) => {
-              return (
-                <div
-                  key={index}
-                  className="flex h-8 w-8 cursor-pointer items-center justify-center border duration-100 hover:bg-neutral-100 focus:ring-2 focus:ring-gray-500 active:ring-2 active:ring-gray-500"
-                >
-                  {x}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div className="mt-6">
-          <p className="pb-2 text-xs text-gray-500">Color</p>
-          <div className="flex gap-1">
-            {productDetailItem.color.map((x, index) => {
-              return (
-                <div
-                  key={index}
-                  className={`h-8 w-8 cursor-pointer border border-white bg-${x}-600 focus:ring-2 focus:ring-${x}-500 active:ring-2 active:ring-${x}-500`}
-                />
-              );
-            })}
-          </div>
-        </div>
-        <div className="mt-6">
+
+        {/* <div className="mt-6">
           <p className="pb-2 text-xs text-gray-500">Quantity</p>
           <div className="flex">
             <button className={`${plusMinuceButton}`}>−</button>
             <div className="flex h-8 w-8 cursor-text items-center justify-center border-t border-b active:ring-gray-500">
               1
             </div>
-            <button className={`${plusMinuceButton}`}> +</button>
+            <button className={`${plusMinuceButton}`}>+</button>
           </div>
-        </div>
+        </div> */}
         <div className="mt-7 flex flex-row items-center gap-6">
-          <button className="flex h-12 w-1/3 items-center justify-center bg-violet-900 text-white duration-100 hover:bg-blue-800">
-            <BiShoppingBag className="mx-2" />
-            Add to cart
+          <button className="flex h-12 w-12 items-center justify-center bg-violet-900 text-white duration-100 hover:bg-blue-800 rounded-full">
+            <AiOutlineWhatsApp className="mx-2" />
           </button>
-          <button className="flex h-12 w-1/3 items-center justify-center bg-amber-400 duration-100 hover:bg-yellow-300">
-            <AiOutlineHeart className="mx-2" />
+          <button className="flex h-12 w-1/3 items-center justify-center bg-amber-400 duration-100 hover:bg-yellow-300 rounded-xl p-3">
+            <AiOutlineHeart className="size-4" />
             Wishlist
           </button>
         </div>

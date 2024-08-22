@@ -13,7 +13,7 @@ function AdminPackages() {
       try {
         const response = await adminInstance.get("/admin/package");
         setPackage(response.data.data);
-        console.log(response.data.data);
+        
       } catch (error) {
         console.error("Error fetching properties", error);
       }
@@ -66,9 +66,9 @@ function AdminPackages() {
               <div className="flex justify-between px-4 py-2">
                 <button
                   className="text-blue-500 hover:text-blue-700"
-                  // onClick={() =>
-                  //   navigate(`/Admin/EditProperty/${packages._id}`)
-                  // }
+                  onClick={() =>
+                    navigate(`/Admin/editPackage/${packages._id}`)
+                  }
                 >
                   <i className="fas fa-edit" />
                 </button>

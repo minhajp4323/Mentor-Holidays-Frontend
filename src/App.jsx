@@ -30,8 +30,9 @@ import Header from "./Component/navbar/Navbar.jsx";
 import AddPackage from "./Component/Admin/pages/Packages/AddPackage.jsx";
 import AdminPackages from "./Component/Admin/pages/Packages/AllPackages.jsx";
 import Packages from "./Component/Packages/Packages.jsx";
-// import ProductDetail from "./Component/Packages/PackageView.jsx";
 import PackageView from "./Component/Packages/PackageView.jsx";
+import EditPackage from "./Component/Admin/pages/Packages/EditPackages.jsx";
+
 
 // const TRACKING_ID = "G-QTTLQ6K9B9";
 
@@ -83,6 +84,8 @@ function App() {
           <Route path="/Admin/Revenue" element={<PropertyRevenue />} />
           <Route path="/Admin/Package" element={<AddPackage />} />
           <Route path="/Admin/AllPackage" element={<AdminPackages />} />
+          <Route path="/Admin/editPackage" element={<EditPackage />} />
+
           {/* <Route path="Chart" element={<Chart />} /> */}
         </Routes>
       </div>

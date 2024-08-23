@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 const PackageView = () => {
   const { id } = useParams();
   const [packages, setPackage] = useState({});
+  const [numPersons, setNumPersons] = useState(1); // State to track the number of persons
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,9 +30,6 @@ const PackageView = () => {
       thumbnail: url,
     })) || [];
 
-  const plusMinuceButton =
-    "flex h-8 w-8 cursor-pointer items-center justify-center border duration-100 hover:bg-neutral-100 focus:ring-2 focus:ring-gray-500 active:ring-2 active:ring-gray-500";
-
   const renderCustomItem = (item) => {
     return (
       <img
@@ -41,6 +39,35 @@ const PackageView = () => {
       />
     );
   };
+
+  // Function to handle WhatsApp redirection
+  const handleWhatsAppClick = () => {
+    const message = `Hello, I'm interested in the package to ${packages.destination} (${packages.duration} day).
+Price: ₹${packages.price}/-
+Category: ${packages.category}
+Description: ${packages.description}
+Number of Persons: ${numPersons}`;
+
+    const url = `https://wa.me/9846564323?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  };
+
+  // Function to increase the number of persons
+  const incrementPersons = () => {
+    if (numPersons < 10) {
+      setNumPersons(numPersons + 1);
+    }
+  };
+
+  // Function to decrease the number of persons
+  const decrementPersons = () => {
+    if (numPersons > 1) {
+      setNumPersons(numPersons - 1);
+    }
+  };
+
+  const plusMinusButton =
+    "flex h-8 w-8 cursor-pointer items-center justify-center border duration-100 hover:bg-neutral-100 focus:ring-2 focus:ring-gray-500 active:ring-2 active:ring-gray-500";
 
   return (
     <section className="container flex-grow mx-auto max-w-[1200px] border-b py-5 lg:grid lg:grid-cols-2 lg:py-10">
@@ -69,14 +96,6 @@ const PackageView = () => {
             <p className="ml-3 text-sm text-gray-400">(150 reviews)</p>
           </div>
         </div>
-        {/* <p className="mt-5 font-bold">
-          Availability:{" "}
-          {packages.availability ? (
-            <span className="text-green-600">In Stock</span>
-          ) : (
-            <span className="text-red-600">Expired</span>
-          )}
-        </p> */}
 
         <p className="font-bold">
           Category: <span className="font-normal">{packages.category}</span>
@@ -90,18 +109,27 @@ const PackageView = () => {
           {packages.description}
         </p>
 
-        {/* <div className="mt-6">
-          <p className="pb-2 text-xs text-gray-500">Quantity</p>
-          <div className="flex">
-            <button className={`${plusMinuceButton}`}>−</button>
-            <div className="flex h-8 w-8 cursor-text items-center justify-center border-t border-b active:ring-gray-500">
-              1
+        {/* Number of Persons Counter */}
+        <div className="mt-6">
+          <p className="pb-2 text-sm text-gray-500">Number of Persons</p>
+          <div className="flex items-center">
+            <button className={plusMinusButton} onClick={decrementPersons}>
+              −
+            </button>
+            <div className="flex h-8 w-12 cursor-text items-center justify-center border-t border-b active:ring-gray-500">
+              {numPersons}
             </div>
-            <button className={`${plusMinuceButton}`}>+</button>
+            <button className={plusMinusButton} onClick={incrementPersons}>
+              +
+            </button>
           </div>
-        </div> */}
+        </div>
+
         <div className="mt-7 flex flex-row items-center gap-6">
-          <button className="flex h-12 w-12 items-center justify-center bg-violet-900 text-white duration-100 hover:bg-blue-800 rounded-full">
+          <button 
+            className="flex h-12 w-12 items-center justify-center bg-violet-900 text-white duration-100 hover:bg-blue-800 rounded-full"
+            onClick={handleWhatsAppClick}
+          >
             <AiOutlineWhatsApp className="mx-2" />
           </button>
           <button className="flex h-12 w-1/3 items-center justify-center bg-amber-400 duration-100 hover:bg-yellow-300 rounded-xl p-3">

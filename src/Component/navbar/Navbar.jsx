@@ -35,7 +35,7 @@ function Header() {
         position: "sticky",
         // backgroundColor: "rgba(255, 255, 255, 0.8)", 
         backdropFilter: "blur(10px)",
-        WebkitBackdropFilter: "blur(20px)", // iOS support
+        WebkitBackdropFilter: "blur(5px)", 
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
       }}
       className={styles.navbarMain}

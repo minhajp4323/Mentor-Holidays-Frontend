@@ -13,7 +13,6 @@ function AdminPackages() {
       try {
         const response = await adminInstance.get("/admin/package");
         setPackage(response.data.data);
-        
       } catch (error) {
         console.error("Error fetching properties", error);
       }
@@ -41,6 +40,14 @@ function AdminPackages() {
     <div className="flex w-full">
       <SideBar />
       <div className="container mx-auto p-8">
+        <div className="mb-6 flex justify-center">
+          <button
+            className="border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded"
+            onClick={() => navigate("/Admin/Package")}
+          >
+            + Add New Package
+          </button>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {packagess.map((packages) => (
             <div
@@ -66,9 +73,7 @@ function AdminPackages() {
               <div className="flex justify-between px-4 py-2">
                 <button
                   className="text-blue-500 hover:text-blue-700"
-                  onClick={() =>
-                    navigate(`/Admin/editPackage/${packages._id}`)
-                  }
+                  onClick={() => navigate(`/Admin/editPackage/${packages._id}`)}
                 >
                   <i className="fas fa-edit" />
                 </button>

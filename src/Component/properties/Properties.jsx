@@ -186,7 +186,7 @@ function Properties() {
                   <div key={index} className="col-md-3 mb-4">
                     <Card>
                       <Skeleton height={200} />
-                      <Card.Body>
+                      <Card.Body> 
                         <Skeleton count={3} />
                       </Card.Body>
                     </Card>

@@ -84,7 +84,7 @@ function App() {
           <Route path="/Admin/Revenue" element={<PropertyRevenue />} />
           <Route path="/Admin/Package" element={<AddPackage />} />
           <Route path="/Admin/AllPackage" element={<AdminPackages />} />
-          <Route path="/Admin/editPackage" element={<EditPackage />} />
+          <Route path="/Admin/editPackage/:id" element={<EditPackage />} />
 
           {/* <Route path="Chart" element={<Chart />} /> */}
         </Routes>

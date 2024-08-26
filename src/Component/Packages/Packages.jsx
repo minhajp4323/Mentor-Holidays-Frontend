@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 function Packages() {
   const [packages, setPackage] = useState([]);
-  
   const [hoveredPackage, setHoveredPackage] = useState(null);
   const [activeImageIndex, setActiveImageIndex] = useState({});
   const [expandedDescription, setExpandedDescription] = useState({});
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,9 +16,8 @@ function Packages() {
         const response = await userInstance.get("/user/package");
         setPackage(response.data.data);
         console.log(response);
-        
       } catch (error) {
-        console.error("Error fetching properties", error);
+        console.error("Error fetching packages", error);
       }
     };
     fetchData();
@@ -59,11 +58,25 @@ function Packages() {
     }));
   };
 
+  const filteredPackages = packages.filter((pkg) =>
+    pkg.destination.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    pkg.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="flex justify-center w-full">
       <div className="container px-6 py-12 mx-auto">
+        <div className="mb-6 flex justify-center">
+          <input
+            type="text"
+            placeholder="Search by destination or category..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="border border-gray-300 p-2 rounded w-full sm:w-1/2"
+          />
+        </div>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
-          {packages.map((packageItem, index) => (
+          {filteredPackages.map((packageItem, index) => (
             <div
               key={packageItem._id}
               className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md rounded-xl"
@@ -81,6 +94,7 @@ function Packages() {
                 <h5 className="mb-2 text-xl font-semibold leading-snug text-blue-gray-900">
                   {packageItem.destination} - {packageItem.duration} day
                 </h5>
+                <p className="text-sm text-sky-900">{packageItem.category}</p>
                 <p
                   className={`text-base font-light leading-relaxed text-gray-700 ${
                     expandedDescription[index] ? "" : "line-clamp-3"

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import SideBar from "../components/Sidebar";
-import "./AllUser.css";
 import adminInstance from "../../../Interceptors/AdminInterceptor";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +7,7 @@ function AllUser() {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -34,48 +34,36 @@ function AllUser() {
   );
 
   return (
-    <div className="d-flex w-full">
+    <div className="flex w-full">
       <SideBar />
-      <div className="container" style={{ padding: "50px" }}>
-        <h1>All Users</h1>
-        <div style={{ marginBottom: "20px" }}>
+      <div className="flex-1 p-10">
+        <h1 className="text-2xl font-bold mb-6">All Users</h1>
+        <div className="mb-6">
           <input
             type="text"
             placeholder="Search by username..."
             value={searchTerm}
             onChange={handleSearchChange}
-            style={{
-              width: "100%",
-              padding: "10px",
-              fontSize: "1rem",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
+            className="w-full p-3 text-base border border-gray-300 rounded-lg"
           />
         </div>
-        <table className="table custom-table">
+        <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
           <thead>
-            <tr>
-              <th scope="col">
-                <h3>Username</h3>
-              </th>
-              <th scope="col">
-                <h3>Email</h3>
-              </th>
-              <th scope="col">
-                <h3>Phone Number</h3>
-              </th>
+            <tr className="bg-gray-100 border-b border-gray-300">
+              <th className="p-3 text-left text-sm font-semibold text-gray-600">Username</th>
+              <th className="p-3 text-left text-sm font-semibold text-gray-600">Email</th>
+              <th className="p-3 text-left text-sm font-semibold text-gray-600">Phone Number</th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.map((user, index) => (
               <tr
                 key={user._id}
-                className={index % 2 === 0 ? "even-row" : "odd-row"}
+                className={index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"}
               >
-                <td>{user.username}</td>
-                <td>{user.email}</td>
-                <td>{user.phonenumber}</td>
+                <td className="p-3 text-sm text-gray-700">{user.username}</td>
+                <td className="p-3 text-sm text-gray-700">{user.email}</td>
+                <td className="p-3 text-sm text-gray-700">{user.phonenumber}</td>
               </tr>
             ))}
           </tbody>

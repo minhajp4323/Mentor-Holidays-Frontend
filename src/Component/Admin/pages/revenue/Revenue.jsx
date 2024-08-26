@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Table from "react-bootstrap/Table";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Sidebar from "../../components/Sidebar.jsx";
@@ -23,7 +22,7 @@ function PropertyRevenue() {
       try {
         const response = await adminInstance.get("/admin/property-revenue");
         setProperties(response.data.data);
-        console.log(response.data.data)
+        console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching properties and revenue", error);
         setError(error);
@@ -79,107 +78,99 @@ function PropertyRevenue() {
 
   if (loading) {
     return (
-      <div className="d-flex">
+      <div className="flex">
         <Sidebar />
-        <div className="d-flex flex-wrap mt-5 w-100">
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Total Revenue</th>
-                <th>Check-in Date</th>
-                <th>Check-out Date</th>
-                
-              </tr>
-            </thead>
-            <tbody>
-              {[...Array(3)].map((_, index) => (
-                <tr key={index}>
-                  <td>
-                    <Skeleton width={80} />
-                  </td>
-                  <td>
-                    <Skeleton />
-                  </td>
-                  <td>
-                    <Skeleton />
-                  </td>
-                  <td>
-                    <Skeleton />
-                  </td>
+        <div className="flex-1 p-4 bg-gray-50">
+          <div className="bg-white shadow-sm rounded-lg p-4">
+            <table className="w-full border border-gray-200">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="py-2 px-4 text-left text-sm font-medium text-gray-600">Name</th>
+                  <th className="py-2 px-4 text-left text-sm font-medium text-gray-600">Total Revenue</th>
+                  <th className="py-2 px-4 text-left text-sm font-medium text-gray-600">Check-in Date</th>
+                  <th className="py-2 px-4 text-left text-sm font-medium text-gray-600">Check-out Date</th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {[...Array(3)].map((_, index) => (
+                  <tr key={index}>
+                    <td className="py-2 px-4">
+                      <Skeleton width={80} />
+                    </td>
+                    <td className="py-2 px-4">
+                      <Skeleton />
+                    </td>
+                    <td className="py-2 px-4">
+                      <Skeleton />
+                    </td>
+                    <td className="py-2 px-4">
+                      <Skeleton />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div className="p-4 text-red-600 text-sm">Error: {error.message}</div>;
   }
 
   return (
-    <div className="d-flex">
+    <div className="flex">
       <Sidebar />
-      <div
-        className="d-flex flex-wrap mt-2 w-100"
-        style={{ margin: "3%", marginBottom: 0 }}
-      >
-        <Form.Group controlId="timeframeSelect" className="mb-3">
-          <Form.Label>Filter by Timeframe</Form.Label>
-          <Form.Control
-            as="select"
-            value={timeframe}
-            onChange={handleTimeframeChange}
-          >
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
-            <option value="yearly">Yearly</option>
-          </Form.Control>
-        </Form.Group>
-        <Table striped bordered hover>
-          <thead>
-            <tr style={{ fontSize: "1.2rem" }}>
-              <th>Name</th>
-              <th>Total Revenue</th>
-              {/* <th>Check-in Date</th>
-              <th>Check-out Date</th> */}
-              <th>Payment Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredProperties.map((property) => (
-              <React.Fragment key={property._id}>
-                <tr>
-                  <td rowSpan={property.bookings.length + 1}>
-                    {property.name}
-                  </td>
-                  <td rowSpan={property.bookings.length + 1}>
-                    {" "}
-                    <strong>
-                      ₹ {property.totalRevenue.toLocaleString()}
-                    </strong>{" "}
-                  </td>
-                </tr>
-                {property.bookings.map((booking) => (
-                  <tr key={booking._id}>
-                    {/* <td>
-                      {new Date(booking.checkInDate).toLocaleDateString()}
+      <div className="flex-1 p-4 bg-gray-50">
+        <div className="bg-white shadow-sm rounded-lg p-4 mb-4">
+          <Form.Group controlId="timeframeSelect">
+            <Form.Label className="text-gray-700 text-sm font-medium">Filter by Timeframe</Form.Label>
+            <Form.Control
+              as="select"
+              value={timeframe}
+              onChange={handleTimeframeChange}
+              className="form-select mt-1 block w-full text-sm"
+            >
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="yearly">Yearly</option>
+            </Form.Control>
+          </Form.Group>
+        </div>
+        <div className="bg-white shadow-sm rounded-lg p-4">
+          <table className="w-full border border-gray-200">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="py-2 px-4 text-left text-sm font-medium text-gray-600">Name</th>
+                <th className="py-2 px-4 text-left text-sm font-medium text-gray-600">Total Revenue</th>
+                <th className="py-2 px-4 text-left text-sm font-medium text-gray-600">Payment Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredProperties.map((property) => (
+                <React.Fragment key={property._id}>
+                  <tr>
+                    <td rowSpan={property.bookings.length + 1} className="py-2 px-4 text-sm text-gray-800 font-medium">
+                      {property.name}
                     </td>
-                    <td>
-                      {new Date(booking.checkOutDate).toLocaleDateString()}
-                    </td> */}
-                    <td>
-                      {new Date(booking.paymentDate).toLocaleDateString()}
+                    <td rowSpan={property.bookings.length + 1} className="py-2 px-4 text-sm text-gray-800 font-medium">
+                      <strong>₹ {property.totalRevenue.toLocaleString()}</strong>
                     </td>
                   </tr>
-                ))}
-              </React.Fragment>
-            ))}
-          </tbody>
-        </Table>
+                  {property.bookings.map((booking) => (
+                    <tr key={booking._id}>
+                      <td className="py-2 px-4 text-sm text-gray-600">
+                        {new Date(booking.paymentDate).toLocaleDateString()}
+                      </td>
+                    </tr>
+                  ))}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

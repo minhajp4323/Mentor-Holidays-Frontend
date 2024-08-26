@@ -8,15 +8,12 @@ function EditPackage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [PackageData, setPackageData] = useState({
-    title: "",
-    location: "",
+    destination: "",
+    duration: "",
     price: "",
-    bedroom: "",
-    bathroom: "",
     images: [],
     description: "",
     category: "",
-    maxGuest: 0,
   });
 
   useEffect(() => {
@@ -27,28 +24,17 @@ function EditPackage() {
     const fetchProperty = async () => {
       try {
         const response = await adminInstance.get(`/user/properties/${id}`);
-        const {
-          title,
-          location,
-          price,
-          bedroom,
-          bathroom,
-          images,
-          description,
-          category,
-          maxGuest,
-        } = response.data.data;
+        const { destination, duration, price, images, description, category } =
+          response.data.data;
         setPackageData({
-          title,
-          location,
+          destination,
+          duration,
           price,
-          bedroom,
-          bathroom,
           images,
           description,
           category,
-          maxGuest,
         });
+        console.log(response, "response")
       } catch (error) {
         toast.error("Error fetching property details");
       }
@@ -76,14 +62,11 @@ function EditPackage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("title", PackageData.title);
-    formData.append("location", PackageData.location);
+    formData.append("destination", PackageData.destination);
+    formData.append("duration", PackageData.duration);
     formData.append("price", PackageData.price);
-    formData.append("bedroom", PackageData.bedroom);
-    formData.append("bathroom", PackageData.bathroom);
     formData.append("description", PackageData.description);
     formData.append("category", PackageData.category);
-    formData.append("maxGuest", PackageData.maxGuest);
 
     for (let i = 0; i < PackageData.images.length; i++) {
       formData.append("images", PackageData.images[i]);
@@ -94,6 +77,8 @@ function EditPackage() {
         `/admin/properties/${id}`,
         formData
       );
+
+      console.log(response);
       toast.success("Property edited successfully");
       setTimeout(() => navigate("/Admin/AdminProperties"), 2000);
     } catch (error) {
@@ -114,20 +99,69 @@ function EditPackage() {
           <div className="card-body text-yellow-500">
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="title" className="form-label">
-                  Title:
+                <label htmlFor="destination" className="form-label">
+                  Destination:
                 </label>
                 <input
                   onChange={handleChange}
                   type="text"
-                  id="title"
+                  id="destination"
                   className="form-control"
-                  value={PackageData.title}
+                  value={PackageData.destination}
                   required
                 />
               </div>
-              {/* Add other fields similarly */}
-
+              <div className="mb-3">
+                <label htmlFor="duration" className="form-label">
+                  Duration:
+                </label>
+                <input
+                  onChange={handleChange}
+                  type="text"
+                  id="duration"
+                  className="form-control"
+                  value={PackageData.duration}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="price" className="form-label">
+                  Price:
+                </label>
+                <input
+                  onChange={handleChange}
+                  type="text"
+                  id="price"
+                  className="form-control"
+                  value={PackageData.price}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="category" className="form-label">
+                  Category:
+                </label>
+                <input
+                  onChange={handleChange}
+                  type="text"
+                  id="category"
+                  className="form-control"
+                  value={PackageData.category}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="description" className="form-label">
+                  Description:
+                </label>
+                <textarea
+                  onChange={handleChange}
+                  id="description"
+                  className="form-control"
+                  value={PackageData.description}
+                  required
+                />
+              </div>
               <div className="mb-3">
                 <label htmlFor="images" className="form-label">
                   Images:

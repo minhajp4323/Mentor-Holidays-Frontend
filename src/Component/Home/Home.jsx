@@ -7,10 +7,8 @@ import Footer from "../Admin/components/Footer.jsx";
 import CardComponent from "./cardComponent.jsx";
 import Testimonial from "./Testimonials/Testimonials.jsx";
 import styles from "./Home.module.css";
-import Logo from "../../assets/Mentor Main Logo White.PNG";
-import About from "./About/About.jsx";
+// import Logo from "../../assets/Mentor Main Logo White.PNG";
 import ContactForm from "../Home/contact/ContactForm.jsx";
-import Services from "../Home/Services/Service.jsx";
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -27,8 +25,8 @@ function Home() {
 
       <div className={styles.homeMain}>
         <div className={styles.contentWrapper}>
-          {/* <Searchbar /> */}
-          <div className={styles.container}>
+          <Searchbar />
+          {/* <div className={styles.container}>
             <div className={styles.sidebar}>
               <div className={styles.left}>
                 <strong>
@@ -46,34 +44,34 @@ function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          {/* <section>
-            <div className={styles.findBoxMain}>
-              <div className="primary">
-                <h3>
-                  Find and book your <br />
-                  perfect stay
-                </h3>
-              </div>
-              <div className={styles.rightMain}>
-                <div className={styles.secondary} style={{ right: "5px" }}>
-                  <FaTags size={40} />
-                  <span>Save more with groups</span>
-                </div>
-                <div className={styles.secondary}>
-                  <MdOutlineChangeCircle size={80} />
-                  <span>Free cancellation options if plan changes</span>
-                </div>
-              </div>
-            </div>
-          </section> */}
+<section>
+  <div className="flex flex-col md:flex-row justify-between mt-7 w-full p-3 bg-[#3f7acf] text-white text-lg rounded-lg">
+    <div className="w-full md:w-1/2 mb-4 md:mb-0">
+      <h3 className="text-xl font-semibold">
+        Find and book your <br />
+        perfect stay
+      </h3>
+    </div>
+    <div className="flex flex-col md:flex-row justify-end w-full md:w-1/2 space-y-4 md:space-y-0 md:space-x-4">
+      <div className="flex items-center w-full md:w-1/2 bg-[#164282] p-2 rounded-lg">
+        <FaTags size={40} className="mr-2" />
+        <span>Save more with groups</span>
+      </div>
+      <div className="flex items-center w-full md:w-1/2 bg-[#164282] p-2 rounded-lg">
+        <MdOutlineChangeCircle size={80} className="mr-2" />
+        <span>Free cancellation options if plan changes</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+          <> <CardComponent /> </>
         </div>
         
-          <> <CardComponent /> </>
       </div>
-      <Services />
-      <About />
+      
       <Testimonial />
       <ContactForm />
       <Footer />

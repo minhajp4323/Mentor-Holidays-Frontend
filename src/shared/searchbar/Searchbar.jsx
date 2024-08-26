@@ -22,17 +22,17 @@ function Searchbar() {
       <div className="py-6">
         <h1 className="text-2xl font-semibold">Where to?</h1>
       </div>
-      <div className="bg-white p-6 shadow-md rounded-lg">
+      <div className="bg-zinc-50 p-6 shadow-inner  rounded-xl">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="w-full sm:w-1/4">
-            <label htmlFor="search-type" className="block text-sm font-medium text-gray-700">
+            {/* <label htmlFor="search-type" className="block text-sm font-medium text-gray-700">
               Search In
-            </label>
+            </label> */}
             <select
               id="search-type"
               value={searchType}
               onChange={(e) => setSearchType(e.target.value)}
-              className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
               <option value="resorts">Resorts</option>
               <option value="packages">Tours</option>
@@ -40,9 +40,9 @@ function Searchbar() {
           </div>
 
           <div className="w-full sm:w-2/3">
-            <label htmlFor="search-term" className="block text-sm font-medium text-gray-700">
+            {/* <label htmlFor="search-term" className="block text-sm font-medium text-gray-700">
               Search {searchType}, hotel, and more
-            </label>
+            </label> */}
             <input
               type="text"
               id="search-term"
@@ -50,7 +50,7 @@ function Searchbar() {
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder={`Search ${searchType}, hotel, and more`}
-              className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
 
@@ -58,7 +58,7 @@ function Searchbar() {
             <button
               type="button"
               onClick={handleSearch}
-              className="w-full bg-blue-900 text-white py-2 px-4 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="w-full bg-blue-900 text-white py-2 px-4 rounded-full hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Search
             </button>

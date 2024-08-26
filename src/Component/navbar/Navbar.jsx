@@ -10,7 +10,6 @@ import { NavDropdown } from "react-bootstrap";
 function Header() {
   const username = localStorage.getItem("username");
   const location = useLocation();
-
   const navigate = useNavigate();
   const isAdminPath = location.pathname.startsWith("/Admin");
 
@@ -34,8 +33,9 @@ function Header() {
       expand="sm"
       style={{
         position: "sticky",
-        backgroundColor: "rgba(255, 255, 255, 0.3)",
+        backgroundColor: "rgba(255, 255, 255, 0.8)", // Increased opacity for better visibility
         backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)", // iOS support
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
       }}
       className={styles.navbarMain}
@@ -71,12 +71,6 @@ function Header() {
             >
               Contact
             </Nav.Link>
-            {/* <Nav.Link
-              onClick={() => navigate("/portfolio")}
-              className={styles.navLink}
-            >
-              PortFolio
-            </Nav.Link> */}
             <Nav.Link
               onClick={() => navigate("/team")}
               className={styles.navLink}

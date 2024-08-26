@@ -18,10 +18,14 @@
   color: #164282;
   font-size: 1.1rem;
 }
+
 .navbarMain {
   position: sticky;
   top: 0;
   z-index: 1500;
   width: 100%;
-  background-color: white; 
+  background-color: rgba(117, 117, 117, 0.569); /* Increased opacity for better visibility */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* iOS support */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Added shadow for better visibility */
 }

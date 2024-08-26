@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import userInstance from "../../Interceptors/UserInterceptors";
 import { useNavigate } from "react-router-dom";
+import { FaSearchLocation } from "react-icons/fa";
 
 function Packages() {
   const [packages, setPackage] = useState([]);
@@ -58,9 +59,10 @@ function Packages() {
     }));
   };
 
-  const filteredPackages = packages.filter((pkg) =>
-    pkg.destination.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    pkg.category.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredPackages = packages.filter(
+    (pkg) =>
+      pkg.destination.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pkg.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -72,7 +74,7 @@ function Packages() {
             placeholder="Search by destination or category..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="border border-gray-300 p-2 rounded w-full sm:w-1/2"
+            className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
@@ -90,6 +92,7 @@ function Packages() {
                   className="object-cover w-full h-full transition-all duration-500 ease-in-out"
                 />
               </div>
+
               <div className="p-6">
                 <h5 className="mb-2 text-xl font-semibold leading-snug text-blue-gray-900">
                   {packageItem.destination} - {packageItem.duration} day

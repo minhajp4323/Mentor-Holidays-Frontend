@@ -8,7 +8,6 @@ const CardComponent = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,12 +24,6 @@ const CardComponent = () => {
     fetchData();
     const intervalId = setInterval(fetchData, 14000);
     return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleMouseEnter = (id) => {
@@ -50,112 +43,81 @@ const CardComponent = () => {
   ].slice(0, 4);
 
   return (
-    <div className="flex justify-center my-5">
-      {loading ? (
-        <div className="grid gap-6 max-w-7xl grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div key={index} className="flex-1 max-w-xs mb-5">
-              <div className="bg-gray-800 rounded-lg overflow-hidden relative h-72">
-                <Skeleton
-                  variant="rectangular"
-                  width="100%"
-                  height="100%"
-                  animation="wave"
-                />
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                  <Skeleton
-                    variant="text"
-                    width="80%"
-                    height={40}
-                    animation="wave"
-                  />
+    <>
+      <>
+        <div className="flex justify-center my-5">
+          {loading ? (
+            <div className="grid gap-6 max-w-7xl grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <div key={index} className="flex-1 max-w-xs mb-5">
+                  <div className="bg-gray-800 rounded-lg overflow-hidden relative h-72">
+                    <Skeleton
+                      variant="rectangular"
+                      width="100%"
+                      height="100%"
+                      animation="wave"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                      <Skeleton
+                        variant="text"
+                        width="80%"
+                        height={40}
+                        animation="wave"
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
+          ) : (
+            <Marquee gradient={false} pauseOnHover speed={50}>
+              <div className="flex gap-6 max-w-7xl">
+                {uniqueCategories.map((category) => {
+                  const property = properties.find(
+                    (property) => property.category === category
+                  );
+                  return (
+                    <div
+                      key={property._id}
+                      className="flex-1 max-w-xs mb-5 cursor-pointer"
+                      onMouseEnter={() => handleMouseEnter(property._id)}
+                      onMouseLeave={handleMouseLeave}
+                      onClick={() => handleCardClick(property.category)}
+                    >
+                      <div
+                        className={`bg-gray-800 rounded-lg overflow-hidden relative h-72 transition-shadow duration-200 ${
+                          hoveredCard === property._id
+                            ? "shadow-xl"
+                            : "shadow-md"
+                        }`}
+                      >
+                        <img
+                          src={property.images[0]}
+                          alt={property.category}
+                          className={`w-full h-full object-cover transition-opacity duration-300 ${
+                            hoveredCard === property._id
+                              ? "opacity-90"
+                              : "opacity-100"
+                          }`}
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 text-white bg-gradient-to-t from-black via-transparent">
+                          <h5 className="text-lg font-semibold">
+                            {property.category}
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </Marquee>
+          )}
         </div>
-      ) : windowWidth > 1100 ? (
-        <Marquee gradient={false} pauseOnHover speed={50} className="overflow-hidden">
-          <div className="flex gap-6 min-w-full">
-            {uniqueCategories.map((category) => {
-              const property = properties.find(
-                (property) => property.category === category
-              );
-              return (
-                <div
-                  key={property._id}
-                  className="flex-1 max-w-xs mb-5 cursor-pointer"
-                  onMouseEnter={() => handleMouseEnter(property._id)}
-                  onMouseLeave={handleMouseLeave}
-                  onClick={() => handleCardClick(property.category)}
-                >
-                  <div
-                    className={`bg-gray-800 rounded-lg overflow-hidden relative h-72 transition-shadow duration-200 ${
-                      hoveredCard === property._id ? "shadow-xl" : "shadow-md"
-                    }`}
-                  >
-                    <img
-                      src={property.images[0]}
-                      alt={property.category}
-                      className={`w-full h-full object-cover transition-opacity duration-300 ${
-                        hoveredCard === property._id
-                          ? "opacity-90"
-                          : "opacity-100"
-                      }`}
-                    />
-                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white bg-gradient-to-t from-black via-transparent">
-                      <h5 className="text-lg font-semibold">
-                        {property.category}
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </Marquee>
-      ) : (
-        <Marquee gradient={false} pauseOnHover speed={50} className="overflow-hidden">
-          <div className="flex gap-6 min-w-full">
-            {uniqueCategories.map((category) => {
-              const property = properties.find(
-                (property) => property.category === category
-              );
-              return (
-                <div
-                  key={property._id}
-                  className={`flex-1 ${windowWidth < 768 ? 'w-[80%]' : 'w-1/2'} mb-5 cursor-pointer`}
-                  onMouseEnter={() => handleMouseEnter(property._id)}
-                  onMouseLeave={handleMouseLeave}
-                  onClick={() => handleCardClick(property.category)}
-                >
-                  <div
-                    className={`bg-gray-800 rounded-lg overflow-hidden relative h-72 transition-shadow duration-200 ${
-                      hoveredCard === property._id ? "shadow-xl" : "shadow-md"
-                    }`}
-                  >
-                    <img
-                      src={property.images[0]}
-                      alt={property.category}
-                      className={`w-full h-full object-cover transition-opacity duration-300 ${
-                        hoveredCard === property._id
-                          ? "opacity-90"
-                          : "opacity-100"
-                      }`}
-                    />
-                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white bg-gradient-to-t from-black via-transparent">
-                      <h5 className="text-lg font-semibold">
-                        {property.category}
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </Marquee>
-      )}
-    </div>
+      </>
+      <>
+        <div></div>
+      </>
+    </>
   );
 };
 

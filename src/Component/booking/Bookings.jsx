@@ -25,12 +25,10 @@ function Bookings() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await userInstance.get(
-          `/user/booking/${userId}`
-        );
+        const response = await userInstance.get(`/user/booking/${userId}`);
         setBookings(response.data.data);
         setLoading(false);
-        console.log(response.data.data)
+        console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching bookings:", error);
         setLoading(false);
@@ -47,9 +45,7 @@ function Bookings() {
   return (
     <>
       <MDBContainer fluid>
-        <h1 style={{ textAlign: "center", paddingTop: "20px" }}>
-          My Bookings
-        </h1>
+        <h1 style={{ textAlign: "center", paddingTop: "20px" }}>My Bookings</h1>
         <MDBRow className="justify-content-center mb-3">
           {bookings.map((booking) => (
             <MDBCol md="12" xl="10" key={booking._id}>

@@ -21,10 +21,12 @@ const CardComponent = () => {
         setLoading(false);
       }
     };
+  
     fetchData();
     const intervalId = setInterval(fetchData, 14000);
     return () => clearInterval(intervalId);
   }, []);
+  
 
   const handleMouseEnter = (id) => {
     setHoveredCard(id);

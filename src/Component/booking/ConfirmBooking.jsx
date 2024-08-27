@@ -107,7 +107,6 @@ function ConfirmBooking() {
 
   return (
     <>
-      <Header />
       <Container fluid className="confirmationPage d-flex justify-content-center align-items-center">
         {property && (
           <Card className="booking-card">

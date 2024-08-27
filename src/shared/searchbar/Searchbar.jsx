@@ -1,3 +1,5 @@
+import SelectInput from "@mui/material/Select/SelectInput";
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +22,7 @@ function Searchbar() {
   return (
     <>
       <div className="py-6">
-        <h1 className="text-2xl font-semibold">Where to?</h1>
+        <h1 className="text-5xl font-semibold text-[#164282] ">Let`s go..!!</h1>
       </div>
       <div className="bg-zinc-50 p-6 shadow-inner  rounded-xl">
         <div className="flex flex-col sm:flex-row gap-4">
@@ -58,7 +60,7 @@ function Searchbar() {
             <button
               type="button"
               onClick={handleSearch}
-              className="w-full bg-blue-900 text-white py-2 px-4 rounded-full hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="w-full bg-[#164282] text-white py-2 px-4 rounded-full hover:bg-[#2f5691] focus:outline-none "
             >
               Search
             </button>

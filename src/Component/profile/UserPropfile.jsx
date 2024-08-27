@@ -13,7 +13,6 @@ function UserPropfile() {
   };
   return (
     <>
-      <Header />
 
       <div style={{display: "flex", flexDirection:"column", alignItems:"center",justifyContent:"center", height:"50vh"}}>
         <TextField

@@ -46,7 +46,6 @@ function Bookings() {
 
   return (
     <>
-      <Header />
       <MDBContainer fluid>
         <h1 style={{ textAlign: "center", paddingTop: "20px" }}>
           My Bookings

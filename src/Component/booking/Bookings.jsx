@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Header from "../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import {

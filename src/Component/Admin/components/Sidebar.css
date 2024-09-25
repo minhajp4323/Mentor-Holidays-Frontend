@@ -1,15 +1,45 @@
 /* Sidebar.css */
 .sidebar_main {
-    height: 100vh;
+  height: 100vh;
+}
+
+.sticky-sidebar {
+  position: sticky;
+  top: 0;
+}
+
+.sidebar {
+  height: 100%;
+}
+
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10%;
+  position: relative; /* Needed for absolute positioning of the small logo */
+}
+
+.default-logo {
+  width: 70%;
+}
+
+.small-logo {
+  width: 50%; /* Adjust as necessary */
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%) rotate(45deg); /* Adjust rotation angle */
+  display: none; /* Hide initially */
+}
+
+/* Media query for small screens */
+@media (max-width: 768px) {
+  .default-logo {
+    display: none; /* Hide the default logo on small screens */
   }
   
-  .sticky-sidebar {
-    position: sticky;
-    top: 0;
+  .small-logo {
+    display: block; /* Show the small logo on small screens */
   }
-  
-  .sidebar {
-    height: 100%;
-  }
-  
-  
+}

@@ -7,7 +7,7 @@ import Footer from "../Admin/components/Footer.jsx";
 import CardComponent from "./cardComponent.jsx";
 import Testimonial from "./Testimonials/Testimonials.jsx";
 import styles from "./Home.module.css";
-import Logo from "../../assets/Mentor Main Logo White.PNG";
+// import Logo from "../../assets/Mentor Main Logo White.PNG";
 import ContactForm from "../Home/contact/ContactForm.jsx";
 import Card2 from "./Card2.jsx";
 
@@ -72,7 +72,7 @@ function Home() {
             {" "}
             <CardComponent />{" "}
           </>
-          {/* <Card2/> */}
+          <Card2/>
           <>
           </>
         </div>

@@ -17,31 +17,17 @@ function EditPackage() {
   });
 
   useEffect(() => {
-    if (!localStorage.getItem("admintoken")) {
-      navigate("/Admin/Login");
-    }
-
-    const fetchProperty = async () => {
+    const fetchData = async () => {
       try {
-        const response = await adminInstance.get(`/user/properties/${id}`);
-        const { destination, duration, price, images, description, category } =
-          response.data.data;
-        setPackageData({
-          destination,
-          duration,
-          price,
-          images,
-          description,
-          category,
-        });
-        console.log(response, "response")
+        const response = await adminInstance.get(`/user/package/${id}`);
+        setPackageData(response.data.data);
+        console.log(response.data.data);
       } catch (error) {
-        toast.error("Error fetching property details");
+        console.log("Error fetching properties", error);
       }
     };
-
-    fetchProperty();
-  }, [navigate, id]);
+    fetchData();
+  }, [id]);
 
   const handleChange = (e) => {
     const { id, value, files } = e.target;
@@ -74,17 +60,28 @@ function EditPackage() {
 
     try {
       const response = await adminInstance.put(
-        `/admin/properties/${id}`,
+        `/admin/package/${id}`,
         formData
       );
 
       console.log(response);
       toast.success("Property edited successfully");
-      setTimeout(() => navigate("/Admin/AdminProperties"), 2000);
+      setTimeout(() => navigate("/Admin/AllPackage"), 2000);
     } catch (error) {
       toast.error("Error updating property");
     }
   };
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this property?")) {
+      try {
+        await adminInstance.delete(`/admin/package/${id}`);
+        setPackageData(PackageData.filter((property) => property._id !== id));
+      } catch (error) {
+        console.error("Error deleting property", error);
+      }
+    }
+  };
+
 
   return (
     <div className="flex w-full justify-center">
@@ -181,6 +178,7 @@ function EditPackage() {
                 Update Property
               </button>
             </form>
+             
           </div>
         </div>
       </div>

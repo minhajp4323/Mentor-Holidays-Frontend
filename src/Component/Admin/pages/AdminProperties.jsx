@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { IconButton } from "@mui/material";
+import { IconButton, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SideBar from "../components/Sidebar";
@@ -42,6 +42,14 @@ function AdminProperties() {
     <div className="flex w-full">
       <SideBar />
       <div className="container mx-auto p-12">
+      <div className="mb-6 flex justify-center">
+          <button
+            className="border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded"
+            onClick={() => navigate("/Admin/AddProduct")}
+          >
+            + Add New Properties
+          </button>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {properties.map((property) => (
             <div key={property._id} className="bg-white shadow-lg rounded-lg overflow-hidden">

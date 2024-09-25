@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Card, Button, ListGroup, Col, Row, Container } from "react-bootstrap";
-import Header from "../navbar/Navbar";
 import { toast } from "react-toastify";
 import userInstance from "../../Interceptors/UserInterceptors";
 import { useEffect } from "react";

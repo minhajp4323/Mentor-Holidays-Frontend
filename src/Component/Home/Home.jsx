@@ -9,7 +9,6 @@ import Testimonial from "./Testimonials/Testimonials.jsx";
 import styles from "./Home.module.css";
 // import Logo from "../../assets/Mentor Main Logo White.PNG";
 import ContactForm from "../Home/contact/ContactForm.jsx";
-import Card2 from "./Card2.jsx";
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -72,7 +71,6 @@ function Home() {
             {" "}
             <CardComponent />{" "}
           </>
-          <Card2/>
           <>
           </>
         </div>

@@ -15,7 +15,7 @@ function AdminHome() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [totalRevenue, setTotalRevenue] = useState(0);
-  console.log(booking);
+  // console.log(booking);
 
   useEffect(() => {
     if (!localStorage.getItem("admintoken")) {

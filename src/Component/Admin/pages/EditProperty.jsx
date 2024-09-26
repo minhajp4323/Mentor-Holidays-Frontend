@@ -27,7 +27,6 @@ function EditProperty() {
       try {
         const response = await adminInstance.get(`/user/properties/${id}`);
         setPropertyData(response.data.data);
-        console.log(response.data.data);
       } catch (error) {
         toast.error("Error fetching property details");
       }

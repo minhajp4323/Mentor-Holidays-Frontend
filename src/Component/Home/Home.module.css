@@ -172,3 +172,30 @@
     font-size: 14px;
   }
 }
+
+
+.loadingScreen {
+  background-color: #ffffff; /* Dark background for the loading screen */
+  color: white;
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingScreen img {
+  animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+

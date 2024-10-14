@@ -42,7 +42,7 @@ const Card2 = () => {
   return (
     <div className="w-full px-4 py-6">
       <h2 className="text-xl font-bold mb-4">
-        Explore stays in trending destinations
+        Explore stays in trending destinations with us
       </h2>
       <Swiper
         slidesPerView={3}

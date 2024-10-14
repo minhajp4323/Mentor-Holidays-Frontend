@@ -1,47 +1,44 @@
 import { useEffect, useState } from "react";
 import Searchbar from "./../../shared/searchbar/Searchbar.jsx";
-// import "./../Home/Home.css";
 import { FaTags } from "react-icons/fa";
 import { MdOutlineChangeCircle } from "react-icons/md";
 import Footer from "../Admin/components/Footer.jsx";
 import CardComponent from "./cardComponent.jsx";
 import Testimonial from "./Testimonials/Testimonials.jsx";
 import styles from "./Home.module.css";
-// import Logo from "../../assets/Mentor Main Logo White.PNG";
 import ContactForm from "../Home/contact/ContactForm.jsx";
+import Logo from "../../assets/Menort Main Logo.png";
+
+// Loading screen component
+function LoadingScreen() {
+  return (
+    <div className={`${styles.loadingScreen} flex items-center justify-center h-screen`}>
+      <img src={Logo} alt="Welcome Logo" className="w-80" />
+    </div>
+  );
+}
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isFadedIn, setIsFadedIn] = useState(false); // New state for fade-in
 
   useEffect(() => {
+    // Simulate a 2-second loading time
     setTimeout(() => {
       setIsLoading(false);
+      // Apply fade-in effect after loading
+      setTimeout(() => {
+        setIsFadedIn(true); // Set the fade-in effect after the component is loaded
+      }, 100); // Small delay to start fade-in
     }, 2000);
   }, []);
 
-  return (
-    <div id="Home">
-      {/* <Header /> */}
+  if (isLoading) {
+    return <LoadingScreen />; // Show loading screen while loading
+  }
 
-          {/* <div className={styles.container}>
-            <div className={styles.sidebar}>
-              <div className={styles.left}>
-                <strong>
-                  <h1 className={styles.letsgo}>LET`S TRAVEL</h1>
-                </strong>
-                <div className={styles.logo}>
-                  <img src={Logo} alt="" />
-                </div>
-              </div>
-            </div>
-            <div className={styles.mainContent}>
-              <div className={styles.overlay}>
-                <div className={styles.address}>
-                  <p>Kondotty, Malappuram</p>
-                </div>
-              </div>
-            </div>
-          </div> */}
+  return (
+    <div id="Home" className={isFadedIn ? styles.homePageFadeIn : ""}> {/* Apply the fade-in class */}
       <div className={styles.homeMain}>
         <div className={styles.contentWrapper}>
           <Searchbar />
@@ -67,12 +64,7 @@ function Home() {
             </div>
           </section>
 
-          <>
-            {" "}
-            <CardComponent />{" "}
-          </>
-          <>
-          </>
+          <CardComponent />
         </div>
       </div>
 

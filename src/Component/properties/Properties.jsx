@@ -140,10 +140,9 @@ function Properties() {
 
   return (
     <>
-      {/* <Header /> */}
       <div className="container">
-        <h1 className="text-center mt-4 mb-4">All Properties</h1>
-        <div className="row justify-content-center">
+        {/* <h1 className="text-center mt-4 mb-4">All Properties</h1> */}
+        <div className="row justify-content-center pt-5">
           <div className="col-md-6 mb-3">
             <TextField
               fullWidth
@@ -180,7 +179,7 @@ function Properties() {
       <div className="container ">
         <div className="row">
           {loading
-            ? Array(5)
+            ? Array(8)
                 .fill()
                 .map((_, index) => (
                   <div key={index} className="col-md-3 mb-4">

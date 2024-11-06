@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import SideBar from "../components/Sidebar";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
+import Skeleton from "@mui/material/Skeleton"; // Import Skeleton
 import adminInstance from "../../../Interceptors/AdminInterceptor";
 import { useNavigate } from "react-router-dom";
 
 function BookingList() {
   const [bookings, setBookings] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true); // Loading state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,6 +19,8 @@ function BookingList() {
         setBookings(response.data.data);
       } catch (error) {
         console.error("Error fetching bookings", error);
+      } finally {
+        setLoading(false); // Set loading to false once fetching is done
       }
     };
     if (!localStorage.getItem("admintoken")) {
@@ -71,8 +75,21 @@ function BookingList() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {filteredBookings.map((user) => {
-                if (user.username.toLowerCase().includes(searchTerm.toLowerCase())) {
+              {loading ? ( // Check loading state
+                [...Array(5)].map((_, index) => ( // Generate 5 skeletons for rows
+                  <tr key={index}>
+                    <td className="p-2"><Skeleton variant="text" width="80%" /></td>
+                    <td className="p-2"><Skeleton variant="text" width="80%" /></td>
+                    <td className="p-2"><Skeleton variant="text" width="80%" /></td>
+                    <td className="p-2"><Skeleton variant="text" width="80%" /></td>
+                    <td className="p-2"><Skeleton variant="text" width="80%" /></td>
+                    <td className="p-2"><Skeleton variant="text" width="80%" /></td>
+                    <td className="p-2"><Skeleton variant="text" width="80%" /></td>
+                    <td className="p-2"><Skeleton variant="text" width="80%" /></td>
+                  </tr>
+                ))
+              ) : (
+                filteredBookings.map((user) => {
                   return user.bookings.map((booking, bookingIndex) => (
                     <tr
                       key={booking.bookingId}
@@ -97,39 +114,8 @@ function BookingList() {
                       </td>
                     </tr>
                   ));
-                } else {
-                  return user.bookings
-                    .filter((booking) =>
-                      booking.title
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase())
-                    )
-                    .map((booking, bookingIndex) => (
-                      <tr
-                        key={booking.bookingId}
-                        className={bookingIndex % 2 === 0 ? "bg-gray-50" : "bg-gray-100"}
-                      >
-                        <td className="p-2 text-sm text-gray-700">{user.username}</td>
-                        <td className="p-2 text-sm text-gray-700">{user.email}</td>
-                        <td className="p-2 text-sm text-gray-700">{booking.title}</td>
-                        <td className="p-2 text-sm text-gray-700">
-                          {new Date(booking.checkInDate).toLocaleDateString()}
-                        </td>
-                        <td className="p-2 text-sm text-gray-700">
-                          {new Date(booking.checkOutDate).toLocaleDateString()}
-                        </td>
-                        <td className="p-2 text-sm text-gray-700">{booking.receipt}</td>
-                        <td className="p-2 text-sm text-gray-700">
-                          {booking.amount} {booking.currency}
-                        </td>
-                        <td className="p-2 text-sm text-gray-700">
-                          {new Date(booking.paymentDate).toLocaleDateString()}
-                          {booking.paymentTime ? ` ${booking.paymentTime}` : ""}
-                        </td>
-                      </tr>
-                    ));
-                }
-              })}
+                })
+              )}
             </tbody>
           </table>
         </div>

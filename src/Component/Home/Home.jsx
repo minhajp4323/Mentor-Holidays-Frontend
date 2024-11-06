@@ -3,16 +3,18 @@ import Searchbar from "./../../shared/searchbar/Searchbar.jsx";
 import { FaTags } from "react-icons/fa";
 import { MdOutlineChangeCircle } from "react-icons/md";
 import Footer from "../Admin/components/Footer.jsx";
-import CardComponent from "./cardComponent.jsx";
 import Testimonial from "./Testimonials/Testimonials.jsx";
 import styles from "./Home.module.css";
 import ContactForm from "../Home/contact/ContactForm.jsx";
 import Logo from "../../assets/Menort Main Logo.png";
+import PackageHome from "./PackageHome.jsx";
+import ResortHome from "./ResortHome.jsx";
 
-// Loading screen component
 function LoadingScreen() {
   return (
-    <div className={`${styles.loadingScreen} flex items-center justify-center h-screen`}>
+    <div
+      className={`${styles.loadingScreen} flex items-center justify-center h-screen`}
+    >
       <img src={Logo} alt="Welcome Logo" className="w-80" />
     </div>
   );
@@ -20,25 +22,24 @@ function LoadingScreen() {
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isFadedIn, setIsFadedIn] = useState(false); // New state for fade-in
+  const [isFadedIn, setIsFadedIn] = useState(false);
 
   useEffect(() => {
-    // Simulate a 2-second loading time
     setTimeout(() => {
       setIsLoading(false);
-      // Apply fade-in effect after loading
+
       setTimeout(() => {
-        setIsFadedIn(true); // Set the fade-in effect after the component is loaded
-      }, 100); // Small delay to start fade-in
+        setIsFadedIn(true);
+      }, 100);
     }, 2000);
   }, []);
 
   if (isLoading) {
-    return <LoadingScreen />; // Show loading screen while loading
+    return <LoadingScreen />;
   }
 
   return (
-    <div id="Home" className={isFadedIn ? styles.homePageFadeIn : ""}> {/* Apply the fade-in class */}
+    <div id="Home" className={isFadedIn ? styles.homePageFadeIn : ""}>
       <div className={styles.homeMain}>
         <div className={styles.contentWrapper}>
           <Searchbar />
@@ -64,7 +65,8 @@ function Home() {
             </div>
           </section>
 
-          <CardComponent />
+          <ResortHome />
+          <PackageHome />
         </div>
       </div>
 

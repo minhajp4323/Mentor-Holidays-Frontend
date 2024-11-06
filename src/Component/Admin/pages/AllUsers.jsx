@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import SideBar from "../components/Sidebar";
 import adminInstance from "../../../Interceptors/AdminInterceptor";
 import { useNavigate } from "react-router-dom";
+import { Skeleton } from "@mui/material"; // Import Skeleton
 
 function AllUser() {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,16 +15,18 @@ function AllUser() {
       try {
         const response = await adminInstance.get("/admin/user");
         setUsers(response.data.data);
-      } catch (error) { 
+      } catch (error) {
         console.error("Error fetching users", error);
+      } finally {
+        setLoading(false); // Set loading to false after fetching
       }
     };
 
     if (!localStorage.getItem("admintoken")) {
       navigate("/Admin/Login");
+    } else {
+      fetchUsers();
     }
-
-    fetchUsers();
   }, [navigate]);
 
   const handleSearchChange = (event) => {
@@ -47,27 +51,47 @@ function AllUser() {
             className="w-full p-3 text-base border border-gray-300 rounded-lg"
           />
         </div>
-        <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
-          <thead>
-            <tr className="bg-gray-100 border-b border-gray-300">
-              <th className="p-3 text-left text-sm font-semibold text-gray-600">Username</th>
-              <th className="p-3 text-left text-sm font-semibold text-gray-600">Email</th>
-              <th className="p-3 text-left text-sm font-semibold text-gray-600">Phone Number</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredUsers.map((user, index) => (
-              <tr
-                key={user._id}
-                className={index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"}
-              >
-                <td className="p-3 text-sm text-gray-700">{user.username}</td>
-                <td className="p-3 text-sm text-gray-700">{user.email}</td>
-                <td className="p-3 text-sm text-gray-700">{user.phonenumber}</td>
+        {loading ? ( // Show skeleton while loading
+          <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+            <tbody>
+              {[...Array(5)].map((_, index) => ( // Create 5 skeleton rows
+                <tr key={index} className={index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"}>
+                  <td className="p-3">
+                    <Skeleton variant="text" width="80%" height={20} />
+                  </td>
+                  <td className="p-3">
+                    <Skeleton variant="text" width="80%" height={20} />
+                  </td>
+                  <td className="p-3">
+                    <Skeleton variant="text" width="80%" height={20} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+            <thead>
+              <tr className="bg-gray-100 border-b border-gray-300">
+                <th className="p-3 text-left text-sm font-semibold text-gray-600">Username</th>
+                <th className="p-3 text-left text-sm font-semibold text-gray-600">Email</th>
+                <th className="p-3 text-left text-sm font-semibold text-gray-600">Phone Number</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredUsers.map((user, index) => (
+                <tr
+                  key={user._id}
+                  className={index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"}
+                >
+                  <td className="p-3 text-sm text-gray-700">{user.username}</td>
+                  <td className="p-3 text-sm text-gray-700">{user.email}</td>
+                  <td className="p-3 text-sm text-gray-700">{user.phonenumber}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import adminInstance from "../../../Interceptors/AdminInterceptor";
 import { useNavigate } from "react-router-dom";
+import { useDropzone } from "react-dropzone";
 
 function AddProduct() {
   const [propertyData, setPropertyData] = useState({
@@ -29,22 +30,10 @@ function AddProduct() {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    if (id === "images") {
-      const files = e.target.files;
-      const imageArray = [];
-      for (let i = 0; i < files.length; i++) {
-        imageArray.push(files[i]);
-      }
-      setPropertyData((prevData) => ({
-        ...prevData,
-        images: imageArray,
-      }));
-    } else {
-      setPropertyData((prevData) => ({
-        ...prevData,
-        [id]: value,
-      }));
-    }
+    setPropertyData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
   };
 
   const navigate = useNavigate();
@@ -53,7 +42,7 @@ function AddProduct() {
     if (!localStorage.getItem("admintoken")) {
       navigate("/Admin/Login");
     }
-  },[navigate]);
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -96,11 +85,27 @@ function AddProduct() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const onDrop = (acceptedFiles) => {
+    setPropertyData((prevData) => ({
+      ...prevData,
+      images: [...prevData.images, ...acceptedFiles],
+    }));
+  };
+
+  const handleImageRemove = (index) => {
+    setPropertyData((prevData) => ({
+      ...prevData,
+      images: prevData.images.filter((_, i) => i !== index),
+    }));
+  };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: "image/*",
+  });
+
   return (
-    <div
-      className="d-flex w-full"
-      style={{ display: "flex", justifyContent: "center" }}
-    >
+    <div className="d-flex w-full" style={{ display: "flex", justifyContent: "center" }}>
       <SideBar />
       <Paper
         elevation={3}
@@ -194,39 +199,97 @@ function AddProduct() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Description"
-                id="description"
-                multiline
-                rows={4}
-                value={propertyData.description}
-                onChange={handleChange}
-                required
-              />
+              <Grid container spacing={2}>
+                <Grid item xs={8}>
+                  <TextField
+                    fullWidth
+                    label="Description"
+                    id="description"
+                    multiline
+                    rows={4}
+                    value={propertyData.description}
+                    onChange={handleChange}
+                    required
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <div
+                    {...getRootProps()}
+                    style={{
+                      border: '2px dashed #3f51b5',
+                      padding: '20px',
+                      textAlign: 'center',
+                      cursor: 'pointer',
+                      height: '100%',
+                      position: 'relative',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <input {...getInputProps()} />
+                    {isDragActive ? (
+                      <p>Drop the files here ...</p>
+                    ) : (
+                      <p>Drag 'n' drop some images here, or click to select images</p>
+                    )}
+                  </div>
+                </Grid>
+              </Grid>
             </Grid>
+
+            {/* Display selected images outside the drop zone */}
+            {propertyData.images.length > 0 && (
+              <Grid item xs={12}>
+                <Typography variant="h6" component="h3">
+                  Selected Images:
+                </Typography>
+                <Box
+                  display="flex"
+                  flexWrap="wrap"
+                  justifyContent="center"
+                  mt={2}
+                >
+                  {propertyData.images.map((file, index) => (
+                    <Box
+                      key={index}
+                      m={1}
+                      width="100px"
+                      height="100px"
+                      position="relative"
+                      onClick={() => handleImageRemove(index)}
+                      style={{ cursor: 'pointer' }} // Add a pointer cursor to indicate clickability
+                    >
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt={file.name}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: '4px',
+                          objectFit: 'cover',
+                        }}
+                      />
+                      {/* Add a remove indicator */}
+                      <Box
+                        position="absolute"
+                        top="0"
+                        right="0"
+                        bgcolor="rgba(255, 0, 0, 0.5)"
+                        color="white"
+                        p={0.5}
+                        borderRadius="50%"
+                        fontSize="0.8rem"
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                      >
+                        &times;
+                      </Box>
+                    </Box>
+                  ))}
+                </Box>
+              </Grid>
+            )}
+
             <Grid item xs={6}>
-              <input
-                accept="image/*"
-                id="images"
-                type="file"
-                multiple
-                onChange={handleChange}
-                style={{ display: "none" }}
-              />
-              <label htmlFor="images">
-                <Button variant="contained" component="span" fullWidth>
-                  Upload Images
-                </Button>
-              </label>
-            </Grid>
-            <Grid item xs={6}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-              >
+              <Button type="submit" variant="contained" color="primary" fullWidth>
                 Add Property
               </Button>
             </Grid>

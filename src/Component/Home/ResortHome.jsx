@@ -4,7 +4,7 @@ import Skeleton from "@mui/material/Skeleton";
 import Marquee from "react-fast-marquee";
 import userInstance from "../../Interceptors/UserInterceptors";
 
-const CardComponent = () => {
+const ResortHome = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +13,7 @@ const CardComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await userInstance.get("/user/properties");
+        const response = await userInstance.get("/user/properties"); 
         setProperties(response.data.data);
       } catch (error) {
         console.error("Error fetching properties:", error);
@@ -123,4 +123,4 @@ const CardComponent = () => {
   );
 };
 
-export default CardComponent;
+export default ResortHome;

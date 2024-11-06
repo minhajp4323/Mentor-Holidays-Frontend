@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Modal, Typography } from "@mui/material";
+import { Button, Modal, Typography, Skeleton } from "@mui/material";
 import SideBar from "../../components/Sidebar";
 import adminInstance from "../../../../Interceptors/AdminInterceptor";
 
@@ -9,14 +9,18 @@ function AdminPackages() {
   const [packages, setPackage] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedPackageId, setSelectedPackageId] = useState(null);
+  const [loading, setLoading] = useState(true); // Loading state
 
   // Fetch data function defined in the component scope
   const fetchData = async () => {
+    setLoading(true); // Set loading to true before fetching
     try {
       const response = await adminInstance.get("/admin/package");
       setPackage(response.data.data);
     } catch (error) {
       console.error("Error fetching packages", error);
+    } finally {
+      setLoading(false); // Set loading to false after fetching
     }
   };
 
@@ -65,36 +69,43 @@ function AdminPackages() {
           </button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {packages.map((pkg) => (
-            <div className="bg-white shadow rounded-lg overflow-hidden" key={pkg._id}>
-              <img
-                className="w-full h-48 object-cover"
-                src={pkg.images[0]}
-                alt={pkg.destination}
-              />
-              <div className="p-4">
-                <h2 className="text-lg font-semibold mb-2">
-                  {pkg.destination} - {pkg.duration} day
-                </h2>
-                <p className="text-gray-700 mb-2">₹{pkg.price}/-</p>
-                <p className="text-gray-600">{pkg.category}</p>
+          {loading ? (
+            // Show skeleton loading if loading
+            Array.from(new Array(4)).map((_, index) => (
+              <Skeleton key={index} variant="rectangular" width="100%" height={200} />
+            ))
+          ) : (
+            packages.map((pkg) => (
+              <div className="bg-white shadow rounded-lg overflow-hidden" key={pkg._id}>
+                <img
+                  className="w-full h-48 object-cover"
+                  src={pkg.images[0]}
+                  alt={pkg.destination}
+                />
+                <div className="p-4">
+                  <h2 className="text-lg font-semibold mb-2">
+                    {pkg.destination} - {pkg.duration} day
+                  </h2>
+                  <p className="text-gray-700 mb-2">₹{pkg.price}/-</p>
+                  <p className="text-gray-600">{pkg.category}</p>
+                </div>
+                <div className="flex justify-between px-4 py-2">
+                  <button
+                    className="text-blue-500 hover:text-blue-700"
+                    onClick={() => navigate(`/Admin/editPackage/${pkg._id}`)}
+                  >
+                    <i className="fas fa-edit" />
+                  </button>
+                  <button
+                    className="text-red-500 hover:text-red-700"
+                    onClick={() => handleOpen(pkg._id)}
+                  >
+                    <i className="fas fa-trash-alt" />
+                  </button>
+                </div>
               </div>
-              <div className="flex justify-between px-4 py-2">
-                <button
-                  className="text-blue-500 hover:text-blue-700"
-                  onClick={() => navigate(`/Admin/editPackage/${pkg._id}`)}
-                >
-                  <i className="fas fa-edit" />
-                </button>
-                <button
-                  className="text-red-500 hover:text-red-700"
-                  onClick={() => handleOpen(pkg._id)}
-                >
-                  <i className="fas fa-trash-alt" />
-                </button>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
 
         {/* Confirmation Modal */}

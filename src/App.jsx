@@ -24,7 +24,6 @@ import About from "./Component/Home/About/About.jsx";
 import Services from "./Component/Home/Services/Service.jsx";
 import Team from "./Component/Home/Team/Team.jsx";
 import PortFolio from "./Component/Home/PortFolio/Portfolio.jsx";
-// import ReactGA from "react-ga";
 // import { useEffect } from "react";
 import Header from "./Component/navbar/Navbar.jsx";
 import AddPackage from "./Component/Admin/pages/Packages/AddPackage.jsx";
@@ -34,21 +33,9 @@ import PackageView from "./Component/Packages/PackageView.jsx";
 import EditPackage from "./Component/Admin/pages/Packages/EditPackages.jsx";
 
 
-// const TRACKING_ID = "G-QTTLQ6K9B9";
 
-// ReactGA.initialize(TRACKING_ID, { debug: true });
-
-// const usePageTracking = () => {
-//   const location = useLocation();
-
-//   useEffect(() => {
-//     ReactGA.pageview(location.pathname + location.search);
-//     console.log(`Pageview tracked: ${location.pathname + location.search}`);
-//   }, [location]);
-// };
 
 function App() {
-  // usePageTracking();
   return (
     <>
       <div className="App">

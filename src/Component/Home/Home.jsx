@@ -34,9 +34,7 @@ function Home() {
     }, 2000);
   }, []);
 
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
+ 
 
   return (
     <div id="Home" className={isFadedIn ? styles.homePageFadeIn : ""}>

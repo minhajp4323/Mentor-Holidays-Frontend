@@ -22,7 +22,7 @@ const PackageHome = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center">Loading...</div>;
+    return <div className="text-center">Loading....</div>;
   }
 
   const cardContainerClass =
